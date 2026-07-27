@@ -1,42 +1,64 @@
 # 🗄️ Database - Lume
 
-Documentação da estrutura do banco de dados do e-commerce Lume.
+Documentação da estrutura do banco de dados do **Lume**, um e-commerce de livros desenvolvido com Laravel.
 
-O banco foi projetado pensando em flexibilidade, escalabilidade e separação de responsabilidades.
+O banco foi projetado priorizando:
+
+- Normalização dos dados;
+- Escalabilidade;
+- Integridade referencial;
+- Performance nas consultas;
+- Facilidade de manutenção.
+
+---
+
+# Status
+
+## ✅ Implementado
+
+- Migrations
+- Relacionamentos
+- Models Eloquent
+
+## 🚧 Em andamento
+
+- Factories
+- Seeders
+- Enums
 
 ---
 
 # Diagrama geral
 
-```
+```text
                     publishers
-                         |
-                         |
-                       books
-                    /    |    \
-                   /     |     \
-                  /      |      \
-             authors  categories book_images
-                  \      /
-                   \    /
-              book_author
-              book_category
+                         │
+                         │
+                      books
+                 ┌────┼────┐
+                 │    │    │
+                 │    │    └───────────────┐
+                 │    │                    │
+             authors categories      book_images
+                 ▲         ▲
+                 │         │
+          book_author  book_category
 
 
 users
- |
+ │
  ├── addresses
- |
+ │
  ├── carts
- |      |
- |      └── cart_items
- |
+ │      │
+ │      └── cart_items
+ │
  ├── orders
- |      |
- |      └── order_items
- |
+ │      │
+ │      └── order_items
+ │
  ├── reviews
- |
+ │
  └── wishlists
 ```
 
@@ -46,24 +68,70 @@ users
 
 ## admins
 
-Tabela responsável pelos usuários administrativos do sistema.
+Armazena os usuários administrativos responsáveis pelo gerenciamento da plataforma.
 
-Utilizada para acesso ao painel administrativo.
+### Relacionamentos
 
-## Campos
+```text
+Admin
+
+Autenticação do painel administrativo
+```
+
+### Campos
 
 | Campo | Tipo | Descrição |
-|---|---|---|
+|------|------|-----------|
 | id | bigint | Identificador |
-| name | string | Nome do administrador |
-| email | string | E-mail de acesso |
+| name | string | Nome |
+| email | string | E-mail |
 | password | string | Senha criptografada |
-| role | string | Nível de acesso |
-| is_active | boolean | Controle de acesso |
+| role | string | Cargo administrativo |
+| is_active | boolean | Conta ativa |
+| last_login_at | timestamp | Último acesso |
+| created_at | timestamp | Data de criação |
+| updated_at | timestamp | Data de atualização |
+| deleted_at | timestamp | Soft Delete |
+
+---
+
+# Usuários
+
+## users
+
+Representa os clientes da loja.
+
+### Relacionamentos
+
+```text
+User
+
+hasMany Addresses
+
+hasOne Cart
+
+hasMany Orders
+
+hasMany Reviews
+
+belongsToMany Books (Wishlist)
+```
+
+### Campos
+
+| Campo | Tipo | Descrição |
+|------|------|-----------|
+| id | bigint | Identificador |
+| name | string | Nome |
+| email | string | E-mail |
+| email_verified_at | timestamp | E-mail verificado |
+| password | string | Senha |
+| is_active | boolean | Conta ativa |
 | last_login_at | timestamp | Último login |
-| created_at | timestamp | Data criação |
-| updated_at | timestamp | Data atualização |
-| deleted_at | timestamp | Soft delete |
+| remember_token | string | Token "Lembrar-me" |
+| created_at | timestamp | Data de criação |
+| updated_at | timestamp | Data de atualização |
+| deleted_at | timestamp | Soft Delete |
 
 ---
 
@@ -71,22 +139,22 @@ Utilizada para acesso ao painel administrativo.
 
 ## authors
 
-Armazena os autores dos livros.
+Armazena os autores cadastrados.
 
-Um autor pode possuir vários livros.
+Um autor pode escrever vários livros.
 
-Relacionamento:
+### Relacionamentos
 
-```
+```text
 Author
 
-hasMany Books
+belongsToMany Books
 ```
 
-Campos:
+### Campos
 
 | Campo | Tipo | Descrição |
-|-|-|-|
+|------|------|-----------|
 | id | bigint | Identificador |
 | name | string | Nome |
 | slug | string | URL amigável |
@@ -98,28 +166,29 @@ Campos:
 
 ## publishers
 
-Armazena editoras.
+Armazena as editoras.
 
-Uma editora pode possuir vários livros.
+Uma editora publica vários livros.
 
-Relacionamento:
+### Relacionamentos
 
-```
+```text
 Publisher
 
 hasMany Books
 ```
 
-Campos:
+### Campos
 
 | Campo | Tipo | Descrição |
-|-|-|-|
+|------|------|-----------|
 | id | bigint | Identificador |
 | name | string | Nome |
 | slug | string | URL amigável |
 | description | text | Descrição |
-| website | string | Site |
+| website | string | Site oficial |
 | logo | string | Logo |
+| is_active | boolean | Status |
 
 ---
 
@@ -127,39 +196,40 @@ Campos:
 
 Categorias dos livros.
 
-Possui suporte para categorias e subcategorias.
+Suporta categorias e subcategorias.
 
 Exemplo:
 
-```
+```text
 Tecnologia
 
- ├── Programação
-
- ├── Banco de Dados
-
- └── Redes
+├── Programação
+├── Banco de Dados
+└── Redes
 ```
 
-Relacionamento:
+### Relacionamentos
 
-```
+```text
 Category
 
-hasMany Books
+belongsToMany Books
 
 belongsTo Category (parent)
+
+hasMany Categories (children)
 ```
 
-Campos:
+### Campos
 
 | Campo | Tipo | Descrição |
-|-|-|-|
+|------|------|-----------|
 | id | bigint | Identificador |
 | name | string | Nome |
 | slug | string | URL amigável |
 | description | text | Descrição |
 | parent_id | bigint | Categoria pai |
+| is_active | boolean | Status |
 
 ---
 
@@ -167,11 +237,11 @@ Campos:
 
 Tabela principal do catálogo.
 
-Representa os livros disponíveis na loja.
+Representa os livros vendidos pela loja.
 
-Relacionamentos:
+### Relacionamentos
 
-```
+```text
 Book
 
 belongsTo Publisher
@@ -180,20 +250,26 @@ belongsToMany Authors
 
 belongsToMany Categories
 
-hasMany Images
+hasMany BookImages
 
 hasMany Reviews
+
+hasMany CartItems
+
+hasMany OrderItems
+
+hasMany Wishlists
 ```
 
-Campos:
+### Campos
 
 | Campo | Tipo | Descrição |
-|-|-|-|
+|------|------|-----------|
 | id | bigint | Identificador |
 | title | string | Título |
 | slug | string | URL amigável |
-| isbn | string | Código ISBN |
-| description | text | Descrição curta |
+| isbn | string | ISBN |
+| description | text | Descrição |
 | synopsis | longText | Sinopse |
 | price | decimal | Preço |
 | sale_price | decimal | Preço promocional |
@@ -202,71 +278,67 @@ Campos:
 | language | string | Idioma |
 | edition | string | Edição |
 | format | string | Formato |
-| publication_date | date | Data publicação |
+| publication_date | date | Data de publicação |
 | weight | decimal | Peso |
 | height | decimal | Altura |
 | width | decimal | Largura |
 | length | decimal | Comprimento |
 | publisher_id | bigint | Editora |
-| is_featured | boolean | Destaque |
+| is_featured | boolean | Livro em destaque |
 | is_active | boolean | Disponível |
+| created_at | timestamp | Data de criação |
+| updated_at | timestamp | Data de atualização |
 
 ---
 
 ## book_images
 
-Armazena imagens dos livros.
+Armazena as imagens dos livros.
 
-Um livro pode ter várias imagens.
+Um livro pode possuir diversas imagens.
 
-Exemplo:
+### Relacionamentos
 
-```
-Livro
+```text
+BookImage
 
-├── capa.jpg
-
-├── verso.jpg
-
-└── detalhes.jpg
+belongsTo Book
 ```
 
-Relacionamento:
-
-```
-Book
-
-hasMany BookImages
-```
-
-Campos:
+### Campos
 
 | Campo | Tipo | Descrição |
-|-|-|-|
+|------|------|-----------|
 | id | bigint | Identificador |
 | book_id | bigint | Livro |
 | image | string | Caminho da imagem |
-| sort_order | integer | Ordem |
-| is_primary | boolean | Imagem principal |
+| sort_order | integer | Ordem de exibição |
+| is_primary | boolean | Define a capa principal |
+| created_at | timestamp | Data de criação |
+| updated_at | timestamp | Data de atualização |
 
 ---
 
 ## book_author
 
-Tabela intermediária entre livros e autores.
+Tabela pivô responsável pelo relacionamento entre livros e autores.
 
-Relacionamento:
+### Relacionamentos
 
+```text
+Book
+
+belongsToMany Authors
+
+Author
+
+belongsToMany Books
 ```
-Book belongsToMany Author
 
-Author belongsToMany Book
-```
-
-Campos:
+### Campos
 
 | Campo | Tipo |
-|-|-|
+|------|------|
 | book_id | bigint |
 | author_id | bigint |
 
@@ -274,20 +346,24 @@ Campos:
 
 ## book_category
 
-Tabela intermediária entre livros e categorias.
+Tabela pivô responsável pelo relacionamento entre livros e categorias.
 
-Relacionamento:
+### Relacionamentos
 
+```text
+Book
+
+belongsToMany Categories
+
+Category
+
+belongsToMany Books
 ```
-Book belongsToMany Category
 
-Category belongsToMany Book
-```
-
-Campos:
+### Campos
 
 | Campo | Tipo |
-|-|-|
+|------|------|
 | book_id | bigint |
 | category_id | bigint |
 
@@ -297,22 +373,21 @@ Campos:
 
 ## addresses
 
-Endereços dos usuários.
+Endereços cadastrados pelos clientes.
 
-Um usuário pode ter vários endereços.
+### Relacionamentos
 
-Relacionamento:
+```text
+Address
 
-```
-User
-
-hasMany Addresses
+belongsTo User
 ```
 
-Campos:
+### Campos
 
 | Campo | Tipo |
-|-|-|
+|------|------|
+| id | bigint |
 | user_id | bigint |
 | label | string |
 | recipient_name | string |
@@ -325,49 +400,62 @@ Campos:
 | state | string |
 | cep | string |
 | is_default | boolean |
+| created_at | timestamp |
+| updated_at | timestamp |
 
 ---
 
 ## carts
 
-Carrinho do usuário.
+Carrinho de compras.
 
-Relacionamento:
+Cada usuário possui apenas um carrinho.
 
+### Relacionamentos
+
+```text
+Cart
+
+belongsTo User
+
+hasMany CartItems
 ```
-User
 
-hasOne Cart
-```
-
-Campos:
+### Campos
 
 | Campo | Tipo |
-|-|-|
+|------|------|
 | id | bigint |
 | user_id | bigint |
+| created_at | timestamp |
+| updated_at | timestamp |
 
 ---
 
 ## cart_items
 
-Produtos dentro do carrinho.
+Itens adicionados ao carrinho.
 
-Relacionamento:
+### Relacionamentos
 
+```text
+CartItem
+
+belongsTo Cart
+
+belongsTo Book
 ```
-Cart
 
-hasMany CartItems
-```
-
-Campos:
+### Campos
 
 | Campo | Tipo |
-|-|-|
+|------|------|
+| id | bigint |
 | cart_id | bigint |
 | book_id | bigint |
 | quantity | integer |
+| created_at | timestamp |
+| updated_at | timestamp |
 
 ---
 
@@ -375,15 +463,13 @@ Campos:
 
 ## orders
 
-Representa os pedidos realizados.
+Representa um pedido realizado pelo cliente.
 
-Possui um snapshot dos dados da compra.
+A tabela mantém um **snapshot** das informações da compra.
 
-Isso garante que alterações futuras no usuário ou endereço não alterem pedidos antigos.
+### Relacionamentos
 
-Relacionamentos:
-
-```
+```text
 Order
 
 belongsTo User
@@ -391,10 +477,11 @@ belongsTo User
 hasMany OrderItems
 ```
 
-Campos:
+### Campos
 
 | Campo | Tipo |
-|-|-|
+|------|------|
+| id | bigint |
 | user_id | bigint |
 | status | string |
 | payment_status | string |
@@ -414,34 +501,39 @@ Campos:
 | gateway | string |
 | gateway_payment_id | string |
 | paid_at | timestamp |
+| created_at | timestamp |
+| updated_at | timestamp |
 
 ---
 
 ## order_items
 
-Itens comprados no pedido.
+Itens pertencentes ao pedido.
 
-Mantém uma cópia das informações do livro no momento da compra.
+Mantêm uma cópia das informações do livro no momento da compra.
 
-Exemplo:
+### Relacionamentos
 
+```text
+OrderItem
+
+belongsTo Order
+
+belongsTo Book
 ```
-Livro custava R$ 49,90
 
-Depois aumentou para R$ 69,90
-
-O pedido antigo continua R$ 49,90
-```
-
-Campos:
+### Campos
 
 | Campo | Tipo |
-|-|-|
+|------|------|
+| id | bigint |
 | order_id | bigint |
 | book_id | bigint |
 | title | string |
 | price | decimal |
 | quantity | integer |
+| created_at | timestamp |
+| updated_at | timestamp |
 
 ---
 
@@ -449,100 +541,173 @@ Campos:
 
 ## reviews
 
-Avaliações dos livros.
+Avaliações realizadas pelos clientes.
 
-Relacionamentos:
+### Relacionamentos
 
-```
-User
+```text
+Review
 
-hasMany Reviews
+belongsTo User
 
-
-Book
-
-hasMany Reviews
+belongsTo Book
 ```
 
-Campos:
+### Campos
 
 | Campo | Tipo |
-|-|-|
+|------|------|
+| id | bigint |
 | user_id | bigint |
 | book_id | bigint |
 | rating | integer |
 | comment | text |
 | is_approved | boolean |
+| created_at | timestamp |
+| updated_at | timestamp |
 
 ---
 
 ## wishlists
 
-Lista de desejos.
+Lista de desejos dos usuários.
 
-Relacionamento:
+Também representa um relacionamento Many-to-Many entre usuários e livros.
 
+### Relacionamentos
+
+```text
+Wishlist
+
+belongsTo User
+
+belongsTo Book
 ```
-User belongsToMany Books
 
-Book belongsToMany Users
-```
-
-Campos:
+### Campos
 
 | Campo | Tipo |
-|-|-|
+|------|------|
+| id | bigint |
 | user_id | bigint |
 | book_id | bigint |
+| created_at | timestamp |
+| updated_at | timestamp |
 
 ---
 
-# Regras importantes
+# Convenções
 
-## Snapshot de pedidos
+## Chaves primárias
 
-Pedidos não dependem dos dados atuais do catálogo.
+Todas as tabelas utilizam:
 
-São armazenados:
+- `id` (`bigint unsigned`)
 
-- nome do livro;
-- preço;
-- endereço;
-- valores da compra.
+Exceto a tabela `book_author`, que utiliza chave primária composta.
+
+---
+
+## Chaves estrangeiras
+
+As Foreign Keys seguem o padrão do Laravel:
+
+- user_id
+- admin_id
+- book_id
+- author_id
+- category_id
+- publisher_id
+- order_id
+- cart_id
 
 ---
 
 ## Slugs
 
-Entidades públicas utilizam slug:
+As entidades públicas utilizam slugs únicos.
 
 Exemplo:
 
-```
-/livro/clean-code
+```text
+/livros/clean-code
 
-/autor/robert-martin
+/autores/robert-c-martin
 
-/categoria/programacao
+/categorias/programacao
 ```
 
 ---
 
-## Soft Delete
+## Timestamps
 
-Utilizado em entidades onde histórico é importante:
+As tabelas utilizam:
 
-- admins;
-- futuramente livros e usuários.
+- created_at
+- updated_at
+
+Quando necessário:
+
+- deleted_at (Soft Deletes)
 
 ---
 
-# Próximas etapas
+## Índices
 
-Após finalizar as migrations:
+Foram adicionados índices para melhorar a performance das consultas em campos frequentemente pesquisados, como:
 
-1. Criar Models.
-2. Configurar relacionamentos Eloquent.
-3. Criar Factories.
-4. Criar Seeders.
-5. Testar a estrutura do banco.
+- slug
+- isbn
+- title
+- stock
+- is_active
+- sort_order
+
+---
+
+# Regras importantes
+
+## Snapshot dos pedidos
+
+Os pedidos armazenam uma cópia das informações da compra para preservar o histórico.
+
+São armazenados:
+
+- título do livro;
+- preço pago;
+- endereço de entrega;
+- dados do destinatário;
+- valores da compra.
+
+Alterações futuras no catálogo ou nos dados do usuário não afetam pedidos já realizados.
+
+---
+
+## Soft Deletes
+
+Utilizado em entidades onde o histórico deve ser preservado:
+
+- admins
+- users
+
+Outras entidades poderão utilizar Soft Deletes futuramente, conforme a necessidade do projeto.
+
+---
+
+# Integridade referencial
+
+Todas as relações utilizam Foreign Keys do Laravel.
+
+Principais regras:
+
+- Um livro pertence a uma editora.
+- Um livro pode possuir vários autores.
+- Um livro pode possuir várias categorias.
+- Um livro pode possuir várias imagens.
+- Um usuário pode possuir vários endereços.
+- Um usuário possui um carrinho.
+- Um carrinho possui vários itens.
+- Um pedido pertence a um usuário.
+- Um pedido possui vários itens.
+- Um livro pode possuir várias avaliações.
+- Um usuário pode favoritar vários livros.

@@ -1,8 +1,8 @@
 # 📋 Decisions - Lume
 
-Registro das principais decisões técnicas e arquiteturais tomadas durante o desenvolvimento do projeto Lume.
+Registro das principais decisões técnicas e arquiteturais tomadas durante o desenvolvimento do projeto **Lume**.
 
-O objetivo deste documento é manter o histórico das escolhas realizadas e seus motivos.
+Este documento serve como histórico das decisões de arquitetura, organização do código e modelagem do banco de dados.
 
 ---
 
@@ -14,72 +14,62 @@ Separar as entidades de catálogo das entidades de venda.
 
 ## Motivo
 
-O catálogo possui informações permanentes dos produtos:
+O catálogo representa informações permanentes dos livros:
 
 - livros;
 - autores;
 - categorias;
 - editoras.
 
-Enquanto vendas possuem informações históricas:
+Já o módulo de vendas representa eventos históricos:
 
 - pedidos;
 - pagamentos;
 - itens comprados.
 
-Essa separação evita acoplamento entre módulos.
+Essa separação reduz o acoplamento entre os módulos e facilita futuras alterações.
 
 ---
 
-# 002 - Utilizar tabela book_images separada
+# 002 - Utilizar tabela book_images
 
 ## Decisão
 
-As imagens dos livros serão armazenadas em uma tabela própria.
+Armazenar as imagens dos livros em uma tabela própria.
 
 ## Motivo
 
-Inicialmente poderia existir apenas:
-
-```
-books.cover_image
-```
-
-Porém um livro pode precisar de:
+Um livro pode possuir:
 
 - capa;
 - contracapa;
-- imagens adicionais;
-- diferentes versões.
+- imagens internas;
+- outras imagens de divulgação.
 
-A tabela separada permite:
+A estrutura ficou:
 
-```
-books
+```text
+Book
 
-1:N
+1 : N
 
-book_images
+BookImages
 ```
 
 Benefícios:
 
-- maior flexibilidade;
-- galeria de imagens;
-- controle de imagem principal;
-- melhor organização.
+- múltiplas imagens;
+- imagem principal;
+- ordenação;
+- maior flexibilidade.
 
 ---
 
-# 003 - Usar relacionamento muitos-para-muitos entre livros e autores
+# 003 - Relacionamento muitos-para-muitos entre livros e autores
 
 ## Decisão
 
-Criar a tabela intermediária:
-
-```
-book_author
-```
+Criar a tabela pivô `book_author`.
 
 ## Motivo
 
@@ -90,20 +80,7 @@ Um livro pode possuir:
 - organizadores;
 - colaboradores.
 
-Exemplo:
-
-```
-Livro
-
-Clean Code
-
-Autores:
-
-Robert Martin
-Outro colaborador
-```
-
-O relacionamento muitos-para-muitos evita limitações futuras.
+Da mesma forma, um autor pode participar de diversos livros.
 
 ---
 
@@ -111,13 +88,7 @@ O relacionamento muitos-para-muitos evita limitações futuras.
 
 ## Decisão
 
-Adicionar:
-
-```
-parent_id
-```
-
-na tabela categories.
+Adicionar o campo `parent_id` na tabela `categories`.
 
 ## Motivo
 
@@ -125,14 +96,11 @@ Permitir categorias e subcategorias.
 
 Exemplo:
 
-```
+```text
 Tecnologia
-
- ├── Programação
-
- ├── Banco de Dados
-
- └── Redes
+├── Programação
+├── Banco de Dados
+└── Redes
 ```
 
 Isso evita criar tabelas separadas para cada nível.
@@ -143,50 +111,26 @@ Isso evita criar tabelas separadas para cada nível.
 
 ## Decisão
 
-Salvar informações do produto e endereço diretamente no pedido.
+Salvar uma cópia dos dados da compra no momento da criação do pedido.
 
 ## Motivo
 
-Pedidos representam eventos históricos.
+Pedidos representam um registro histórico.
 
-Exemplo:
+Mesmo que o livro ou o endereço sejam alterados posteriormente, o pedido permanece exatamente como foi realizado.
 
-Um livro comprado hoje:
-
-```
-Clean Code
-R$ 80,00
-```
-
-No futuro:
-
-```
-Clean Code
-R$ 120,00
-```
-
-O pedido antigo deve continuar mostrando:
-
-```
-Clean Code
-R$ 80,00
-```
-
-Por isso `order_items` salva:
+São armazenados:
 
 - título;
 - preço;
-- quantidade.
-
-E `orders` salva:
-
+- quantidade;
 - endereço;
 - destinatário;
-- valores.
+- valores da compra.
 
 ---
 
-# 006 - Controllers pequenos
+# 006 - Controllers enxutos
 
 ## Decisão
 
@@ -194,220 +138,115 @@ Evitar regras de negócio dentro dos Controllers.
 
 ## Motivo
 
-Controllers devem apenas:
+Os Controllers devem apenas:
 
-- receber requisição;
-- validar entrada;
-- chamar serviços;
-- retornar resposta.
+- receber a requisição;
+- validar os dados;
+- chamar Services;
+- retornar a resposta.
 
-Exemplo:
-
-Evitar:
-
-```php
-public function checkout()
-{
-    calcularFrete();
-    validarEstoque();
-    criarPedido();
-    processarPagamento();
-}
-```
-
-Preferir:
-
-```php
-CheckoutService->process();
-```
-
-Benefícios:
-
-- código reutilizável;
-- testes mais fáceis;
-- manutenção melhor.
+Toda lógica complexa deve ficar na camada de Services.
 
 ---
 
-# 007 - Usar Form Requests
+# 007 - Utilizar Form Requests
 
 ## Decisão
 
-Centralizar validações usando Laravel Form Requests.
+Centralizar todas as validações em Form Requests.
 
 ## Motivo
 
-Evitar validações espalhadas nos Controllers.
-
-Exemplo:
-
-```
-StoreBookRequest
-
-UpdateBookRequest
-
-CheckoutRequest
-```
+Evitar validações espalhadas pelos Controllers.
 
 Benefícios:
 
 - organização;
+- reutilização;
 - mensagens personalizadas;
 - código mais limpo.
 
 ---
 
-# 008 - Utilizar Enums para estados
+# 008 - Utilizar Enums
 
 ## Decisão
 
-Estados fixos utilizarão Enums.
+Representar estados fixos utilizando Enums.
 
-Exemplo:
+## Exemplos
 
-```
-OrderStatus
-
-PaymentStatus
-
-AdminRole
-```
+- AdminRole
+- OrderStatus
+- PaymentStatus
 
 ## Motivo
 
-Evitar valores inconsistentes.
-
-Antes:
-
-```php
-$status = "pagoo";
-```
-
-Problema:
-
-Erro de digitação.
-
-Depois:
-
-```php
-OrderStatus::PAID
-```
-
-Mais seguro e organizado.
+Evitar valores inválidos e erros de digitação.
 
 ---
 
-# 009 - Soft Delete em entidades importantes
+# 009 - Utilizar Soft Deletes
 
 ## Decisão
 
-Utilizar Soft Delete quando o histórico for importante.
+Utilizar Soft Deletes nas entidades onde o histórico é importante.
 
-Exemplo:
+## Aplicado em
 
-```
-admins
-```
+- Admins
+- Users
 
 ## Motivo
 
-Não remover dados definitivamente.
+Permitir:
 
-Caso um administrador seja removido:
-
-Antes:
-
-```
-DELETE FROM admins
-```
-
-Depois:
-
-```
-deleted_at = data
-```
-
-Permite:
-
-- recuperação;
+- recuperação de registros;
 - auditoria;
-- histórico.
+- preservação do histórico.
 
 ---
 
-# 010 - Separação entre Admin e Cliente
+# 010 - Separação entre Administradores e Clientes
 
 ## Decisão
 
-Administradores terão uma autenticação separada.
+Utilizar autenticações independentes.
 
 ## Motivo
 
-O painel administrativo possui regras diferentes da área do cliente.
+Administradores possuem responsabilidades diferentes dos clientes.
 
-Administrador:
+Administração:
 
-- gerencia produtos;
-- controla pedidos;
-- acessa dados internos.
+- gerencia catálogo;
+- gerencia pedidos;
+- administra usuários.
 
-Cliente:
+Clientes:
 
-- compra;
-- acompanha pedidos;
-- gerencia perfil.
-
-Separar evita problemas de permissão.
+- realizam compras;
+- acompanham pedidos;
+- gerenciam o próprio perfil.
 
 ---
 
-# 011 - Utilizar Services para regras complexas
+# 011 - Camada de Services
 
 ## Decisão
 
-Criar uma camada de Services.
+Centralizar regras de negócio em Services.
 
-Exemplos:
+## Exemplos
 
-```
-CheckoutService
-
-PaymentService
-
-ShippingService
-
-CartService
-```
+- CheckoutService
+- CartService
+- PaymentService
+- ShippingService
 
 ## Motivo
 
-Algumas regras não pertencem a Models ou Controllers.
-
-Exemplo:
-
-Checkout:
-
-```
-Carrinho
-
-↓
-
-Validar estoque
-
-↓
-
-Calcular valores
-
-↓
-
-Criar pedido
-
-↓
-
-Enviar pagamento
-```
-
-Essa lógica fica isolada.
+Facilitar manutenção, testes e reutilização.
 
 ---
 
@@ -415,13 +254,9 @@ Essa lógica fica isolada.
 
 ## Decisão
 
-Criar uma estrutura mais completa desde o início.
+Projetar o banco de dados pensando em futuras funcionalidades.
 
-## Motivo
-
-Evitar refazer o banco quando novas funcionalidades surgirem.
-
-Exemplos preparados:
+## Funcionalidades previstas
 
 - avaliações;
 - lista de desejos;
@@ -431,10 +266,84 @@ Exemplos preparados:
 
 ---
 
-# Histórico de alterações
+# 013 - Utilizar Slugs
 
-| Data | Decisão |
-|---|---|
-| 27/07/2026 | Estrutura inicial do banco criada |
-| 27/07/2026 | Definição da arquitetura Laravel |
-| 27/07/2026 | Separação dos módulos catálogo, cliente e vendas |
+## Decisão
+
+Todas as entidades públicas utilizarão slugs únicos.
+
+## Aplicado em
+
+- Books
+- Authors
+- Categories
+- Publishers
+
+## Motivo
+
+URLs amigáveis, melhor SEO e facilidade de navegação.
+
+Exemplo:
+
+```text
+/livros/clean-code
+
+/autores/robert-c-martin
+```
+
+---
+
+# 014 - Organização por responsabilidade
+
+## Decisão
+
+Organizar a aplicação em camadas.
+
+## Estrutura
+
+```text
+Controllers
+    ↓
+Form Requests
+    ↓
+Services
+    ↓
+Models
+    ↓
+Database
+```
+
+## Motivo
+
+Separar responsabilidades e facilitar a manutenção do projeto.
+
+---
+
+# 015 - Documentação do projeto
+
+## Decisão
+
+Manter toda a documentação técnica na pasta `docs/`.
+
+## Arquivos
+
+- architecture.md
+- database.md
+- roadmap.md
+- decisions.md
+
+## Motivo
+
+Centralizar a documentação e facilitar o entendimento do projeto.
+
+---
+
+# Histórico
+
+| Data | Alteração |
+|------|-----------|
+| 27/07/2026 | Estrutura inicial do banco de dados definida |
+| 27/07/2026 | Arquitetura Laravel definida |
+| 27/07/2026 | Migrations implementadas |
+| 27/07/2026 | Models Eloquent implementados |
+| 27/07/2026 | Documentação inicial criada |
