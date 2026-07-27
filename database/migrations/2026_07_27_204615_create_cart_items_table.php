@@ -18,18 +18,14 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-
             $table->foreignId('book_id')
                 ->constrained()
                 ->cascadeOnDelete();
 
-
             $table->unsignedInteger('quantity')
                 ->default(1);
 
-
             $table->timestamps();
-
 
             $table->unique([
                 'cart_id',

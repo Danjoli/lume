@@ -2,20 +2,25 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
+     * Cargos disponíveis.
+     */
+    public const ROLES = [
+        'suporte'   => 'Suporte',
+        'admin'     => 'Administrador',
+        'superadmin'=> 'Super Administrador',
+    ];
+
+     /**
+     * Os atributos que podem ser preenchidos em massa.
      *
      * @var list<string>
      */
@@ -23,12 +28,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
         'is_active',
         'last_login_at',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Os atributos que devem ficar ocultos em serializações.
      *
      * @var list<string>
      */
@@ -38,14 +44,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Conversão de atributos.
      *
      * @return array<string, string>
      */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_active' => 'boolean',
             'last_login_at' => 'datetime',
@@ -54,32 +59,32 @@ class User extends Authenticatable
 
     /*
     |--------------------------------------------------------------------------
-    | Relacionamentos
+    | Métodos auxiliares
     |--------------------------------------------------------------------------
     */
 
-    public function addresses()
+    public function isSuperAdmin(): bool
     {
-        return $this->hasMany(Address::class);
+        return $this->role === 'superadmin';
     }
 
-    public function cart()
+    public function isAdmin(): bool
     {
-        return $this->hasOne(Cart::class);
+        return $this->role === 'admin';
     }
 
-    public function orders()
+    public function isSupport(): bool
     {
-        return $this->hasMany(Order::class);
+        return $this->role === 'suporte';
     }
 
-    public function reviews()
+    public function hasRole(string $role): bool
     {
-        return $this->hasMany(Review::class);
+        return $this->role === $role;
     }
 
-    public function wishlists()
+    public function getRoleLabelAttribute(): string
     {
-        return $this->belongsToMany(Book::class, 'wishlists');
+        return self::ROLES[$this->role] ?? $this->role;
     }
 }

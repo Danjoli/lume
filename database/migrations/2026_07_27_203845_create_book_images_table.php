@@ -32,12 +32,8 @@ return new class extends Migration
 
             $table->timestamps();
 
-
             // Índices
-            $table->index('book_id');
             $table->index('sort_order');
-
-            $table->timestamps();
         });
     }
 
