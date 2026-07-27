@@ -1,6 +1,6 @@
 # 🗺️ Roadmap - Lume
 
-Roadmap de desenvolvimento do e-commerce de livros Lume.
+Roadmap de desenvolvimento do e-commerce de livros **Lume**.
 
 O projeto será desenvolvido por etapas, priorizando uma base sólida antes da implementação das funcionalidades.
 
@@ -10,66 +10,75 @@ O projeto será desenvolvido por etapas, priorizando uma base sólida antes da i
 
 ## Planejamento
 
-✅ Definição do nome do projeto
+- [x] Definição do nome do projeto
+- [x] Definição da stack
+- [x] Definição da arquitetura
+- [x] Modelagem inicial do banco de dados
 
-✅ Definição da stack
+## Documentação
 
-✅ Definição da arquitetura
-
-✅ Modelagem inicial do banco de dados
-
+- [x] README.md
+- [x] architecture.md
+- [x] database.md
+- [x] decisions.md
+- [x] roadmap.md
 
 ## Banco de Dados
 
-✅ Migration de admins
-
-✅ Migration de authors
-
-✅ Migration de publishers
-
-✅ Migration de categories
-
-✅ Migration de books
-
-✅ Migration de book_images
-
-✅ Migration de book_author
-
-✅ Migration de book_category
-
-✅ Migration de addresses
-
-✅ Migration de carts
-
-✅ Migration de cart_items
-
-✅ Migration de orders
-
-✅ Migration de order_items
-
-✅ Migration de reviews
-
-✅ Migration de wishlists
-
+- [x] Migration de admins
+- [x] Migration de users
+- [x] Migration de authors
+- [x] Migration de publishers
+- [x] Migration de categories
+- [x] Migration de books
+- [x] Migration de book_images
+- [x] Migration de book_author
+- [x] Migration de book_category
+- [x] Migration de addresses
+- [x] Migration de carts
+- [x] Migration de cart_items
+- [x] Migration de orders
+- [x] Migration de order_items
+- [x] Migration de reviews
+- [x] Migration de wishlists
 
 ---
 
-# Fase 2 — Models e Estrutura Laravel
+# Fase 2 — Estrutura Laravel
 
-⬜ Criar Models
+## Models
 
-⬜ Configurar relacionamentos Eloquent
+- [x] Admin
+- [x] User
+- [x] Author
+- [x] Publisher
+- [x] Category
+- [x] Book
+- [x] BookImage
+- [x] Address
+- [x] Cart
+- [x] CartItem
+- [x] Order
+- [x] OrderItem
+- [x] Review
+- [x] Wishlist
 
-⬜ Criar Enums
+## Relacionamentos
 
-⬜ Criar Policies
+- [x] Configurar relacionamentos Eloquent
 
-⬜ Criar Factories
+## Próximas tarefas
 
-⬜ Criar Seeders
-
-⬜ Criar Observers quando necessário
-
+- [ ] Factories
+- [ ] Seeders
+- [ ] Enums
+- [ ] Policies
+- [ ] Form Requests
+- [ ] Services
+- [ ] Actions
+- [ ] DTOs
+- [ ] Exceptions
+- [ ] Support
 
 ---
 
@@ -77,27 +86,20 @@ O projeto será desenvolvido por etapas, priorizando uma base sólida antes da i
 
 ## Cliente
 
-⬜ Cadastro
-
-⬜ Login
-
-⬜ Recuperação de senha
-
-⬜ Perfil do usuário
-
-⬜ Gerenciamento de endereços
-
+- [ ] Cadastro
+- [ ] Login
+- [ ] Recuperação de senha
+- [ ] Verificação de e-mail
+- [ ] Perfil
+- [ ] Alteração de senha
+- [ ] Gerenciamento de endereços
 
 ## Administrador
 
-⬜ Login administrativo
-
-⬜ Middleware admin
-
-⬜ Controle de permissões
-
-⬜ Gerenciamento de cargos
-
+- [ ] Login administrativo
+- [ ] Middleware Admin
+- [ ] Controle de permissões
+- [ ] Controle de cargos
 
 ---
 
@@ -105,47 +107,32 @@ O projeto será desenvolvido por etapas, priorizando uma base sólida antes da i
 
 ## Dashboard
 
-⬜ Dashboard inicial
-
-⬜ Estatísticas de vendas
-
-⬜ Pedidos recentes
-
-⬜ Produtos com baixo estoque
-
+- [ ] Dashboard inicial
+- [ ] Estatísticas
+- [ ] Pedidos recentes
+- [ ] Livros mais vendidos
+- [ ] Livros com baixo estoque
 
 ## Catálogo
 
-⬜ CRUD de livros
+- [ ] CRUD de livros
+- [ ] CRUD de autores
+- [ ] CRUD de editoras
+- [ ] CRUD de categorias
+- [ ] Upload de imagens
+- [ ] Controle de estoque
 
-⬜ CRUD de autores
+## Usuários
 
-⬜ CRUD de editoras
-
-⬜ CRUD de categorias
-
-⬜ Upload de imagens
-
-⬜ Controle de estoque
-
-
-## Clientes
-
-⬜ Listagem de usuários
-
-⬜ Visualização de pedidos
-
-⬜ Gerenciamento de status
-
+- [ ] Listagem de clientes
+- [ ] Visualização de pedidos
+- [ ] Gerenciamento de administradores
 
 ## Pedidos
 
-⬜ Listagem de pedidos
-
-⬜ Atualização de status
-
-⬜ Visualização detalhada
-
+- [ ] Listagem
+- [ ] Detalhes
+- [ ] Atualização de status
 
 ---
 
@@ -153,172 +140,146 @@ O projeto será desenvolvido por etapas, priorizando uma base sólida antes da i
 
 ## Página inicial
 
-⬜ Banner principal
-
-⬜ Livros em destaque
-
-⬜ Categorias
-
-⬜ Novidades
-
+- [ ] Banner principal
+- [ ] Livros em destaque
+- [ ] Novidades
+- [ ] Categorias
+- [ ] Editoras
 
 ## Catálogo
 
-⬜ Listagem de livros
-
-⬜ Busca
-
-⬜ Filtros
-
-⬜ Paginação
-
-⬜ Ordenação
-
+- [ ] Listagem
+- [ ] Busca
+- [ ] Paginação
+- [ ] Ordenação
+- [ ] Filtros
 
 ## Página do livro
 
-⬜ Informações do livro
-
-⬜ Galeria de imagens
-
-⬜ Autores
-
-⬜ Categorias
-
-⬜ Avaliações
-
-⬜ Livros relacionados
-
+- [ ] Informações completas
+- [ ] Galeria de imagens
+- [ ] Autores
+- [ ] Categorias
+- [ ] Avaliações
+- [ ] Livros relacionados
 
 ---
 
-# Fase 6 — Carrinho e Compra
+# Fase 6 — Carrinho e Checkout
 
 ## Carrinho
 
-⬜ Adicionar livro
-
-⬜ Remover livro
-
-⬜ Alterar quantidade
-
-⬜ Atualização automática de valores
-
+- [ ] Adicionar livro
+- [ ] Remover livro
+- [ ] Alterar quantidade
+- [ ] Atualização automática
 
 ## Checkout
 
-⬜ Seleção de endereço
-
-⬜ Cálculo de frete
-
-⬜ Resumo da compra
-
-⬜ Criação do pedido
-
+- [ ] Seleção de endereço
+- [ ] Cálculo de frete
+- [ ] Resumo da compra
+- [ ] Criação do pedido
 
 ---
 
-# Fase 7 — Pagamentos e Integrações
+# Fase 7 — Pagamentos
 
-⬜ Integração com gateway de pagamento
+## Gateway
 
-⬜ PIX
-
-⬜ Cartão
-
-⬜ Boleto
-
-⬜ Webhooks
-
-⬜ Atualização automática de status
-
+- [ ] Integração
+- [ ] PIX
+- [ ] Cartão
+- [ ] Boleto
+- [ ] Webhooks
+- [ ] Atualização automática do pedido
 
 ## Frete
 
-⬜ Integração com transportadora
-
-⬜ Cálculo de frete
-
-⬜ Rastreamento
-
+- [ ] Integração com transportadora
+- [ ] Rastreamento
 
 ---
 
-# Fase 8 — Melhorias
+# Fase 8 — Recursos do Cliente
+
+- [ ] Lista de desejos
+- [ ] Avaliações
+- [ ] Histórico de pedidos
+- [ ] Recompra
+- [ ] Favoritos
+
+---
+
+# Fase 9 — Qualidade
 
 ## Segurança
 
-⬜ Proteção contra ataques comuns
-
-⬜ Validação de dados
-
-⬜ Controle de permissões
-
-⬜ Auditoria de ações administrativas
-
+- [ ] Validação de dados
+- [ ] Policies
+- [ ] Rate Limiting
+- [ ] Auditoria
 
 ## Performance
 
-⬜ Cache
-
-⬜ Otimização de consultas
-
-⬜ Eager Loading
-
-⬜ Compressão de imagens
-
+- [ ] Cache
+- [ ] Eager Loading
+- [ ] Otimização de consultas
+- [ ] Compressão de imagens
 
 ## SEO
 
-⬜ Meta tags
-
-⬜ Sitemap
-
-⬜ URLs amigáveis
-
-⬜ Dados estruturados
-
+- [ ] Sitemap
+- [ ] Meta Tags
+- [ ] Open Graph
+- [ ] URLs amigáveis
+- [ ] Dados estruturados
 
 ---
 
-# Fase 9 — Testes
+# Fase 10 — Testes
 
-⬜ Testes de Models
-
-⬜ Testes de Requests
-
-⬜ Testes de Controllers
-
-⬜ Testes de Services
-
-⬜ Testes de fluxo de compra
-
+- [ ] Models
+- [ ] Requests
+- [ ] Services
+- [ ] Controllers
+- [ ] Fluxo de compra
+- [ ] Testes de integração
 
 ---
 
-# Fase 10 — Deploy
+# Fase 11 — Deploy
 
-⬜ Configuração do servidor
-
-⬜ Configuração de ambiente de produção
-
-⬜ Banco de dados produção
-
-⬜ Build frontend
-
-⬜ Configuração de filas
-
-⬜ Monitoramento
-
+- [ ] Configuração do servidor
+- [ ] Ambiente de produção
+- [ ] Banco de dados
+- [ ] Build do frontend
+- [ ] Filas
+- [ ] Logs
+- [ ] Monitoramento
+- [ ] Backup
 
 ---
 
 # Status Atual
 
-## Em desenvolvimento:
+## Concluído
 
-✅ Fundação do banco de dados concluída
+- [x] Planejamento do projeto
+- [x] Arquitetura definida
+- [x] Documentação inicial
+- [x] Banco de dados modelado
+- [x] Migrations
+- [x] Models
+- [x] Relacionamentos Eloquent
 
-## Próximo passo:
+## Em andamento
 
-➡️ Criar Models e relacionamentos Eloquent
+- [ ] Factories
+- [ ] Seeders
+- [ ] Enums
+- [ ] Policies
+
+## Próximo passo
+
+➡️ Implementar **Factories** e **Seeders** para popular o banco de dados e facilitar o desenvolvimento das próximas funcionalidades.

@@ -1,330 +1,144 @@
-# Lume 📚
+# 📚 Lume
 
-E-commerce de livros desenvolvido com Laravel.
-
-O Lume tem como objetivo criar uma plataforma moderna de venda de livros online, com catálogo completo, gerenciamento administrativo, carrinho de compras, checkout e integração com pagamentos.
+Lume é um e-commerce de livros desenvolvido com Laravel, focado em arquitetura limpa, boas práticas e escalabilidade. O projeto está sendo construído como um sistema completo de livraria online, servindo tanto para aprendizado quanto para portfólio.
 
 ---
 
-# 🚀 Tecnologias utilizadas
+## 🚀 Tecnologias
 
-## Backend
-
-- PHP 8.3+
+- PHP 8.4+
 - Laravel 12
-- Eloquent ORM
-- MySQL/MariaDB
-
-## Frontend
-
+- MySQL / MariaDB
 - Blade
 - Tailwind CSS
-- JavaScript
-
-## Ferramentas
-
-- Composer
-- NPM
 - Vite
-- Git
+- JavaScript
+- Eloquent ORM
 
 ---
 
-# 📌 Funcionalidades
+## ✨ Funcionalidades
 
-## Loja
+### Área pública
 
-- [ ] Página inicial
-- [ ] Catálogo de livros
-- [ ] Busca de livros
-- [ ] Filtros por categoria, autor e editora
-- [ ] Página de detalhes do livro
-- [ ] Sistema de avaliações
-- [ ] Lista de desejos
+- Catálogo de livros
+- Busca de livros
+- Categorias
+- Autores
+- Editoras
+- Página do livro
+- Carrinho de compras
+- Lista de desejos
+- Avaliações
+- Cadastro de clientes
+- Login
 
----
+### Área do cliente
 
-## Cliente
+- Perfil
+- Endereços
+- Histórico de pedidos
+- Lista de desejos
 
-- [ ] Cadastro de usuário
-- [ ] Login
-- [ ] Gerenciamento de perfil
-- [ ] Gerenciamento de endereços
-- [ ] Histórico de pedidos
-- [ ] Acompanhamento de pedidos
+### Painel administrativo
 
----
-
-## Carrinho e pedidos
-
-- [ ] Carrinho de compras
-- [ ] Controle de estoque
-- [ ] Checkout
-- [ ] Cálculo de frete
-- [ ] Criação de pedidos
-- [ ] Histórico de compras
-
----
-
-## Pagamentos
-
-- [ ] Integração com gateway de pagamento
-- [ ] PIX
-- [ ] Cartão
-- [ ] Boleto
-- [ ] Webhooks de atualização de pagamento
+- Dashboard
+- Gerenciamento de livros
+- Gerenciamento de autores
+- Gerenciamento de editoras
+- Gerenciamento de categorias
+- Gerenciamento de clientes
+- Gerenciamento de pedidos
+- Gerenciamento de administradores
 
 ---
 
-## Administração
-
-- [ ] Login administrativo
-- [ ] Dashboard
-- [ ] Gerenciamento de livros
-- [ ] Gerenciamento de autores
-- [ ] Gerenciamento de editoras
-- [ ] Gerenciamento de categorias
-- [ ] Gerenciamento de pedidos
-- [ ] Gerenciamento de clientes
-
----
-
-# 🗄️ Estrutura do Banco de Dados
-
-Principais entidades:
-
-```
-admins
-
-users
-
-authors
-
-publishers
-
-categories
-
-books
-
-book_images
-
-book_author
-
-book_category
-
-addresses
-
-carts
-
-cart_items
-
-orders
-
-order_items
-
-reviews
-
-wishlists
-```
-
----
-
-# 📚 Catálogo
-
-O sistema possui uma estrutura flexível para livros:
-
-- Um livro pode possuir vários autores.
-- Um livro pode possuir várias categorias.
-- Um livro pode possuir várias imagens.
-- Uma editora pode possuir vários livros.
-
-Exemplo:
-
-```
-Book
- |
- ├── Publisher
- |
- ├── Authors
- |
- ├── Categories
- |
- └── Images
-```
-
----
-
-# 🏗️ Arquitetura
-
-O projeto segue uma organização baseada nas boas práticas do Laravel:
+## 📂 Estrutura do projeto
 
 ```
 app/
+├── Actions/
+├── DTOs/
+├── Enums/
+├── Exceptions/
+├── Http/
+├── Models/
+├── Policies/
+├── Services/
+└── Support/
 
-├── Models
-├── Http
-│   ├── Controllers
-│   ├── Requests
-│   └── Middleware
-│
-├── Services
-├── Policies
-├── Enums
-└── Observers
-```
-
-Princípios utilizados:
-
-- Controllers enxutos
-- Form Requests para validação
-- Services para regras de negócio
-- Policies para autorização
-- Enums para estados fixos
-- Eloquent Relationships
-
----
-
-# ⚙️ Instalação
-
-Clone o projeto:
-
-```bash
-git clone https://github.com/seu-usuario/lume.git
-```
-
-Entre na pasta:
-
-```bash
-cd lume
-```
-
-Instale as dependências PHP:
-
-```bash
-composer install
-```
-
-Instale as dependências frontend:
-
-```bash
-npm install
-```
-
-Crie o arquivo de ambiente:
-
-```bash
-cp .env.example .env
-```
-
-Gere a chave da aplicação:
-
-```bash
-php artisan key:generate
-```
-
-Configure o banco de dados no arquivo:
-
-```
-.env
-```
-
-Execute as migrations:
-
-```bash
-php artisan migrate
-```
-
-Compile os assets:
-
-```bash
-npm run build
-```
-
-Inicie o servidor:
-
-```bash
-php artisan serve
-```
-
----
-
-# 🧪 Desenvolvimento
-
-Durante o desenvolvimento:
-
-Terminal PHP:
-
-```bash
-php artisan serve
-```
-
-Terminal Vite:
-
-```bash
-npm run dev
-```
-
----
-
-# 📂 Documentação
-
-Documentações técnicas:
-
-```
 docs/
-
-├── database.md
 ├── architecture.md
-├── roadmap.md
-└── decisions.md
+├── database.md
+├── decisions.md
+└── roadmap.md
 ```
 
 ---
 
-# 📝 Roadmap
+## 🗄️ Banco de dados
 
-## Fundação
+O sistema possui entidades para:
 
-✅ Planejamento
-
-✅ Modelagem do banco
-
-✅ Migrations
-
-
-## Próximas etapas
-
-⬜ Models
-
-⬜ Relacionamentos Eloquent
-
-⬜ Factories
-
-⬜ Seeders
-
-⬜ Autenticação
-
-⬜ Painel administrativo
-
-⬜ Loja pública
-
-⬜ Carrinho
-
-⬜ Checkout
-
-⬜ Pagamentos
-
-⬜ Deploy
-
+- Users
+- Admins
+- Books
+- Authors
+- Publishers
+- Categories
+- Book Images
+- Addresses
+- Carts
+- Cart Items
+- Orders
+- Order Items
+- Reviews
+- Wishlists
 
 ---
 
-# 👨‍💻 Desenvolvedor
+## 📖 Documentação
 
-Projeto desenvolvido por Danilo Fiod.
+A documentação do projeto está organizada na pasta `docs/`.
+
+- `architecture.md` → arquitetura da aplicação
+- `database.md` → estrutura do banco de dados
+- `decisions.md` → decisões técnicas do projeto
+- `roadmap.md` → planejamento e progresso
 
 ---
 
-# 📄 Licença
+## 📌 Status
 
-Este projeto é desenvolvido para fins de estudo, portfólio e aprendizado.
+🚧 Em desenvolvimento.
+
+### Concluído
+
+- Estrutura inicial
+- Arquitetura do projeto
+- Modelagem do banco de dados
+- Migrations
+- Models Eloquent
+- Relacionamentos entre entidades
+- Documentação inicial
+
+### Próximas etapas
+
+- Factories
+- Seeders
+- Enums
+- Policies
+- Form Requests
+- Services
+- Controllers
+- Área administrativa
+- Área pública
+- Checkout
+- Sistema de pagamentos
+- Testes
+
+---
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para fins de estudo e portfólio.

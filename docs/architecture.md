@@ -1,8 +1,8 @@
 # 🏗️ Arquitetura - Lume
 
-Documento responsável por descrever a arquitetura e organização do projeto Lume.
+Documento responsável por descrever a arquitetura e organização do projeto **Lume**.
 
-O objetivo é manter o sistema organizado, escalável e seguindo boas práticas do Laravel.
+O objetivo é manter o sistema organizado, escalável e seguindo as boas práticas do Laravel.
 
 ---
 
@@ -10,24 +10,27 @@ O objetivo é manter o sistema organizado, escalável e seguindo boas práticas 
 
 O Lume é um e-commerce de livros desenvolvido utilizando Laravel.
 
-A aplicação é dividida em camadas para separar responsabilidades:
+A aplicação é organizada em camadas, separando responsabilidades para facilitar manutenção, testes e evolução do sistema.
 
-```
+```text
 Usuário
-   |
-   ↓
+   │
+   ▼
 Routes
-   |
-   ↓
+   │
+   ▼
 Controllers
-   |
-   ↓
-Requests / Services
-   |
-   ↓
+   │
+   ▼
+Form Requests
+   │
+   ▼
+Actions / Services
+   │
+   ▼
 Models
-   |
-   ↓
+   │
+   ▼
 Database
 ```
 
@@ -43,29 +46,32 @@ Database
 
 ## Banco de Dados
 
-- MySQL/MariaDB
+- MySQL / MariaDB
 
 ## Frontend
 
 - Blade
 - Tailwind CSS
 - JavaScript
+- Vite
 
 ## Ferramentas
 
 - Composer
 - NPM
-- Vite
 - Git
 
 ---
 
-# Estrutura de Pastas
+# Estrutura da aplicação
 
-```
+```text
 app/
 
+├── Actions/
+├── DTOs/
 ├── Enums/
+├── Exceptions/
 │
 ├── Http/
 │   ├── Controllers/
@@ -84,11 +90,11 @@ app/
 │
 ├── Policies/
 │
+├── Providers/
+│
 ├── Services/
 │
-├── Observers/
-│
-└── Providers/
+└── Support/
 ```
 
 ---
@@ -101,22 +107,25 @@ Os Controllers são separados por contexto.
 
 Responsável pelo painel administrativo.
 
-Exemplo:
+Exemplos:
 
-```
-Controllers/Admin/
-
-BookController.php
-AuthorController.php
-OrderController.php
-DashboardController.php
+```text
+DashboardController
+BookController
+AuthorController
+PublisherController
+CategoryController
+OrderController
+UserController
+AdminController
 ```
 
 Responsabilidades:
 
 - receber requisições;
-- chamar Services;
-- retornar respostas.
+- validar entrada;
+- chamar Actions ou Services;
+- retornar Views ou Redirects.
 
 ---
 
@@ -124,15 +133,15 @@ Responsabilidades:
 
 Responsável pela loja pública.
 
-Exemplo:
+Exemplos:
 
-```
-Controllers/Store/
-
-HomeController.php
-BookController.php
-CategoryController.php
-CartController.php
+```text
+HomeController
+BookController
+CategoryController
+AuthorController
+CartController
+CheckoutController
 ```
 
 Responsabilidades:
@@ -140,7 +149,8 @@ Responsabilidades:
 - catálogo;
 - busca;
 - páginas públicas;
-- carrinho.
+- carrinho;
+- checkout.
 
 ---
 
@@ -148,251 +158,310 @@ Responsabilidades:
 
 Responsável pela área do cliente.
 
-Exemplo:
+Exemplos:
 
-```
-Controllers/Customer/
-
-ProfileController.php
-OrderController.php
-AddressController.php
+```text
+ProfileController
+OrderController
+AddressController
+WishlistController
+ReviewController
 ```
 
 Responsabilidades:
 
 - perfil;
+- endereços;
 - pedidos;
-- endereços.
+- avaliações;
+- lista de desejos.
 
 ---
 
 # Form Requests
 
-Toda validação de entrada deve ficar nos Form Requests.
+Toda validação de entrada deve ser realizada utilizando Form Requests.
 
-Exemplo:
+Exemplos:
 
-```
-Http/Requests/
-
-StoreBookRequest.php
-
-UpdateBookRequest.php
-
-CheckoutRequest.php
+```text
+StoreBookRequest
+UpdateBookRequest
+CheckoutRequest
+StoreReviewRequest
+UpdateProfileRequest
 ```
 
 Responsabilidades:
 
 - validar dados;
 - normalizar informações;
-- autorizar ações.
+- autorizar ações;
+- centralizar mensagens de erro.
+
+---
+
+# Actions
+
+Actions representam operações específicas da aplicação.
+
+Exemplos:
+
+```text
+CreateOrderAction
+
+UpdateStockAction
+
+CalculateShippingAction
+
+UploadBookImageAction
+```
+
+Responsabilidades:
+
+- executar uma única ação;
+- facilitar reutilização;
+- reduzir responsabilidades dos Controllers.
 
 ---
 
 # Services
 
-Services armazenam regras de negócio que não pertencem ao Controller.
+Services concentram regras de negócio mais complexas.
 
-Exemplo:
+Exemplos:
 
-```
-Services/
+```text
+CheckoutService
 
-CartService.php
+CartService
 
-CheckoutService.php
+PaymentService
 
-PaymentService.php
-
-ShippingService.php
+ShippingService
 ```
 
-Exemplo:
+Responsabilidades:
 
-O Controller não deve calcular pedido:
+- coordenar múltiplas Actions;
+- integrar serviços externos;
+- executar regras de negócio.
 
-```php
-$total = $price * $quantity;
+---
+
+# DTOs
+
+DTOs (Data Transfer Objects) são utilizados para transportar dados entre camadas.
+
+Exemplos:
+
+```text
+CheckoutData
+
+AddressData
+
+BookData
 ```
 
-Essa regra pertence ao Service.
+Benefícios:
+
+- tipagem;
+- organização;
+- menor acoplamento.
 
 ---
 
 # Models
 
-Models representam as entidades do sistema.
+Os Models representam as entidades do sistema.
 
 Principais Models:
 
-```
+```text
 Admin
-
 User
 
-Book
-
 Author
-
 Publisher
-
 Category
+Book
+BookImage
 
-Order
-
-OrderItem
+Address
 
 Cart
+CartItem
+
+Order
+OrderItem
 
 Review
+Wishlist
 ```
 
 Responsabilidades:
 
-- relacionamentos;
+- representar entidades;
+- definir relacionamentos;
 - casts;
 - scopes;
-- regras simples da entidade.
+- métodos auxiliares.
 
 ---
 
-# Relacionamentos Principais
+# Relacionamentos principais
 
-## Livro
+## Book
 
-```
-Book
-
+```text
 belongsTo Publisher
 
-belongsToMany Author
+belongsToMany Authors
 
-belongsToMany Category
+belongsToMany Categories
 
-hasMany Image
+hasMany BookImages
 
-hasMany Review
+hasMany Reviews
+
+hasMany CartItems
+
+hasMany OrderItems
+
+hasMany Wishlists
 ```
 
 ---
 
-## Usuário
+## User
 
-```
-User
-
-hasMany Address
+```text
+hasMany Addresses
 
 hasOne Cart
 
-hasMany Order
+hasMany Orders
 
-hasMany Review
+hasMany Reviews
 
-belongsToMany Book (Wishlist)
+belongsToMany Books (Wishlist)
 ```
 
 ---
 
-## Pedido
+## Order
 
-```
-Order
-
+```text
 belongsTo User
 
-hasMany OrderItem
+hasMany OrderItems
 ```
 
 ---
 
 # Enums
 
-Valores fixos devem utilizar Enums.
+Valores fixos serão representados por Enums.
 
 Exemplos:
 
-```
-Enums/
+```text
+AdminRole
 
-AdminRole.php
+OrderStatus
 
-OrderStatus.php
-
-PaymentStatus.php
-```
-
-Exemplo:
-
-```php
-enum OrderStatus: string
-{
-    case Pending = 'pending';
-    case Paid = 'paid';
-    case Shipped = 'shipped';
-    case Delivered = 'delivered';
-}
+PaymentStatus
 ```
 
 Benefícios:
 
 - evita erros de digitação;
-- melhora legibilidade;
-- facilita manutenção.
+- facilita manutenção;
+- melhora a legibilidade.
 
 ---
 
 # Policies
 
-Policies controlam permissões.
-
-Exemplo:
-
-```
-Policies/
-
-BookPolicy.php
-
-OrderPolicy.php
-```
-
-Exemplo:
-
-Um administrador pode editar livros.
-
-Um cliente só pode visualizar seus próprios pedidos.
-
----
-
-# Observers
-
-Observers serão utilizados quando uma ação automática precisar acontecer.
+Policies controlam permissões da aplicação.
 
 Exemplos:
 
+```text
+BookPolicy
+
+OrderPolicy
+
+ReviewPolicy
 ```
-Observers/
 
-BookObserver.php
-OrderObserver.php
+Exemplos de regras:
+
+- administradores podem gerenciar o catálogo;
+- clientes podem editar apenas seus próprios dados;
+- clientes visualizam apenas seus pedidos.
+
+---
+
+# Exceptions
+
+Exceptions personalizadas concentram erros específicos do domínio.
+
+Exemplos:
+
+```text
+OutOfStockException
+
+PaymentFailedException
+
+BookUnavailableException
 ```
 
-Possíveis usos:
+Benefícios:
 
-- gerar slug automaticamente;
-- registrar alterações;
-- executar ações após eventos.
+- tratamento centralizado;
+- mensagens mais claras;
+- código mais organizado.
+
+---
+
+# Support
+
+Classes auxiliares compartilhadas entre diferentes módulos.
+
+Exemplos:
+
+```text
+SlugGenerator
+
+PriceFormatter
+
+IsbnFormatter
+```
+
+Responsabilidades:
+
+- reutilização;
+- evitar duplicação;
+- utilitários da aplicação.
 
 ---
 
 # Banco de Dados
 
-O banco foi dividido por módulos.
+O banco foi organizado por módulos.
+
+## Administração
+
+```text
+admins
+```
+
+---
 
 ## Catálogo
 
-```
+```text
 authors
 
 publishers
@@ -410,9 +479,9 @@ book_category
 
 ---
 
-## Cliente
+## Clientes
 
-```
+```text
 users
 
 addresses
@@ -428,9 +497,9 @@ reviews
 
 ---
 
-## Venda
+## Vendas
 
-```
+```text
 orders
 
 order_items
@@ -438,91 +507,113 @@ order_items
 
 ---
 
-# Princípios utilizados
+# Princípios adotados
 
 ## Separação de responsabilidades
 
-Cada parte do sistema possui uma responsabilidade clara.
+Cada camada possui uma única responsabilidade.
 
 ---
 
-## Controllers pequenos
+## Controllers enxutos
 
-Controllers devem coordenar o fluxo, não conter regras complexas.
+Controllers apenas coordenam o fluxo da aplicação.
 
 ---
 
-## Código reutilizável
+## Reutilização
 
-Evitar duplicação através de:
+Sempre que possível, evitar duplicação utilizando:
 
 - Services;
-- métodos reutilizáveis;
-- componentes.
+- Actions;
+- Support;
+- DTOs.
+
+---
+
+## Arquitetura orientada ao domínio
+
+As regras de negócio permanecem fora dos Controllers e Views.
 
 ---
 
 ## Segurança
 
-O projeto utiliza:
+A aplicação utiliza:
 
-- validação via Requests;
+- Form Requests;
+- Policies;
 - autenticação;
-- autorização via Policies;
+- autorização;
 - proteção CSRF;
 - Hash de senhas;
-- controle de permissões.
+- Mass Assignment Protection;
+- Eloquent ORM.
 
 ---
 
 # Fluxo de uma compra
 
-```
+```text
 Cliente
 
-↓
+      │
+      ▼
 
-Adicionar livro ao carrinho
+Adicionar ao carrinho
 
-↓
+      │
+      ▼
 
 Checkout
 
-↓
+      │
+      ▼
 
-Validação
+Form Request
 
-↓
+      │
+      ▼
 
-Criação do pedido
+CheckoutService
 
-↓
+      │
+      ▼
 
-Pagamento
+CreateOrderAction
 
-↓
+      │
+      ▼
 
-Webhook
+PaymentService
 
-↓
+      │
+      ▼
+
+Pedido criado
+
+      │
+      ▼
+
+Pagamento confirmado
+
+      │
+      ▼
 
 Atualização do pedido
-
-↓
-
-Envio
 ```
 
 ---
 
-# Objetivo da arquitetura
+# Objetivos da arquitetura
 
-Manter o Lume preparado para crescer sem perder organização.
+A arquitetura foi planejada para:
 
-A arquitetura busca facilitar:
-
-- manutenção;
-- criação de novas funcionalidades;
-- testes;
-- escalabilidade;
-- trabalho em equipe.
+- facilitar manutenção;
+- permitir crescimento do projeto;
+- reduzir acoplamento;
+- favorecer reutilização de código;
+- simplificar testes;
+- facilitar trabalho em equipe;
+- seguir as boas práticas recomendadas pelo Laravel.
