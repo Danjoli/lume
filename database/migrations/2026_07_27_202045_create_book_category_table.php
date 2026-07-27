@@ -22,8 +22,8 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->primary(['book_id', 'category_id']);
-            
+            $table->unique(['book_id', 'category_id']);
+
             $table->timestamps();
         });
     }

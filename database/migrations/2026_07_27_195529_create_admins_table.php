@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('admins', function (Blueprint $table) {
-            
+
             $table->id();
 
             // Dados pessoais
@@ -41,7 +41,6 @@ return new class extends Migration
 
             // Soft delete
             $table->softDeletes();
-
 
             // Índices
             $table->index('role');

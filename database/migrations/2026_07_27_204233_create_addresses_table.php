@@ -19,42 +19,29 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-
             // Identificação
             $table->string('label')
                 ->default('Casa');
 
-
             // Destinatário
             $table->string('recipient_name');
-
             $table->string('phone');
-
 
             // Endereço
             $table->string('street');
-
             $table->string('number');
-
             $table->string('complement')
                 ->nullable();
-
             $table->string('neighborhood');
-
             $table->string('city');
-
             $table->string('state', 2);
-
             $table->string('cep', 10);
-
 
             // Controle
             $table->boolean('is_default')
                 ->default(false);
 
-
             $table->timestamps();
-
 
             $table->index('user_id');
         });
