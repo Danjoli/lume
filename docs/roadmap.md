@@ -71,7 +71,7 @@ O projeto será desenvolvido por etapas, priorizando uma base sólida antes da i
 
 - [ ] Factories
 - [ ] Seeders
-- [ ] Enums
+- [x] Enums
 - [ ] Policies
 - [ ] Form Requests
 - [ ] Services
@@ -277,7 +277,7 @@ O projeto será desenvolvido por etapas, priorizando uma base sólida antes da i
 
 - [ ] Factories
 - [ ] Seeders
-- [ ] Enums
+- [x] Enums
 - [ ] Policies
 
 ## Próximo passo
