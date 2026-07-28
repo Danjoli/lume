@@ -24,17 +24,15 @@ return new class extends Migration
             $table->rememberToken();
 
             // Controle da conta
-            $table->boolean('is_active')
-                ->default(true);
+            $table->string('status')->default('active');
 
-            $table->timestamp('last_login_at')
-                ->nullable();
+            $table->timestamp('last_login_at')->nullable();
 
             $table->timestamps();
 
-             // Soft delete
+            // Soft delete
             $table->softDeletes();
-            $table->index('is_active');
+            $table->index('status');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

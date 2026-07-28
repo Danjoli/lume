@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\UserStatus;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,7 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_active',
+        'status',
         'last_login_at',
     ];
 
@@ -47,7 +49,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_active' => 'boolean',
+            'status' => UserStatus::class,
             'last_login_at' => 'datetime',
         ];
     }
