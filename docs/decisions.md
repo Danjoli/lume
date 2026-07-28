@@ -172,13 +172,14 @@ Benefícios:
 
 ## Decisão
 
-Representar estados fixos utilizando Enums.
+Utilizar PHP Enums para representar estados e tipos fixos do sistema.
 
 ## Exemplos
 
 - AdminRole
 - OrderStatus
 - PaymentStatus
+- ShipmentStatus
 
 ## Motivo
 
@@ -335,6 +336,41 @@ Manter toda a documentação técnica na pasta `docs/`.
 ## Motivo
 
 Centralizar a documentação e facilitar o entendimento do projeto.
+
+---
+
+# 015 - Separar controle de entrega em Shipment
+
+## Decisão
+
+Criar uma entidade própria para envio dos pedidos.
+
+## Motivo
+
+Pedido e logística possuem responsabilidades diferentes.
+
+## Pedido:
+
+- compra;
+- pagamento;
+- valores.
+
+## Shipment:
+
+- transportadora;
+- rastreamento;
+- entrega.
+
+## Relacionamento:
+
+- Order
+- hasOne Shipment
+
+## Benefícios:
+
+- integração com transportadoras;
+- controle de rastreio;
+- evolução futura.
 
 ---
 

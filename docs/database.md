@@ -55,7 +55,9 @@ users
  │
  ├── orders
  │      │
- │      └── order_items
+ │      |── order_items
+ |      |
+ |      └── shipments
  │
  ├── reviews
  │
@@ -512,6 +514,7 @@ Itens pertencentes ao pedido.
 
 Mantêm uma cópia das informações do livro no momento da compra.
 
+
 ### Relacionamentos
 
 ```text
@@ -536,6 +539,35 @@ belongsTo Book
 | updated_at | timestamp |
 
 ---
+
+# Envios
+
+## shipments
+
+Responsável pelo controle logístico dos pedidos.
+
+Armazena informações de entrega, transportadora e rastreamento.
+
+### Relacionamento:
+
+Order
+hasOne Shipment
+
+### Campos
+
+| Campo | Tipo | Descrição |
+|-|-|-|
+| id | bigint | Identificador |
+| order_id | bigint | Pedido relacionado |
+| carrier | string | Transportadora |
+| tracking_code | string | Código de rastreio |
+| service | string | Serviço contratado |
+| status | string | Status do envio |
+| shipping_cost | decimal | Valor do frete |
+| shipped_at | timestamp | Data de envio |
+| delivered_at | timestamp | Data de entrega |
+| created_at | timestamp | Data criação |
+| updated_at | timestamp | Data atualização |
 
 # Interações
 
@@ -711,3 +743,5 @@ Principais regras:
 - Um pedido possui vários itens.
 - Um livro pode possuir várias avaliações.
 - Um usuário pode favoritar vários livros.
+- Um pedido possui um envio.
+- Um envio controla rastreamento e entrega.

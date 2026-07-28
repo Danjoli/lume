@@ -355,6 +355,8 @@ belongsToMany Books (Wishlist)
 belongsTo User
 
 hasMany OrderItems
+
+hasOne Shipment
 ```
 
 ---
@@ -371,6 +373,8 @@ AdminRole
 OrderStatus
 
 PaymentStatus
+
+ShipmentStatus
 ```
 
 Benefícios:
@@ -378,6 +382,7 @@ Benefícios:
 - evita erros de digitação;
 - facilita manutenção;
 - melhora a legibilidade.
+- facilita manutenção.
 
 ---
 
@@ -505,6 +510,12 @@ orders
 order_items
 ```
 
+## Envios
+
+```text
+Shipment
+```
+
 ---
 
 # Princípios adotados
@@ -532,9 +543,19 @@ Sempre que possível, evitar duplicação utilizando:
 
 ---
 
-## Arquitetura orientada ao domínio
+## Arquitetura orientada a responsabilidades e domínio
 
 As regras de negócio permanecem fora dos Controllers e Views.
+
+O projeto utiliza separação por responsabilidades:
+
+- Models representam entidades e relacionamentos;
+- Services controlam regras de negócio;
+- Enums controlam valores fixos do sistema;
+- Policies controlam permissões e autorização;
+- Requests validam e normalizam entradas.
+
+Essa organização mantém o código desacoplado, facilita manutenção e permite o crescimento do sistema.
 
 ---
 

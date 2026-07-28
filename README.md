@@ -94,6 +94,7 @@ O sistema possui entidades para:
 - Order Items
 - Reviews
 - Wishlists
+- Shipments
 
 ---
 
