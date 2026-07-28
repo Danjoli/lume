@@ -31,33 +31,21 @@ class OrderFactory extends Factory
 
             // Valores
             'subtotal' => fake()->randomFloat(2, 50, 500),
-
             'shipping' => fake()->randomFloat(2, 10, 80),
-
             'discount' => fake()->randomFloat(2, 0, 50),
-
             'total' => fake()->randomFloat(2, 60, 600),
 
 
             // Snapshot do endereço
             'recipient_name' => fake()->name(),
-
             'phone' => fake()->numerify('(##) 9####-####'),
-
             'street' => fake()->streetName(),
-
             'number' => (string) fake()->buildingNumber(),
-
             'complement' => fake()->optional()->secondaryAddress(),
-
             'neighborhood' => fake()->citySuffix(),
-
             'city' => fake()->city(),
-
             'state' => fake()->stateAbbr(),
-
             'cep' => fake()->postcode(),
-
 
             // Gateway de pagamento
             'gateway' => fake()->randomElement([

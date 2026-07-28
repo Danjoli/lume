@@ -21,13 +21,9 @@ class ReviewFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-
             'book_id' => Book::factory(),
-
             'rating' => fake()->numberBetween(1, 5),
-
             'comment' => fake()->paragraph(),
-
             'is_approved' => false,
         ];
     }

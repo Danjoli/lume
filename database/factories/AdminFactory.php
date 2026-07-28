@@ -4,8 +4,10 @@ namespace Database\Factories;
 
 use App\Enums\AdminRole;
 use App\Models\Admin;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Admin>
@@ -21,19 +23,15 @@ class AdminFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-
             'email' => fake()->unique()->safeEmail(),
-
             'password' => Hash::make('password'),
-
+            'remember_token' => Str::random(10),
             'role' => fake()->randomElement([
                 AdminRole::SUPPORT,
                 AdminRole::ADMIN,
                 AdminRole::SUPERADMIN,
             ]),
-
             'is_active' => true,
-
             'last_login_at' => fake()->optional()->dateTime(),
         ];
     }
@@ -73,6 +71,13 @@ class AdminFactory extends Factory
     {
         return $this->state(fn () => [
             'is_active' => false,
+        ]);
+    }
+
+    public function deleted(): static
+    {
+        return $this->state(fn () => [
+            'deleted_at' => Carbon::now(),
         ]);
     }
 }
