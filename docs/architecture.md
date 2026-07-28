@@ -307,6 +307,45 @@ Responsabilidades:
 - scopes;
 - métodos auxiliares.
 
+## Factories
+
+Factories são utilizadas para criação de dados de teste e desenvolvimento.
+
+Cada Model possui uma Factory responsável por definir como registros fictícios serão gerados.
+
+Exemplos:
+
+
+database/factories/
+
+AdminFactory.php
+UserFactory.php
+
+AuthorFactory.php
+PublisherFactory.php
+CategoryFactory.php
+BookFactory.php
+BookImageFactory.php
+
+AddressFactory.php
+
+CartFactory.php
+CartItemFactory.php
+
+OrderFactory.php
+OrderItemFactory.php
+ShipmentFactory.php
+
+ReviewFactory.php
+WishlistFactory.php
+
+
+As Factories permitem:
+
+- testes automatizados;
+- criação rápida de ambientes;
+- geração de dados para desenvolvimento.
+
 ---
 
 # Relacionamentos principais
@@ -365,16 +404,22 @@ hasOne Shipment
 
 Valores fixos serão representados por Enums.
 
-Exemplos:
+Atualmente utilizados para:
 
 ```text
-AdminRole
+AdminRole.php
 
-OrderStatus
+OrderStatus.php
 
-PaymentStatus
+PaymentStatus.php
 
-ShipmentStatus
+PaymentMethod.php
+
+ShipmentStatus.php
+
+BookFormat.php
+
+UserStatus.php
 ```
 
 Benefícios:

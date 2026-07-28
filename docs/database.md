@@ -19,12 +19,12 @@ O banco foi projetado priorizando:
 - Migrations
 - Relacionamentos
 - Models Eloquent
+- Enums
+- Factories
 
 ## 🚧 Em andamento
 
-- Factories
 - Seeders
-- Enums
 
 ---
 
@@ -128,7 +128,7 @@ belongsToMany Books (Wishlist)
 | email | string | E-mail |
 | email_verified_at | timestamp | E-mail verificado |
 | password | string | Senha |
-| is_active | boolean | Conta ativa |
+| status | string | Status da conta |
 | last_login_at | timestamp | Último login |
 | remember_token | string | Token "Lembrar-me" |
 | created_at | timestamp | Data de criação |

@@ -22,17 +22,13 @@ class AuthorFactory extends Factory
 
         return [
             'name' => $name,
-
             'slug' => Str::slug($name),
-
             'biography' => fake()->paragraphs(3, true),
-
             'photo' => fake()->optional()->imageUrl(
                 width: 400,
                 height: 600,
                 category: 'people'
             ),
-
             'is_active' => true,
         ];
     }

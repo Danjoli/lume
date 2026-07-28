@@ -69,7 +69,7 @@ O projeto será desenvolvido por etapas, priorizando uma base sólida antes da i
 
 ## Próximas tarefas
 
-- [ ] Factories
+- [x] Factories
 - [ ] Seeders
 - [x] Enums
 - [ ] Policies

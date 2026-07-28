@@ -36,13 +36,9 @@ class ShipmentFactory extends Factory
             ]),
 
             'tracking_code' => fake()->optional()->bothify('BR###########'),
-
             'status' => ShipmentStatus::PENDING,
-
             'shipping_cost' => fake()->randomFloat(2, 10, 100),
-
             'shipped_at' => null,
-
             'delivered_at' => null,
         ];
     }
@@ -54,9 +50,7 @@ class ShipmentFactory extends Factory
     {
         return $this->state(fn () => [
             'status' => ShipmentStatus::SHIPPED,
-
             'tracking_code' => fake()->bothify('BR###########'),
-
             'shipped_at' => now(),
         ]);
     }
@@ -68,11 +62,8 @@ class ShipmentFactory extends Factory
     {
         return $this->state(fn () => [
             'status' => ShipmentStatus::DELIVERED,
-
             'tracking_code' => fake()->bothify('BR###########'),
-
             'shipped_at' => now()->subDays(5),
-
             'delivered_at' => now(),
         ]);
     }

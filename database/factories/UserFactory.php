@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\UserStatus;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -53,6 +54,13 @@ class UserFactory extends Factory
     {
         return $this->state(fn () => [
             'status' => UserStatus::INACTIVE,
+        ]);
+    }
+
+    public function deleted(): static
+    {
+        return $this->state(fn () => [
+            'deleted_at' => Carbon::now(),
         ]);
     }
 }

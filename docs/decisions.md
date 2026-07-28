@@ -374,12 +374,43 @@ Pedido e logística possuem responsabilidades diferentes.
 
 ---
 
-# Histórico
+# 016 - Utilizar Factories para geração de dados
+
+## Decisão
+
+Criar uma Factory para cada entidade principal do sistema.
+
+## Motivo
+
+Separar a lógica de criação de dados dos Seeders.
+
+Factories ficam responsáveis por definir como um registro é criado, enquanto Seeders definem quais dados serão inseridos.
+
+Benefícios:
+
+- testes mais simples;
+- criação rápida de ambientes;
+- dados consistentes;
+- melhor organização.
+
+Exemplos:
+
+UserFactory
+
+BookFactory
+
+OrderFactory
+
+ShipmentFactory
+
+---
+
+# Histórico de decisões
 
 | Data | Alteração |
 |------|-----------|
 | 27/07/2026 | Estrutura inicial do banco de dados definida |
 | 27/07/2026 | Arquitetura Laravel definida |
-| 27/07/2026 | Migrations implementadas |
-| 27/07/2026 | Models Eloquent implementados |
-| 27/07/2026 | Documentação inicial criada |
+| 27/07/2026 | Separação dos módulos catálogo, cliente e vendas |
+| 28/07/2026 | Implementação dos Models, Enums e Factories |
+| 28/07/2026 | Definição da criação de dados de teste utilizando Factories |

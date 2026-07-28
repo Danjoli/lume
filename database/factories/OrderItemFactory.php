@@ -21,14 +21,11 @@ class OrderItemFactory extends Factory
     {
         return [
             'order_id' => Order::factory(),
-
             'book_id' => Book::factory(),
 
             // Snapshot do livro no momento da compra
             'title' => fake()->sentence(3),
-
             'price' => fake()->randomFloat(2, 20, 300),
-
             'quantity' => fake()->numberBetween(1, 5),
         ];
     }
@@ -40,9 +37,7 @@ class OrderItemFactory extends Factory
     {
         return $this->state(fn () => [
             'book_id' => $book->id,
-
             'title' => $book->title,
-
             'price' => $book->sale_price ?? $book->price,
         ]);
     }

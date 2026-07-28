@@ -122,12 +122,12 @@ A documentação do projeto está organizada na pasta `docs/`.
 - Models Eloquent
 - Relacionamentos entre entidades
 - Documentação inicial
+- Enums
+- Factories
 
 ### Próximas etapas
 
-- Factories
 - Seeders
-- Enums
 - Policies
 - Form Requests
 - Services
