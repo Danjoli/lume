@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AdminRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,15 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Admin extends Authenticatable
 {
     use HasFactory, SoftDeletes;
-
-    /**
-     * Cargos disponíveis.
-     */
-    public const ROLES = [
-        'suporte'   => 'Suporte',
-        'admin'     => 'Administrador',
-        'superadmin'=> 'Super Administrador',
-    ];
 
      /**
      * Os atributos que podem ser preenchidos em massa.
@@ -51,6 +43,7 @@ class Admin extends Authenticatable
     protected function casts(): array
     {
         return [
+            'role' => AdminRole::class,
             'password' => 'hashed',
             'is_active' => 'boolean',
             'last_login_at' => 'datetime',
@@ -85,6 +78,6 @@ class Admin extends Authenticatable
 
     public function getRoleLabelAttribute(): string
     {
-        return self::ROLES[$this->role] ?? $this->role;
+        return $this->role?->label() ?? '';
     }
 }
