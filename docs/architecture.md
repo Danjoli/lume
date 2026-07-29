@@ -2,7 +2,7 @@
 
 Documento responsável por descrever a arquitetura e organização do projeto **Lume**.
 
-O objetivo é manter o sistema organizado, escalável e seguindo as boas práticas do Laravel.
+O objetivo é manter o sistema organizado, escalável e seguindo boas práticas de desenvolvimento utilizando Laravel.
 
 ---
 
@@ -40,26 +40,26 @@ Database
 
 ## Backend
 
-- PHP 8.3+
-- Laravel 12
-- Eloquent ORM
+* PHP 8.4+
+* Laravel 12
+* Eloquent ORM
 
 ## Banco de Dados
 
-- MySQL / MariaDB
+* MySQL / MariaDB
 
 ## Frontend
 
-- Blade
-- Tailwind CSS
-- JavaScript
-- Vite
+* Blade
+* Tailwind CSS
+* JavaScript
+* Vite
 
 ## Ferramentas
 
-- Composer
-- NPM
-- Git
+* Composer
+* NPM
+* Git
 
 ---
 
@@ -101,9 +101,11 @@ app/
 
 # Organização dos Controllers
 
-Os Controllers são separados por contexto.
+Os Controllers são separados por contexto para manter responsabilidades bem definidas.
 
-## Admin
+---
+
+# Admin
 
 Responsável pelo painel administrativo.
 
@@ -122,14 +124,14 @@ AdminController
 
 Responsabilidades:
 
-- receber requisições;
-- validar entrada;
-- chamar Actions ou Services;
-- retornar Views ou Redirects.
+* receber requisições;
+* validar dados;
+* chamar Actions ou Services;
+* retornar Views ou Redirects.
 
 ---
 
-## Store
+# Store
 
 Responsável pela loja pública.
 
@@ -146,15 +148,15 @@ CheckoutController
 
 Responsabilidades:
 
-- catálogo;
-- busca;
-- páginas públicas;
-- carrinho;
-- checkout.
+* catálogo;
+* busca;
+* páginas públicas;
+* carrinho;
+* checkout.
 
 ---
 
-## Customer
+# Customer
 
 Responsável pela área do cliente.
 
@@ -170,11 +172,11 @@ ReviewController
 
 Responsabilidades:
 
-- perfil;
-- endereços;
-- pedidos;
-- avaliações;
-- lista de desejos.
+* perfil;
+* endereços;
+* pedidos;
+* avaliações;
+* lista de desejos.
 
 ---
 
@@ -194,10 +196,10 @@ UpdateProfileRequest
 
 Responsabilidades:
 
-- validar dados;
-- normalizar informações;
-- autorizar ações;
-- centralizar mensagens de erro.
+* validar dados;
+* normalizar informações;
+* autorizar ações;
+* centralizar mensagens de erro.
 
 ---
 
@@ -219,9 +221,9 @@ UploadBookImageAction
 
 Responsabilidades:
 
-- executar uma única ação;
-- facilitar reutilização;
-- reduzir responsabilidades dos Controllers.
+* executar uma única operação;
+* facilitar reutilização;
+* reduzir responsabilidades dos Controllers.
 
 ---
 
@@ -243,9 +245,9 @@ ShippingService
 
 Responsabilidades:
 
-- coordenar múltiplas Actions;
-- integrar serviços externos;
-- executar regras de negócio.
+* coordenar múltiplas operações;
+* integrar serviços externos;
+* executar regras de negócio.
 
 ---
 
@@ -265,9 +267,9 @@ BookData
 
 Benefícios:
 
-- tipagem;
-- organização;
-- menor acoplamento.
+* tipagem;
+* organização;
+* menor acoplamento.
 
 ---
 
@@ -294,6 +296,7 @@ CartItem
 
 Order
 OrderItem
+Shipment
 
 Review
 Wishlist
@@ -301,21 +304,23 @@ Wishlist
 
 Responsabilidades:
 
-- representar entidades;
-- definir relacionamentos;
-- casts;
-- scopes;
-- métodos auxiliares.
+* representar entidades;
+* definir relacionamentos;
+* casts;
+* scopes;
+* métodos auxiliares.
 
-## Factories
+---
+
+# Factories
 
 Factories são utilizadas para criação de dados de teste e desenvolvimento.
 
-Cada Model possui uma Factory responsável por definir como registros fictícios serão gerados.
+Cada entidade possui uma Factory responsável por definir como registros fictícios serão gerados.
 
 Exemplos:
 
-
+```text
 database/factories/
 
 AdminFactory.php
@@ -338,13 +343,36 @@ ShipmentFactory.php
 
 ReviewFactory.php
 WishlistFactory.php
+```
 
+Benefícios:
 
-As Factories permitem:
+* testes automatizados;
+* criação rápida de ambientes;
+* dados consistentes;
+* desenvolvimento mais eficiente.
 
-- testes automatizados;
-- criação rápida de ambientes;
-- geração de dados para desenvolvimento.
+---
+
+# Seeders
+
+Seeders controlam a criação dos dados iniciais do banco.
+
+Responsabilidades:
+
+* definir ordem de criação;
+* criar dados relacionados;
+* preparar ambientes de desenvolvimento.
+
+Fluxo:
+
+```text
+Factory
+    ↓
+Seeder
+    ↓
+Banco populado
+```
 
 ---
 
@@ -402,9 +430,9 @@ hasOne Shipment
 
 # Enums
 
-Valores fixos serão representados por Enums.
+Valores fixos do sistema são representados utilizando PHP Enums.
 
-Atualmente utilizados para:
+Utilizados em:
 
 ```text
 AdminRole.php
@@ -424,16 +452,16 @@ UserStatus.php
 
 Benefícios:
 
-- evita erros de digitação;
-- facilita manutenção;
-- melhora a legibilidade.
-- facilita manutenção.
+* evita valores inválidos;
+* reduz erros de digitação;
+* melhora legibilidade;
+* facilita manutenção.
 
 ---
 
 # Policies
 
-Policies controlam permissões da aplicação.
+Policies controlam permissões e autorização.
 
 Exemplos:
 
@@ -447,15 +475,15 @@ ReviewPolicy
 
 Exemplos de regras:
 
-- administradores podem gerenciar o catálogo;
-- clientes podem editar apenas seus próprios dados;
-- clientes visualizam apenas seus pedidos.
+* administradores podem gerenciar catálogo;
+* clientes podem editar seus próprios dados;
+* clientes visualizam apenas seus pedidos.
 
 ---
 
 # Exceptions
 
-Exceptions personalizadas concentram erros específicos do domínio.
+Exceptions personalizadas representam erros específicos do domínio.
 
 Exemplos:
 
@@ -469,15 +497,15 @@ BookUnavailableException
 
 Benefícios:
 
-- tratamento centralizado;
-- mensagens mais claras;
-- código mais organizado.
+* tratamento centralizado;
+* mensagens mais claras;
+* código organizado.
 
 ---
 
 # Support
 
-Classes auxiliares compartilhadas entre diferentes módulos.
+Classes auxiliares compartilhadas entre módulos.
 
 Exemplos:
 
@@ -491,9 +519,9 @@ IsbnFormatter
 
 Responsabilidades:
 
-- reutilização;
-- evitar duplicação;
-- utilitários da aplicação.
+* reutilização;
+* evitar duplicação;
+* funcionalidades auxiliares.
 
 ---
 
@@ -555,10 +583,12 @@ orders
 order_items
 ```
 
+---
+
 ## Envios
 
 ```text
-Shipment
+shipments
 ```
 
 ---
@@ -567,7 +597,7 @@ Shipment
 
 ## Separação de responsabilidades
 
-Cada camada possui uma única responsabilidade.
+Cada camada possui uma responsabilidade específica.
 
 ---
 
@@ -579,43 +609,54 @@ Controllers apenas coordenam o fluxo da aplicação.
 
 ## Reutilização
 
-Sempre que possível, evitar duplicação utilizando:
+Evitar duplicação utilizando:
 
-- Services;
-- Actions;
-- Support;
-- DTOs.
-
----
-
-## Arquitetura orientada a responsabilidades e domínio
-
-As regras de negócio permanecem fora dos Controllers e Views.
-
-O projeto utiliza separação por responsabilidades:
-
-- Models representam entidades e relacionamentos;
-- Services controlam regras de negócio;
-- Enums controlam valores fixos do sistema;
-- Policies controlam permissões e autorização;
-- Requests validam e normalizam entradas.
-
-Essa organização mantém o código desacoplado, facilita manutenção e permite o crescimento do sistema.
+* Services;
+* Actions;
+* Support;
+* DTOs.
 
 ---
 
-## Segurança
+## Camada de dados
+
+O projeto utiliza:
+
+* Eloquent ORM;
+* Models;
+* Migrations;
+* Factories;
+* Seeders;
+* Enums.
+
+Fluxo:
+
+```text
+Migration
+    ↓
+Model
+    ↓
+Factory
+    ↓
+Seeder
+    ↓
+Banco populado
+```
+
+---
+
+# Segurança
 
 A aplicação utiliza:
 
-- Form Requests;
-- Policies;
-- autenticação;
-- autorização;
-- proteção CSRF;
-- Hash de senhas;
-- Mass Assignment Protection;
-- Eloquent ORM.
+* Form Requests;
+* Policies;
+* autenticação;
+* autorização;
+* proteção CSRF;
+* Hash de senhas;
+* Mass Assignment Protection;
+* Eloquent ORM.
 
 ---
 
@@ -676,10 +717,10 @@ Atualização do pedido
 
 A arquitetura foi planejada para:
 
-- facilitar manutenção;
-- permitir crescimento do projeto;
-- reduzir acoplamento;
-- favorecer reutilização de código;
-- simplificar testes;
-- facilitar trabalho em equipe;
-- seguir as boas práticas recomendadas pelo Laravel.
+* facilitar manutenção;
+* permitir crescimento do projeto;
+* reduzir acoplamento;
+* favorecer reutilização de código;
+* simplificar testes;
+* facilitar trabalho em equipe;
+* seguir boas práticas recomendadas pelo Laravel.

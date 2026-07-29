@@ -101,7 +101,10 @@ class Book extends Model
      */
     public function authors(): BelongsToMany
     {
-        return $this->belongsToMany(Author::class);
+        return $this->belongsToMany(
+            Author::class,
+            'book_author'
+        );
     }
 
     /**
@@ -109,7 +112,10 @@ class Book extends Model
      */
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(
+            Category::class,
+            'book_category'
+        );
     }
 
     /**
@@ -142,14 +148,6 @@ class Book extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
-    }
-
-    /**
-     * Registros da lista de desejos.
-     */
-    public function wishlists(): HasMany
-    {
-        return $this->hasMany(Wishlist::class);
     }
 
     /**

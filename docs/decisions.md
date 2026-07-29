@@ -2,7 +2,7 @@
 
 Registro das principais decisões técnicas e arquiteturais tomadas durante o desenvolvimento do projeto **Lume**.
 
-Este documento serve como histórico das decisões de arquitetura, organização do código e modelagem do banco de dados.
+Este documento serve como histórico das decisões relacionadas à arquitetura, organização do código e modelagem do sistema.
 
 ---
 
@@ -10,24 +10,24 @@ Este documento serve como histórico das decisões de arquitetura, organização
 
 ## Decisão
 
-Separar as entidades de catálogo das entidades de venda.
+Separar as entidades de catálogo das entidades relacionadas ao processo de venda.
 
 ## Motivo
 
 O catálogo representa informações permanentes dos livros:
 
-- livros;
-- autores;
-- categorias;
-- editoras.
+* livros;
+* autores;
+* categorias;
+* editoras.
 
-Já o módulo de vendas representa eventos históricos:
+O módulo de vendas representa eventos históricos:
 
-- pedidos;
-- pagamentos;
-- itens comprados.
+* pedidos;
+* pagamentos;
+* itens comprados.
 
-Essa separação reduz o acoplamento entre os módulos e facilita futuras alterações.
+Essa separação reduz o acoplamento entre módulos e facilita futuras alterações.
 
 ---
 
@@ -35,18 +35,18 @@ Essa separação reduz o acoplamento entre os módulos e facilita futuras altera
 
 ## Decisão
 
-Armazenar as imagens dos livros em uma tabela própria.
+Armazenar imagens dos livros em uma tabela própria.
 
 ## Motivo
 
-Um livro pode possuir:
+Um livro pode possuir diferentes imagens:
 
-- capa;
-- contracapa;
-- imagens internas;
-- outras imagens de divulgação.
+* capa;
+* contracapa;
+* imagens internas;
+* imagens promocionais.
 
-A estrutura ficou:
+Estrutura:
 
 ```text
 Book
@@ -58,10 +58,10 @@ BookImages
 
 Benefícios:
 
-- múltiplas imagens;
-- imagem principal;
-- ordenação;
-- maior flexibilidade.
+* múltiplas imagens;
+* definição de imagem principal;
+* ordenação;
+* maior flexibilidade.
 
 ---
 
@@ -75,12 +75,12 @@ Criar a tabela pivô `book_author`.
 
 Um livro pode possuir:
 
-- um autor;
-- vários autores;
-- organizadores;
-- colaboradores.
+* um autor;
+* múltiplos autores;
+* organizadores;
+* colaboradores.
 
-Da mesma forma, um autor pode participar de diversos livros.
+Um autor também pode participar de diversos livros.
 
 ---
 
@@ -92,7 +92,7 @@ Adicionar o campo `parent_id` na tabela `categories`.
 
 ## Motivo
 
-Permitir categorias e subcategorias.
+Permitir criação de categorias e subcategorias.
 
 Exemplo:
 
@@ -103,7 +103,7 @@ Tecnologia
 └── Redes
 ```
 
-Isso evita criar tabelas separadas para cada nível.
+Essa abordagem evita múltiplas tabelas para diferentes níveis.
 
 ---
 
@@ -111,22 +111,22 @@ Isso evita criar tabelas separadas para cada nível.
 
 ## Decisão
 
-Salvar uma cópia dos dados da compra no momento da criação do pedido.
+Salvar uma cópia dos dados no momento da criação do pedido.
 
 ## Motivo
 
-Pedidos representam um registro histórico.
+Pedidos representam registros históricos.
 
-Mesmo que o livro ou o endereço sejam alterados posteriormente, o pedido permanece exatamente como foi realizado.
+Alterações futuras no catálogo ou endereço não devem modificar pedidos já realizados.
 
 São armazenados:
 
-- título;
-- preço;
-- quantidade;
-- endereço;
-- destinatário;
-- valores da compra.
+* título do livro;
+* preço;
+* quantidade;
+* endereço;
+* destinatário;
+* valores da compra.
 
 ---
 
@@ -138,14 +138,14 @@ Evitar regras de negócio dentro dos Controllers.
 
 ## Motivo
 
-Os Controllers devem apenas:
+Controllers devem apenas:
 
-- receber a requisição;
-- validar os dados;
-- chamar Services;
-- retornar a resposta.
+* receber requisições;
+* validar dados;
+* chamar Services;
+* retornar respostas.
 
-Toda lógica complexa deve ficar na camada de Services.
+Regras complexas ficam em camadas específicas.
 
 ---
 
@@ -153,7 +153,7 @@ Toda lógica complexa deve ficar na camada de Services.
 
 ## Decisão
 
-Centralizar todas as validações em Form Requests.
+Centralizar validações utilizando Form Requests.
 
 ## Motivo
 
@@ -161,10 +161,10 @@ Evitar validações espalhadas pelos Controllers.
 
 Benefícios:
 
-- organização;
-- reutilização;
-- mensagens personalizadas;
-- código mais limpo.
+* organização;
+* reutilização;
+* mensagens personalizadas;
+* código mais limpo.
 
 ---
 
@@ -172,14 +172,14 @@ Benefícios:
 
 ## Decisão
 
-Utilizar PHP Enums para representar estados e tipos fixos do sistema.
+Utilizar PHP Enums para estados e valores fixos do sistema.
 
-## Exemplos
+## Aplicado em
 
-- AdminRole
-- OrderStatus
-- PaymentStatus
-- ShipmentStatus
+* AdminRole;
+* OrderStatus;
+* PaymentStatus;
+* ShipmentStatus.
 
 ## Motivo
 
@@ -195,16 +195,16 @@ Utilizar Soft Deletes nas entidades onde o histórico é importante.
 
 ## Aplicado em
 
-- Admins
-- Users
+* Admins;
+* Users.
 
 ## Motivo
 
 Permitir:
 
-- recuperação de registros;
-- auditoria;
-- preservação do histórico.
+* recuperação de registros;
+* preservação histórica;
+* futura auditoria.
 
 ---
 
@@ -212,23 +212,23 @@ Permitir:
 
 ## Decisão
 
-Utilizar autenticações independentes.
+Utilizar autenticações separadas para administradores e clientes.
 
 ## Motivo
 
-Administradores possuem responsabilidades diferentes dos clientes.
+Os dois grupos possuem responsabilidades diferentes.
 
-Administração:
+Administradores:
 
-- gerencia catálogo;
-- gerencia pedidos;
-- administra usuários.
+* gerenciam catálogo;
+* gerenciam pedidos;
+* administram usuários.
 
 Clientes:
 
-- realizam compras;
-- acompanham pedidos;
-- gerenciam o próprio perfil.
+* realizam compras;
+* acompanham pedidos;
+* gerenciam seu perfil.
 
 ---
 
@@ -240,14 +240,18 @@ Centralizar regras de negócio em Services.
 
 ## Exemplos
 
-- CheckoutService
-- CartService
-- PaymentService
-- ShippingService
+* CheckoutService;
+* CartService;
+* PaymentService;
+* ShippingService.
 
 ## Motivo
 
-Facilitar manutenção, testes e reutilização.
+Facilitar:
+
+* manutenção;
+* testes;
+* reutilização.
 
 ---
 
@@ -255,15 +259,15 @@ Facilitar manutenção, testes e reutilização.
 
 ## Decisão
 
-Projetar o banco de dados pensando em futuras funcionalidades.
+Projetar o banco considerando futuras expansões.
 
 ## Funcionalidades previstas
 
-- avaliações;
-- lista de desejos;
-- múltiplas imagens;
-- múltiplos autores;
-- categorias hierárquicas.
+* avaliações;
+* lista de desejos;
+* múltiplas imagens;
+* múltiplos autores;
+* categorias hierárquicas.
 
 ---
 
@@ -271,18 +275,22 @@ Projetar o banco de dados pensando em futuras funcionalidades.
 
 ## Decisão
 
-Todas as entidades públicas utilizarão slugs únicos.
+Utilizar slugs únicos nas entidades públicas.
 
 ## Aplicado em
 
-- Books
-- Authors
-- Categories
-- Publishers
+* Books;
+* Authors;
+* Categories;
+* Publishers.
 
 ## Motivo
 
-URLs amigáveis, melhor SEO e facilidade de navegação.
+Melhorar:
+
+* URLs amigáveis;
+* SEO;
+* navegação.
 
 Exemplo:
 
@@ -298,7 +306,7 @@ Exemplo:
 
 ## Decisão
 
-Organizar a aplicação em camadas.
+Separar responsabilidades dentro da aplicação.
 
 ## Estrutura
 
@@ -316,7 +324,7 @@ Database
 
 ## Motivo
 
-Separar responsabilidades e facilitar a manutenção do projeto.
+Facilitar manutenção e evolução do projeto.
 
 ---
 
@@ -324,26 +332,26 @@ Separar responsabilidades e facilitar a manutenção do projeto.
 
 ## Decisão
 
-Manter toda a documentação técnica na pasta `docs/`.
+Manter documentação técnica dentro da pasta `docs/`.
 
 ## Arquivos
 
-- architecture.md
-- database.md
-- roadmap.md
-- decisions.md
+* architecture.md
+* database.md
+* roadmap.md
+* decisions.md
 
 ## Motivo
 
-Centralizar a documentação e facilitar o entendimento do projeto.
+Centralizar informações importantes do projeto.
 
 ---
 
-# 015 - Separar controle de entrega em Shipment
+# 016 - Separação do controle de entrega em Shipment
 
 ## Decisão
 
-Criar uma entidade própria para envio dos pedidos.
+Criar uma entidade própria para controlar os envios.
 
 ## Motivo
 
@@ -351,66 +359,118 @@ Pedido e logística possuem responsabilidades diferentes.
 
 ## Pedido:
 
-- compra;
-- pagamento;
-- valores.
+* compra;
+* pagamento;
+* valores.
 
 ## Shipment:
 
-- transportadora;
-- rastreamento;
-- entrega.
-
-## Relacionamento:
-
-- Order
-- hasOne Shipment
+* transportadora;
+* rastreamento;
+* entrega;
+* status de envio.
 
 ## Benefícios:
 
-- integração com transportadoras;
-- controle de rastreio;
-- evolução futura.
+* integração futura com transportadoras;
+* controle de rastreamento;
+* evolução da logística.
 
 ---
 
-# 016 - Utilizar Factories para geração de dados
+# 017 - Utilizar Factories para geração de dados
 
 ## Decisão
 
-Criar uma Factory para cada entidade principal do sistema.
+Criar Factories para as principais entidades do sistema.
 
 ## Motivo
 
-Separar a lógica de criação de dados dos Seeders.
+Separar a criação de dados dos Seeders.
 
-Factories ficam responsáveis por definir como um registro é criado, enquanto Seeders definem quais dados serão inseridos.
+Factories definem como um registro é criado.
+
+Seeders definem quais dados serão inseridos.
 
 Benefícios:
 
-- testes mais simples;
-- criação rápida de ambientes;
-- dados consistentes;
-- melhor organização.
+* testes mais simples;
+* criação rápida de ambientes;
+* dados consistentes;
+* melhor organização.
 
 Exemplos:
 
-UserFactory
+* UserFactory;
+* BookFactory;
+* OrderFactory;
+* ShipmentFactory.
 
-BookFactory
+---
 
-OrderFactory
+# 018 - Utilizar Seeders para dados iniciais
 
-ShipmentFactory
+## Decisão
+
+Utilizar Seeders para controlar a população inicial do banco de desenvolvimento.
+
+## Motivo
+
+Permitir criação rápida de ambientes para desenvolvimento e testes.
+
+Seeders são responsáveis por:
+
+* definir ordem de criação;
+* criar dados relacionados;
+* preparar cenários de teste.
+
+---
+
+# 019 - Tabelas Pivot sem Models próprios
+
+## Decisão
+
+Não criar Models para tabelas intermediárias utilizadas apenas como relacionamento.
+
+## Aplicado em
+
+* book_category;
+* book_author.
+
+## Motivo
+
+Essas tabelas possuem apenas a função de ligação entre entidades.
+
+---
+
+# 020 - Status utilizando Enums
+
+## Decisão
+
+Utilizar Enums para estados importantes do sistema.
+
+## Aplicado em
+
+* AdminRole;
+* ShipmentStatus;
+* PaymentStatus;
+* OrderStatus.
+
+## Motivo
+
+Garantir padronização dos valores e reduzir erros.
 
 ---
 
 # Histórico de decisões
 
-| Data | Alteração |
-|------|-----------|
-| 27/07/2026 | Estrutura inicial do banco de dados definida |
-| 27/07/2026 | Arquitetura Laravel definida |
-| 27/07/2026 | Separação dos módulos catálogo, cliente e vendas |
-| 28/07/2026 | Implementação dos Models, Enums e Factories |
-| 28/07/2026 | Definição da criação de dados de teste utilizando Factories |
+| Data       | Alteração                                                 |
+| ---------- | --------------------------------------------------------- |
+| 27/07/2026 | Estrutura inicial do banco de dados definida              |
+| 27/07/2026 | Arquitetura Laravel definida                              |
+| 27/07/2026 | Separação dos módulos catálogo, cliente e vendas          |
+| 28/07/2026 | Implementação dos Models, Enums e Relacionamentos         |
+| 28/07/2026 | Implementação das Factories                               |
+| 28/07/2026 | Testes das Factories realizados                           |
+| 28/07/2026 | Implementação dos Seeders iniciais                        |
+| 28/07/2026 | Documentação atualizada após conclusão da camada de dados |
