@@ -90,8 +90,8 @@ O projeto será desenvolvido em etapas, priorizando uma base sólida, organizaç
 
 ## Cliente
 
-* [ ] Cadastro
-* [ ] Login
+* [x] Cadastro
+* [x] Login
 * [ ] Recuperação de senha
 * [ ] Verificação de e-mail
 * [ ] Perfil
@@ -100,10 +100,10 @@ O projeto será desenvolvido em etapas, priorizando uma base sólida, organizaç
 
 ## Administrador
 
-* [ ] Login administrativo
-* [ ] Middleware Admin
-* [ ] Controle de permissões
-* [ ] Controle de cargos
+* [x] Login administrativo
+* [x] Middleware Admin
+* [x] Controle de permissões
+* [x] Controle de cargos
 
 ---
 
@@ -111,7 +111,7 @@ O projeto será desenvolvido em etapas, priorizando uma base sólida, organizaç
 
 ## Dashboard
 
-* [ ] Dashboard inicial
+* [x] Dashboard inicial
 * [ ] Estatísticas
 * [ ] Pedidos recentes
 * [ ] Livros mais vendidos
@@ -246,7 +246,7 @@ O projeto será desenvolvido em etapas, priorizando uma base sólida, organizaç
 
 # Fase 10 — Testes
 
-* [ ] Testes de Models
+* [x] Testes de Models
 * [ ] Testes de Requests
 * [ ] Testes de Services
 * [ ] Testes de Controllers
