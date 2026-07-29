@@ -354,6 +354,61 @@ Benefícios:
 
 ---
 
+# Observers
+
+Observers são utilizados para executar ações automáticas quando eventos dos Models acontecem.
+
+Eles permitem manter regras automáticas fora dos Controllers e Services.
+
+Exemplos utilizados no projeto:
+
+
+Observers/
+
+BookObserver.php
+
+AuthorObserver.php
+
+PublisherObserver.php
+
+CategoryObserver.php
+
+
+Responsabilidades:
+
+- geração automática de slugs;
+- atualização de slugs quando dados principais são alterados;
+- normalização de informações antes da persistência.
+
+Exemplo:
+
+Ao criar um livro:
+
+
+Título:
+
+Clean Code
+
+↓
+
+BookObserver
+
+↓
+
+Slug:
+
+clean-code
+
+
+Benefícios:
+
+- código mais limpo;
+- redução de duplicação;
+- automações centralizadas;
+- Models mais organizados.
+
+---
+
 # Seeders
 
 Seeders controlam a criação dos dados iniciais do banco.
@@ -373,6 +428,66 @@ Seeder
     ↓
 Banco populado
 ```
+
+O projeto possui Seeders para geração de dados de desenvolvimento e testes.
+
+## AdminSeeder
+
+Cria usuários administrativos.
+
+Dados gerados:
+
+- administradores;
+- cargos;
+- status de acesso.
+
+## UserSeeder
+
+Cria usuários clientes.
+
+Dados gerados:
+
+- nome;
+- email;
+- senha;
+- status.
+
+
+## CatalogSeeder
+
+Responsável pelo catálogo.
+
+Cria:
+
+- editoras;
+- autores;
+- categorias;
+- livros;
+- imagens;
+- relacionamentos entre livros, autores e categorias.
+
+
+## CustomerSeeder
+
+Responsável pelos dados dos clientes.
+
+Cria:
+
+- endereços;
+- carrinhos;
+- listas de desejos.
+
+
+## OrderSeeder
+
+Responsável pelos dados de venda.
+
+Cria:
+
+- pedidos;
+- itens do pedido;
+- envios;
+- avaliações.
 
 ---
 

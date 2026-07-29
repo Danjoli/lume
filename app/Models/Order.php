@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -79,8 +80,28 @@ class Order extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function isPending(): bool
+    {
+        return $this->status === OrderStatus::PENDING;
+    }
+
     public function isPaid(): bool
     {
-        return $this->payment_status === 'paid';
+        return $this->status === OrderStatus::PAID;
+    }
+
+    public function isShipped(): bool
+    {
+        return $this->status === OrderStatus::SHIPPED;
+    }
+
+    public function isDelivered(): bool
+    {
+        return $this->status === OrderStatus::DELIVERED;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->status === OrderStatus::CANCELLED;
     }
 }
