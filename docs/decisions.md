@@ -462,6 +462,41 @@ Garantir padronização dos valores e reduzir erros.
 
 ---
 
+# 021 - Utilização de Observers para eventos de Models
+
+## Decisão
+
+Utilizar Observers para executar ações automáticas relacionadas aos Models.
+
+## Motivo
+
+Algumas operações devem acontecer automaticamente durante criação ou atualização de registros.
+
+Exemplos:
+
+- geração de slug;
+- atualização de campos derivados;
+- normalização de dados.
+
+Inicialmente foram criados:
+
+
+BookObserver
+
+AuthorObserver
+
+PublisherObserver
+
+CategoryObserver
+
+
+Benefícios:
+
+- separação de responsabilidades;
+- Controllers menores;
+- regras automáticas centralizadas;
+- melhor manutenção do código.
+
 # Histórico de decisões
 
 | Data       | Alteração                                                 |
@@ -474,3 +509,4 @@ Garantir padronização dos valores e reduzir erros.
 | 28/07/2026 | Testes das Factories realizados                           |
 | 28/07/2026 | Implementação dos Seeders iniciais                        |
 | 28/07/2026 | Documentação atualizada após conclusão da camada de dados |
+| 29/07/2026 | Policies e Observers implementados |

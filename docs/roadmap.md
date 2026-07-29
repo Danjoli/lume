@@ -74,7 +74,9 @@ O projeto será desenvolvido em etapas, priorizando uma base sólida, organizaç
 * [x] Enums
 * [x] Factories
 * [x] Seeders
-* [ ] Policies
+* [x] Policies
+* [x] Observers
+* [x] Providers
 * [ ] Form Requests
 * [ ] Services
 * [ ] Actions
@@ -282,10 +284,12 @@ O projeto será desenvolvido em etapas, priorizando uma base sólida, organizaç
 * [x] Seeders
 * [x] Testes das Factories
 * [x] Testes dos Seeders
+* [x] Policies
+* [x] Observers
+* [x] Providers
 
 ## Em andamento
 
-* [ ] Policies
 * [ ] Form Requests
 * [ ] Services
 

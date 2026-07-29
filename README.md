@@ -140,10 +140,12 @@ Arquivos principais:
 * Seeders
 * População do banco de desenvolvimento
 * Testes dos dados gerados
+* Policies
+* Observers
+* Providers
 
 ### 🔄 Em andamento
 
-* Policies
 * Form Requests
 * Services
 

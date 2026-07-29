@@ -22,6 +22,9 @@ O banco foi projetado priorizando:
 * Enums
 * Factories
 * Seeders
+* Policies
+* Observers
+* Providers
 
 ---
 
