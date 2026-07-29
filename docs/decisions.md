@@ -497,16 +497,80 @@ Benefícios:
 - regras automáticas centralizadas;
 - melhor manutenção do código.
 
+# 022 - Autenticação
+
+## Cliente
+
+A autenticação dos clientes utiliza o sistema padrão do Laravel Breeze.
+
+Configurações:
+
+- Guard: web
+- Provider: users
+- Model: User
+
+Recursos implementados:
+
+- cadastro;
+- login;
+- logout;
+- recuperação de senha;
+- verificação de email;
+- gerenciamento de perfil.
+
+
+## Administrador
+
+Administradores possuem autenticação separada dos clientes.
+
+Configurações:
+
+- Guard: admin
+- Provider: admins
+- Model: Admin
+
+A autenticação administrativa possui:
+
+- login separado;
+- logout separado;
+- middleware próprio;
+- rotas protegidas;
+- layout próprio.
+
+
+Estrutura:
+
+Admin
+    |
+    ├── AdminMiddleware
+    |
+    ├── Admin Guard
+    |
+    └── Admin Controller
+
+
+Cliente
+    |
+    ├── Breeze Auth
+    |
+    ├── Web Guard
+    |
+    └── Customer Controllers
+
 # Histórico de decisões
 
-| Data       | Alteração                                                 |
-| ---------- | --------------------------------------------------------- |
-| 27/07/2026 | Estrutura inicial do banco de dados definida              |
-| 27/07/2026 | Arquitetura Laravel definida                              |
-| 27/07/2026 | Separação dos módulos catálogo, cliente e vendas          |
-| 28/07/2026 | Implementação dos Models, Enums e Relacionamentos         |
-| 28/07/2026 | Implementação das Factories                               |
-| 28/07/2026 | Testes das Factories realizados                           |
-| 28/07/2026 | Implementação dos Seeders iniciais                        |
-| 28/07/2026 | Documentação atualizada após conclusão da camada de dados |
-| 29/07/2026 | Policies e Observers implementados |
+| Data       | Alteração                                                         |
+| ---------- | ---------------------------------------------------------         |
+| 27/07/2026 | Estrutura inicial do banco de dados definida                      |
+| 27/07/2026 | Arquitetura Laravel definida                                      |
+| 27/07/2026 | Separação dos módulos catálogo, cliente e vendas                  |
+| 28/07/2026 | Implementação dos Models, Enums e Relacionamentos                 |
+| 28/07/2026 | Implementação das Factories                                       |
+| 28/07/2026 | Testes das Factories realizados                                   |
+| 28/07/2026 | Implementação dos Seeders iniciais                                |
+| 28/07/2026 | Documentação atualizada após conclusão da camada de dados         |
+| 29/07/2026 | Policies e Observers implementados                                |
+| 29/07/2026 | Autenticação de clientes configurada com Laravel Breeze           |
+| 29/07/2026 | Autenticação administrativa separada implementada com guard admin |
+| 29/07/2026 | Middleware e rotas protegidas do painel administrativo criados    |
+| 29/07/2026 | Layouts e componentes Blade separados por contexto                |
