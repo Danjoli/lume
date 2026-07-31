@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-<head>
+@include('layouts.admin.head')
 
-    <meta charset="UTF-8">
+<body class="bg-gray-100 antialiased">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div class="flex h-screen overflow-hidden">
 
-    <title>
-        @yield('title', 'Painel Administrativo')
-    </title>
+        {{-- Sidebar --}}
+        <x-admin.layout.sidebar />
 
-    @vite([
-        'resources/css/app.css',
-        'resources/js/app.js',
-    ])
+        {{-- Conteúdo --}}
+        <div class="flex flex-1 flex-col overflow-hidden">
 
-</head>
+            {{-- Header --}}
+            <x-admin.layout.header />
 
-<body class="bg-gray-100 text-gray-900">
+            {{-- Conteúdo Principal --}}
+            <main class="flex-1 overflow-y-auto p-8">
 
-    <!-- Page Content -->
-    <main>
-        {{ $slot }}
-    </main>
+                {{ $slot }}
+
+            </main>
+
+        </div>
+
+    </div>
+
+    @include('layouts.admin.scripts')
 
 </body>
 
