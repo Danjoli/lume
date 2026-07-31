@@ -3,63 +3,100 @@
 namespace App\Http\Controllers\Admin\Authors;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Authors\StoreAuthorRequest;
+use App\Http\Requests\Admin\Authors\UpdateAuthorRequest;
+use App\Models\Author;
+
+use App\Services\Admin\Authors\AuthorService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function __construct(
+        private readonly AuthorService $authorService
+    ) {
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Exibe a listagem dos autores.
      */
-    public function create()
+    public function index(Request $request): View
     {
-        //
+        return view('admin.authors.index', [
+            'authors' => $this->authorService->paginate($request),
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Exibe o formulário de criação.
      */
-    public function store(Request $request)
+    public function create(): View
     {
-        //
+        return view('admin.authors.create');
     }
 
     /**
-     * Display the specified resource.
+     * Armazena um novo autor.
      */
-    public function show(string $id)
+    public function store(StoreAuthorRequest $request): RedirectResponse
     {
-        //
+        $this->authorService->store(
+            $request->validated()
+        );
+
+        return redirect()
+            ->route('admin.authors.index')
+            ->with('success', 'Autor cadastrado com sucesso.');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Exibe os detalhes do autor.
      */
-    public function edit(string $id)
+    public function show(Author $author): View
     {
-        //
+        return view('admin.authors.show', [
+            'author' => $author->loadCount('books'),
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Exibe o formulário de edição.
      */
-    public function update(Request $request, string $id)
+    public function edit(Author $author): View
     {
-        //
+        return view('admin.authors.edit', [
+            'author' => $author,
+        ]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Atualiza o autor.
      */
-    public function destroy(string $id)
+    public function update(
+        UpdateAuthorRequest $request,
+        Author $author
+    ): RedirectResponse {
+        $this->authorService->update(
+            $author,
+            $request->validated()
+        );
+
+        return redirect()
+            ->route('admin.authors.index')
+            ->with('success', 'Autor atualizado com sucesso.');
+    }
+
+    /**
+     * Remove um autor.
+     */
+    public function destroy(Author $author): RedirectResponse
     {
-        //
+        $this->authorService->destroy($author);
+
+        return redirect()
+            ->route('admin.authors.index')
+            ->with('success', 'Autor removido com sucesso.');
     }
 }
