@@ -1,32 +1,56 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-<head>
+@include('layouts.admin.head')
 
-    <meta charset="UTF-8">
+<body class="min-h-screen bg-gray-100 antialiased">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div class="flex min-h-screen items-center justify-center p-6">
 
-    <title>
-        @yield('title', 'Login Administrativo')
-    </title>
+        <div class="w-full max-w-md">
 
-    @vite([
-        'resources/css/app.css',
-        'resources/js/app.js',
-    ])
+            {{-- Logo --}}
+            <div class="mb-8 text-center">
 
-</head>
+                <a
+                    href="{{ route('admin.login') }}"
+                    class="inline-flex items-center gap-3"
+                >
 
-<body class="bg-gray-100">
+                    <div
+                        class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 text-xl font-bold text-white shadow"
+                    >
+                        L
+                    </div>
 
-    <div class="min-h-screen flex items-center justify-center">
+                    <div class="text-left">
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-            {{ $slot }}
+                        <h1 class="text-2xl font-bold text-gray-900">
+                            Lume
+                        </h1>
+
+                        <p class="text-sm text-gray-500">
+                            Painel Administrativo
+                        </p>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+            {{-- Card --}}
+            <div class="rounded-2xl bg-white p-8 shadow-lg">
+
+                {{ $slot }}
+
+            </div>
+
         </div>
 
     </div>
+
+    @include('layouts.admin.scripts')
 
 </body>
 

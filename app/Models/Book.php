@@ -123,7 +123,9 @@ class Book extends Model
      */
     public function images(): HasMany
     {
-        return $this->hasMany(BookImage::class);
+        return $this->hasMany(BookImage::class)
+            ->orderByDesc('is_primary')
+            ->orderBy('sort_order');
     }
 
     /**

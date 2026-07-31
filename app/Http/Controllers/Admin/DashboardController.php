@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\Admin\DashboardService;
 
 class DashboardController extends Controller
 {
-    /**
-     * Exibe o dashboard administrativo.
-     */
-    public function __invoke()
+    public function __construct(
+        private DashboardService $dashboardService
+    ) {
+    }
+
+    public function  __invoke()
     {
-        return view('admin.dashboard');
+        return view(
+            'admin.dashboard',
+            $this->dashboardService->getDashboardData()
+        );
     }
 }
