@@ -2,69 +2,88 @@
 
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\LogoutController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Authors\AuthorController;
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->group(function () {
-    Route::middleware('guest:admin')->group(function () {
-
-        Route::get('/login', [LoginController::class, 'create'])
-            ->name('admin.login');
-
-        Route::post('/login', [LoginController::class, 'store'])
-            ->name('admin.login.store');
-
-    });
-
-    Route::middleware('admin')->group(function () {
-
-        Route::post('/logout', [LogoutController::class, 'store'])
-            ->name('admin.logout');
-
-        Route::get('/dashboard', DashboardController::class)
-            ->name('admin.dashboard');
-
-        Route::resource('authors', AuthorController::class);
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
         /*
         |--------------------------------------------------------------------------
-        | Rotas temporárias
+        | Autenticação
         |--------------------------------------------------------------------------
         */
 
-        Route::view('/books', 'admin.temp')
-            ->name('admin.books.index');
+        Route::middleware('guest:admin')->group(function () {
 
-        Route::view('/categories', 'admin.temp')
-            ->name('admin.categories.index');
+            Route::get('/login', [LoginController::class, 'create'])
+                ->name('login');
 
-        Route::view('/authors', 'admin.temp')
-            ->name('admin.authors.index');
+            Route::post('/login', [LoginController::class, 'store'])
+                ->name('login.store');
 
-        Route::view('/publishers', 'admin.temp')
-            ->name('admin.publishers.index');
+        });
 
-        Route::view('/orders', 'admin.temp')
-            ->name('admin.orders.index');
+        /*
+        |--------------------------------------------------------------------------
+        | Área Administrativa
+        |--------------------------------------------------------------------------
+        */
 
-        Route::view('/users', 'admin.temp')
-            ->name('admin.users.index');
+        Route::middleware('admin')->group(function () {
 
-        Route::view('/reviews', 'admin.temp')
-            ->name('admin.reviews.index');
+            Route::post('/logout', [LogoutController::class, 'store'])
+                ->name('logout');
 
-        Route::view('/coupons', 'admin.temp')
-            ->name('admin.coupons.index');
+            Route::get('/dashboard', DashboardController::class)
+                ->name('dashboard');
 
-        Route::view('/reports', 'admin.temp')
-            ->name('admin.reports.index');
+            /*
+            |--------------------------------------------------------------------------
+            | Cadastros
+            |--------------------------------------------------------------------------
+            */
 
-        Route::view('/settings', 'admin.temp')
-            ->name('admin.settings.index');
+            Route::resource('authors', AuthorController::class);
 
-        Route::view('/profile-edit', 'admin.temp')
-            ->name('admin.profile.edit');
+            /*
+            |--------------------------------------------------------------------------
+            | Rotas temporárias
+            |--------------------------------------------------------------------------
+            */
+
+            Route::view('/books', 'admin.temp')
+                ->name('books.index');
+
+            Route::view('/categories', 'admin.temp')
+                ->name('categories.index');
+
+            Route::view('/publishers', 'admin.temp')
+                ->name('publishers.index');
+
+            Route::view('/orders', 'admin.temp')
+                ->name('orders.index');
+
+            Route::view('/users', 'admin.temp')
+                ->name('users.index');
+
+            Route::view('/reviews', 'admin.temp')
+                ->name('reviews.index');
+
+            Route::view('/coupons', 'admin.temp')
+                ->name('coupons.index');
+
+            Route::view('/reports', 'admin.temp')
+                ->name('reports.index');
+
+            Route::view('/settings', 'admin.temp')
+                ->name('settings.index');
+
+            Route::view('/profile-edit', 'admin.temp')
+                ->name('profile.edit');
+
+        });
 
     });
-});
