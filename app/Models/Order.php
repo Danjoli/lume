@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,8 @@ class Order extends Model
     use HasFactory;
 
     /**
+     * Campos preenchíveis.
+     *
      * @var list<string>
      */
     protected $fillable = [
@@ -44,17 +47,28 @@ class Order extends Model
     ];
 
     /**
+     * Conversões de atributos.
+     *
      * @return array<string, string>
      */
     protected function casts(): array
     {
         return [
+
+            'status' => OrderStatus::class,
+
+            'payment_status' => PaymentStatus::class,
+
             'subtotal' => 'decimal:2',
+
             'shipping' => 'decimal:2',
+
             'discount' => 'decimal:2',
+
             'total' => 'decimal:2',
 
             'paid_at' => 'datetime',
+
         ];
     }
 
@@ -76,7 +90,7 @@ class Order extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Métodos auxiliares
+    | Helpers - Status do Pedido
     |--------------------------------------------------------------------------
     */
 
@@ -85,9 +99,9 @@ class Order extends Model
         return $this->status === OrderStatus::PENDING;
     }
 
-    public function isPaid(): bool
+    public function isProcessing(): bool
     {
-        return $this->status === OrderStatus::PAID;
+        return $this->status === OrderStatus::PROCESSING;
     }
 
     public function isShipped(): bool
@@ -103,5 +117,69 @@ class Order extends Model
     public function isCancelled(): bool
     {
         return $this->status === OrderStatus::CANCELLED;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers - Status do Pagamento
+    |--------------------------------------------------------------------------
+    */
+
+    public function isPaymentPending(): bool
+    {
+        return $this->payment_status === PaymentStatus::PENDING;
+    }
+
+    public function isPaid(): bool
+    {
+        return $this->payment_status === PaymentStatus::PAID;
+    }
+
+    public function isPaymentFailed(): bool
+    {
+        return $this->payment_status === PaymentStatus::FAILED;
+    }
+
+    public function isRefunded(): bool
+    {
+        return $this->payment_status === PaymentStatus::REFUNDED;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Regras de Negócio
+    |--------------------------------------------------------------------------
+    */
+
+    public function canBeProcessed(): bool
+    {
+        return $this->status === OrderStatus::PENDING;
+    }
+
+    public function canBeShipped(): bool
+    {
+        return $this->status === OrderStatus::PROCESSING;
+    }
+
+    public function canBeDelivered(): bool
+    {
+        return $this->status === OrderStatus::SHIPPED;
+    }
+
+    public function canBeCancelled(): bool
+    {
+        return ! in_array(
+            $this->status,
+            [
+                OrderStatus::DELIVERED,
+                OrderStatus::CANCELLED,
+            ],
+            true
+        );
+    }
+
+    public function canBeRefunded(): bool
+    {
+        return $this->payment_status === PaymentStatus::PAID;
     }
 }

@@ -14,13 +14,17 @@ class Review extends Model
      * @var list<string>
      */
     protected $fillable = [
+
         'user_id',
+
         'book_id',
 
         'rating',
+
         'comment',
 
         'is_approved',
+
     ];
 
     /**
@@ -29,8 +33,11 @@ class Review extends Model
     protected function casts(): array
     {
         return [
+
             'rating' => 'integer',
+
             'is_approved' => 'boolean',
+
         ];
     }
 
@@ -52,12 +59,35 @@ class Review extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Métodos auxiliares
+    | Helpers
     |--------------------------------------------------------------------------
     */
 
     public function isApproved(): bool
     {
         return $this->is_approved;
+    }
+
+    public function isPending(): bool
+    {
+        return ! $this->is_approved;
+    }
+
+    public function approve(): void
+    {
+        $this->update([
+
+            'is_approved' => true,
+
+        ]);
+    }
+
+    public function reject(): void
+    {
+        $this->update([
+
+            'is_approved' => false,
+
+        ]);
     }
 }

@@ -2,48 +2,23 @@
 
     <div class="space-y-8">
 
-        <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+        <x-admin.headers.page-header title="Autores" description="Gerencie todos os autores cadastrados.">
 
-            <div>
-
-                <h1 class="text-3xl font-bold text-slate-900">
-
-                    Autores
-
-                </h1>
-
-                <p class="mt-1 text-slate-500">
-
-                    Gerencie todos os autores cadastrados.
-
-                </p>
-
-            </div>
-
-            <a
-                href="{{ route('admin.authors.create') }}"
-                class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700"
-            >
+            <x-buttons.primary-button href="{{ route('admin.authors.create') }}">
 
                 Novo Autor
 
-            </a>
+            </x-buttons.primary-button>
 
-        </div>
+        </x-admin.headers.page-header>
 
-        @if(session('success'))
-
-            <div class="rounded-xl border border-green-200 bg-green-50 px-5 py-4 text-green-700">
-
-                {{ session('success') }}
-
-            </div>
-
-        @endif
+        <x-alerts.flash />
 
         @include('admin.authors._partials.filters')
 
         @include('admin.authors._partials.table')
+
+        <x-admin.tables.pagination :paginator="$authors" />
 
     </div>
 

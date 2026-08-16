@@ -3,7 +3,6 @@
     <div class="space-y-5">
 
         @forelse($bestSellingBooks as $index => $book)
-
             <div class="flex items-center justify-between">
 
                 <div class="flex min-w-0 items-center gap-4">
@@ -16,14 +15,9 @@
 
                     <div class="h-[60px] w-[40px] flex-shrink-0 overflow-hidden rounded-md bg-slate-200 shadow-sm">
 
-                        @if($book->cover)
-
-                            <img
-                                src="{{ asset('storage/' . $book->images->first()->image) }}"
-                                alt="{{ $book->title }}"
-                                class="h-full w-full object-cover"
-                            >
-
+                        @if ($book->cover)
+                            <img src="{{ asset('storage/' . $book->images->first()->image) }}" alt="{{ $book->title }}"
+                                class="h-full w-full object-cover">
                         @endif
 
                     </div>
@@ -61,33 +55,20 @@
                 Nenhum livro vendido até o momento.
 
             </p>
-
         @endforelse
 
     </div>
 
     <div class="mt-6">
 
-        <a
-            href="{{ route('admin.books.index') }}"
-            class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 transition hover:text-indigo-700"
-        >
+        <a href="{{ route('admin.books.index') }}"
+            class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 transition hover:text-indigo-700">
 
             Ver todos os livros
 
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9 5l7 7-7 7"
-                />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
 
         </a>

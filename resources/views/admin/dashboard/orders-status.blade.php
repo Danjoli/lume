@@ -16,12 +16,10 @@
 
         <div class="flex-1 space-y-5">
 
-            @foreach($ordersStatus as $item)
-
+            @foreach ($ordersStatus as $item)
                 <div class="flex items-center gap-3">
 
-                    <span
-                        class="h-3 w-3 rounded-full {{ $item['tailwind'] }}">
+                    <span class="h-3 w-3 rounded-full {{ $item['tailwind'] }}">
                     </span>
 
                     <div>
@@ -34,16 +32,12 @@
 
                             {{ $item['value'] }}
 
-                            ({{ $total > 0
-                                ? round(($item['value'] / $total) * 100)
-                                : 0 }}%)
-
+                            ({{ $total > 0 ? round(($item['value'] / $total) * 100) : 0 }}%)
                         </p>
 
                     </div>
 
                 </div>
-
             @endforeach
 
         </div>
@@ -53,85 +47,75 @@
 </x-admin.cards.card>
 
 @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
 
-<script>
+            const canvas = document.getElementById('orders-status-chart');
 
-document.addEventListener('DOMContentLoaded', () => {
+            if (!canvas) return;
 
-    const canvas = document.getElementById('orders-status-chart');
+            new Chart(canvas, {
 
-    if (!canvas) return;
+                type: 'doughnut',
 
-    new Chart(canvas, {
+                data: {
 
-        type: 'doughnut',
+                    labels: @json(collect($ordersStatus)->pluck('label')),
 
-        data: {
+                    datasets: [{
 
-            labels: @json(
-                collect($ordersStatus)->pluck('label')
-            ),
+                        data: @json(collect($ordersStatus)->pluck('value')),
 
-            datasets: [{
+                        backgroundColor: @json(collect($ordersStatus)->pluck('color')),
 
-                data: @json(
-                    collect($ordersStatus)->pluck('value')
-                ),
+                        borderWidth: 0,
 
-                backgroundColor: @json(
-                    collect($ordersStatus)->pluck('color')
-                ),
+                        hoverOffset: 4,
 
-                borderWidth: 0,
+                    }]
 
-                hoverOffset: 4,
-
-            }]
-
-        },
-
-        options: {
-
-            responsive: true,
-
-            maintainAspectRatio: false,
-
-            cutout: '62%',
-
-            plugins: {
-
-                legend: {
-                    display: false,
                 },
 
-                tooltip: {
+                options: {
 
-                    backgroundColor: '#FFFFFF',
+                    responsive: true,
 
-                    titleColor: '#0F172A',
+                    maintainAspectRatio: false,
 
-                    bodyColor: '#475569',
+                    cutout: '62%',
 
-                    borderColor: '#E2E8F0',
+                    plugins: {
 
-                    borderWidth: 1,
+                        legend: {
+                            display: false,
+                        },
 
-                    cornerRadius: 10,
+                        tooltip: {
 
-                    padding: 12,
+                            backgroundColor: '#FFFFFF',
 
-                    displayColors: false,
+                            titleColor: '#0F172A',
+
+                            bodyColor: '#475569',
+
+                            borderColor: '#E2E8F0',
+
+                            borderWidth: 1,
+
+                            cornerRadius: 10,
+
+                            padding: 12,
+
+                            displayColors: false,
+
+                        }
+
+                    }
 
                 }
 
-            }
+            });
 
-        }
-
-    });
-
-});
-
-</script>
-
+        });
+    </script>
 @endpush

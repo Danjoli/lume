@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Authors;
 
+use App\Data\Authors\AuthorData;
+use App\Exceptions\Domain\CannotDeleteAuthorException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Authors\StoreAuthorRequest;
 use App\Http\Requests\Admin\Authors\UpdateAuthorRequest;
 use App\Models\Author;
-
 use App\Services\Admin\Authors\AuthorService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -25,7 +26,9 @@ class AuthorController extends Controller
     public function index(Request $request): View
     {
         return view('admin.authors.index', [
+
             'authors' => $this->authorService->paginate($request),
+
         ]);
     }
 
@@ -40,35 +43,55 @@ class AuthorController extends Controller
     /**
      * Armazena um novo autor.
      */
-    public function store(StoreAuthorRequest $request): RedirectResponse
-    {
+    public function store(
+        StoreAuthorRequest $request
+    ): RedirectResponse {
+
         $this->authorService->store(
-            $request->validated()
+
+            AuthorData::fromRequest($request)
+
         );
 
         return redirect()
+
             ->route('admin.authors.index')
-            ->with('success', 'Autor cadastrado com sucesso.');
+
+            ->with(
+                'success',
+                'Autor cadastrado com sucesso.'
+            );
+
     }
 
     /**
      * Exibe os detalhes do autor.
      */
-    public function show(Author $author): View
-    {
+    public function show(
+        Author $author
+    ): View {
+
         return view('admin.authors.show', [
+
             'author' => $author->loadCount('books'),
+
         ]);
+
     }
 
     /**
      * Exibe o formulário de edição.
      */
-    public function edit(Author $author): View
-    {
+    public function edit(
+        Author $author
+    ): View {
+
         return view('admin.authors.edit', [
+
             'author' => $author,
+
         ]);
+
     }
 
     /**
@@ -78,25 +101,58 @@ class AuthorController extends Controller
         UpdateAuthorRequest $request,
         Author $author
     ): RedirectResponse {
+
         $this->authorService->update(
+
             $author,
-            $request->validated()
+
+            AuthorData::fromRequest($request)
+
         );
 
         return redirect()
+
             ->route('admin.authors.index')
-            ->with('success', 'Autor atualizado com sucesso.');
+
+            ->with(
+                'success',
+                'Autor atualizado com sucesso.'
+            );
+
     }
 
     /**
      * Remove um autor.
      */
-    public function destroy(Author $author): RedirectResponse
-    {
-        $this->authorService->destroy($author);
+    public function destroy(
+        Author $author
+    ): RedirectResponse {
 
-        return redirect()
-            ->route('admin.authors.index')
-            ->with('success', 'Autor removido com sucesso.');
+        try {
+
+            $this->authorService->destroy($author);
+
+            return redirect()
+
+                ->route('admin.authors.index')
+
+                ->with(
+                    'success',
+                    'Autor removido com sucesso.'
+                );
+
+        } catch (CannotDeleteAuthorException $exception) {
+
+            return redirect()
+
+                ->route('admin.authors.index')
+
+                ->with(
+                    'error',
+                    $exception->getMessage()
+                );
+
+        }
+
     }
 }

@@ -1,161 +1,123 @@
-<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+<x-admin.cards.card class="overflow-hidden p-0">
 
-    <div class="overflow-x-auto">
+    <x-admin.tables.table>
 
-        <table class="min-w-full">
+        <x-admin.tables.thead>
 
-            <thead class="bg-slate-100">
+            <x-admin.tables.tr>
 
-                <tr>
+                <x-admin.tables.th>
 
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">
+                    Nome
 
-                        Nome
+                </x-admin.tables.th>
 
-                    </th>
+                <x-admin.tables.th>
 
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">
+                    Livros
 
-                        Livros
+                </x-admin.tables.th>
 
-                    </th>
+                <x-admin.tables.th>
 
-                    <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">
+                    Criado em
 
-                        Criado em
+                </x-admin.tables.th>
 
-                    </th>
+                <x-admin.tables.th class="text-right">
 
-                    <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">
+                    Ações
 
-                        Ações
+                </x-admin.tables.th>
 
-                    </th>
+            </x-admin.tables.tr>
 
-                </tr>
+        </x-admin.tables.thead>
 
-            </thead>
+        <x-admin.tables.tbody>
 
-            <tbody class="divide-y divide-slate-100">
+            @forelse($authors as $author)
+                <x-admin.tables.tr>
 
-                @forelse($authors as $author)
+                    <x-admin.tables.td>
 
-                    <tr class="transition hover:bg-slate-50">
+                        <div>
 
-                        <td class="px-6 py-4">
+                            <p class="font-medium text-slate-900">
 
-                            <div>
+                                {{ $author->name }}
 
-                                <p class="font-semibold text-slate-900">
+                            </p>
 
-                                    {{ $author->name }}
+                            <p class="text-xs text-slate-500">
 
-                                </p>
+                                {{ $author->slug }}
 
-                                @if($author->biography)
+                            </p>
 
-                                    <p class="mt-1 line-clamp-1 text-sm text-slate-500">
+                        </div>
 
-                                        {{ $author->biography }}
+                    </x-admin.tables.td>
 
-                                    </p>
+                    <x-admin.tables.td>
 
-                                @endif
+                        <x-badges.badge>
 
-                            </div>
+                            {{ $author->books_count }}
 
-                        </td>
+                        </x-badges.badge>
 
-                        <td class="px-6 py-4">
+                    </x-admin.tables.td>
 
-                            <span class="rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-700">
+                    <x-admin.tables.td>
 
-                                {{ $author->books_count }}
+                        {{ $author->created_at->format('d/m/Y') }}
 
-                            </span>
+                    </x-admin.tables.td>
 
-                        </td>
+                    <x-admin.tables.td>
 
-                        <td class="px-6 py-4 text-sm text-slate-500">
+                        <x-admin.tables.actions>
 
-                            {{ $author->created_at->format('d/m/Y') }}
+                            <x-buttons.icon-button :href="route('admin.authors.show', $author)" title="Visualizar">
 
-                        </td>
+                                <x-admin.icons.icon name="eye" color="yellow" />
 
-                        <td class="px-6 py-4">
+                            </x-buttons.icon-button>
 
-                            <div class="flex justify-end gap-2">
+                            <x-buttons.icon-button :href="route('admin.authors.edit', $author)" title="Editar">
 
-                                <a
-                                    href="{{ route('admin.authors.show', $author) }}"
-                                    class="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-                                >
-                                    Ver
-                                </a>
+                                <x-admin.icons.icon name="edit" color="blue" color="blue" />
 
-                                <a
-                                    href="{{ route('admin.authors.edit', $author) }}"
-                                    class="rounded-lg bg-amber-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-amber-600"
-                                >
-                                    Editar
-                                </a>
+                            </x-buttons.icon-button>
 
-                                <form
-                                    action="{{ route('admin.authors.destroy', $author) }}"
-                                    method="POST"
-                                    onsubmit="return confirm('Deseja realmente excluir este autor?')"
-                                >
+                            <form method="POST" action="{{ route('admin.authors.destroy', $author) }}"
+                                onsubmit="return confirm('Deseja realmente excluir este autor?')">
 
-                                    @csrf
+                                @csrf
+                                @method('DELETE')
 
-                                    @method('DELETE')
+                                <x-buttons.icon-button type="submit" title="Excluir">
 
-                                    <button
-                                        type="submit"
-                                        class="rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white transition hover:bg-red-700"
-                                    >
-                                        Excluir
-                                    </button>
+                                    <x-admin.icons.icon name="eye" color="red" />
 
-                                </form>
+                                </x-buttons.icon-button>
 
-                            </div>
+                            </form>
 
-                        </td>
+                        </x-admin.tables.actions>
 
-                    </tr>
+                    </x-admin.tables.td>
 
-                @empty
+                </x-admin.tables.tr>
 
-                    <tr>
+            @empty
 
-                        <td
-                            colspan="4"
-                            class="px-6 py-12 text-center text-slate-500"
-                        >
+                <x-admin.tables.empty message="Nenhum autor encontrado." />
+            @endforelse
 
-                            Nenhum autor encontrado.
+        </x-admin.tables.tbody>
 
-                        </td>
+    </x-admin.tables.table>
 
-                    </tr>
-
-                @endforelse
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-    @if($authors->hasPages())
-
-        <div class="border-t border-slate-200 px-6 py-4">
-
-            {{ $authors->links() }}
-
-        </div>
-
-    @endif
-
-</div>
+</x-admin.cards.card>
