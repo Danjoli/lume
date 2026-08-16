@@ -2,6 +2,10 @@
 
 namespace App\Services\Admin\Authors;
 
+use App\Actions\Authors\CreateAuthorAction;
+use App\Actions\Authors\DeleteAuthorAction;
+use App\Actions\Authors\UpdateAuthorAction;
+use App\Data\Authors\AuthorData;
 use App\Models\Author;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
@@ -12,6 +16,13 @@ class AuthorService
      * Quantidade de registros por página.
      */
     private const PER_PAGE = 10;
+
+    public function __construct(
+        private readonly CreateAuthorAction $createAuthorAction,
+        private readonly UpdateAuthorAction $updateAuthorAction,
+        private readonly DeleteAuthorAction $deleteAuthorAction,
+    ) {
+    }
 
     /**
      * Retorna os autores paginados.
@@ -44,9 +55,13 @@ class AuthorService
     /**
      * Cria um novo autor.
      */
-    public function store(array $data): Author
-    {
-        return Author::create($data);
+    public function store(
+        AuthorData $data
+    ): Author {
+
+        return $this->createAuthorAction
+            ->execute($data);
+
     }
 
     /**
@@ -54,28 +69,26 @@ class AuthorService
      */
     public function update(
         Author $author,
-        array $data
+        AuthorData $data
     ): Author {
 
-        $author->update($data);
+        return $this->updateAuthorAction
+            ->execute(
+                $author,
+                $data
+            );
 
-        return $author->refresh();
     }
 
     /**
      * Remove um autor.
      */
-    public function destroy(Author $author): void
-    {
-        if ($author->books()->exists()) {
+    public function destroy(
+        Author $author
+    ): void {
 
-            abort(
-                422,
-                'Este autor possui livros cadastrados e não pode ser removido.'
-            );
+        $this->deleteAuthorAction
+            ->execute($author);
 
-        }
-
-        $author->delete();
     }
 }

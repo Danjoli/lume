@@ -1,37 +1,30 @@
-<x-admin.app-layout title="Autor">
+<x-admin.app-layout :title="$author->name">
 
     <div class="space-y-8">
 
-        <div class="flex items-center justify-between">
+        <x-admin.headers.page-header :title="$author->name" description="Visualize os dados do autor.">
 
-            <div>
+            <div class="flex gap-3">
 
-                <h1 class="text-3xl font-bold text-slate-900">
+                <x-buttons.secondary-button href="{{ route('admin.authors.index') }}">
 
-                    {{ $author->name }}
+                    Voltar
 
-                </h1>
+                </x-buttons.secondary-button>
 
-                <p class="mt-1 text-slate-500">
+                <x-buttons.primary-button href="{{ route('admin.authors.edit', $author) }}">
 
-                    Detalhes do autor.
+                    Editar
 
-                </p>
+                </x-buttons.primary-button>
 
             </div>
 
-            <a
-                href="{{ route('admin.authors.edit', $author) }}"
-                class="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700"
-            >
-                Editar
-            </a>
-
-        </div>
+        </x-admin.headers.page-header>
 
         <x-admin.cards.card>
 
-            <dl class="grid gap-6 md:grid-cols-2">
+            <dl class="grid grid-cols-1 gap-6 md:grid-cols-2">
 
                 <div>
 
@@ -41,7 +34,7 @@
 
                     </dt>
 
-                    <dd class="mt-1 text-lg font-semibold text-slate-900">
+                    <dd class="mt-1 text-slate-900">
 
                         {{ $author->name }}
 
@@ -53,13 +46,13 @@
 
                     <dt class="text-sm font-medium text-slate-500">
 
-                        Livros cadastrados
+                        Slug
 
                     </dt>
 
-                    <dd class="mt-1 text-lg font-semibold text-slate-900">
+                    <dd class="mt-1 text-slate-900">
 
-                        {{ $author->books_count }}
+                        {{ $author->slug }}
 
                     </dd>
 
@@ -73,9 +66,9 @@
 
                     </dt>
 
-                    <dd class="mt-2 rounded-xl bg-slate-50 p-4 text-slate-700">
+                    <dd class="mt-1 text-slate-900">
 
-                        {{ $author->biography ?: 'Nenhuma biografia cadastrada.' }}
+                        {{ $author->biography ?: 'Não informada.' }}
 
                     </dd>
 
@@ -89,7 +82,7 @@
 
                     </dt>
 
-                    <dd class="mt-1 text-slate-700">
+                    <dd class="mt-1">
 
                         {{ $author->created_at->format('d/m/Y H:i') }}
 
@@ -105,7 +98,7 @@
 
                     </dt>
 
-                    <dd class="mt-1 text-slate-700">
+                    <dd class="mt-1">
 
                         {{ $author->updated_at->format('d/m/Y H:i') }}
 

@@ -1,17 +1,25 @@
 <x-admin.guest-layout>
 
-    <div class="flex justify-center mb-6">
+    <div class="mb-6 flex justify-center">
 
-        {{-- <a href="{{ route('home') }}">
-            <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-        </a> --}}
+        <a
+            href="{{ route('store.home') }}"
+            class="
+                text-3xl
+                font-bold
+                tracking-[-0.04em]
+                text-[#062B25]
+                transition-opacity
+                duration-200
+                hover:opacity-80
+            "
+        >
+            Lume
+        </a>
 
     </div>
 
-    <x-auth-session-status
-        class="mb-4"
-        :status="session('status')"
-    />
+    <x-auth.auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('admin.login.store') }}">
 
@@ -19,59 +27,39 @@
 
         <div>
 
-            <x-input-label
-                for="email"
-                :value="__('Email')"
-            />
+            <x-forms.label for="email" :value="__('Email')" />
 
-            <x-text-input
-                id="email"
-                class="block mt-1 w-full"
-                type="email"
-                name="email"
-                :value="old('email')"
-                required
-                autofocus
-                autocomplete="username"
-            />
+            <x-forms.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
+                autofocus autocomplete="username" />
 
-            <x-input-error
-                class="mt-2"
-                :messages="$errors->get('email')"
+            <x-forms.error
+                field="email"
             />
 
         </div>
 
         <div class="mt-4">
 
-            <x-input-label
-                for="password"
-                :value="__('Senha')"
-            />
+            <x-forms.label for="password" :value="__('Senha')" />
 
-            <x-text-input
-                id="password"
-                class="block mt-1 w-full"
-                type="password"
-                name="password"
-                required
-                autocomplete="current-password"
-            />
+            <x-forms.input id="password" class="block mt-1 w-full" type="password" name="password" required
+                autocomplete="current-password" />
 
-            <x-input-error
-                class="mt-2"
-                :messages="$errors->get('password')"
+            <x-forms.error
+                field="password"
             />
 
         </div>
 
         <div class="mt-6">
 
-            <x-primary-button class="w-full justify-center">
+            <x-buttons.primary-button
+                type="submit"
+                class="w-full justify-center">
 
                 Entrar
 
-            </x-primary-button>
+            </x-buttons.primary-button>
 
         </div>
 

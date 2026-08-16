@@ -1,47 +1,34 @@
-<div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+<x-admin.cards.card>
 
-    <form
-        action="{{ route('admin.authors.index') }}"
-        method="GET"
-    >
+    <form method="GET" action="{{ route('admin.authors.index') }}">
 
         <div class="flex flex-col gap-4 lg:flex-row lg:items-end">
 
             <div class="flex-1">
 
-                <label
-                    for="search"
-                    class="mb-2 block text-sm font-medium text-slate-700"
-                >
-                    Pesquisar
-                </label>
+                <x-forms.label for="search">
 
-                <input
-                    type="text"
-                    id="search"
-                    name="search"
-                    value="{{ request('search') }}"
-                    placeholder="Nome do autor..."
-                    class="w-full rounded-xl border border-slate-300 px-4 py-3 shadow-sm transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
-                >
+                    Pesquisar
+
+                </x-forms.label>
+
+                <x-forms.search id="search" name="search" placeholder="Nome do autor..." />
 
             </div>
 
             <div class="flex gap-3">
 
-                <button
-                    type="submit"
-                    class="rounded-xl bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition hover:bg-indigo-700"
-                >
-                    Buscar
-                </button>
+                <x-buttons.primary-button type="submit">
 
-                <a
-                    href="{{ route('admin.authors.index') }}"
-                    class="rounded-xl border border-slate-300 px-6 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-                >
+                    Filtrar
+
+                </x-buttons.primary-button>
+
+                <x-buttons.secondary-button href="{{ route('admin.authors.index') }}">
+
                     Limpar
-                </a>
+
+                </x-buttons.secondary-button>
 
             </div>
 
@@ -49,4 +36,4 @@
 
     </form>
 
-</div>
+</x-admin.cards.card>

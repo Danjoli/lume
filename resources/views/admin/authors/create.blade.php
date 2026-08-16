@@ -2,36 +2,19 @@
 
     <div class="space-y-8">
 
-        <div>
+        <x-admin.headers.page-header title="Novo Autor" description="Cadastre um novo autor.">
 
-            <h1 class="text-3xl font-bold text-slate-900">
+            <x-buttons.secondary-button :href="route('admin.authors.index')">
 
-                Novo Autor
+                Voltar
 
-            </h1>
+            </x-buttons.secondary-button>
 
-            <p class="mt-1 text-slate-500">
+        </x-admin.headers.page-header>
 
-                Cadastre um novo autor.
+        <x-alerts.flash />
 
-            </p>
-
-        </div>
-
-        <x-admin.cards.card>
-
-            <form
-                action="{{ route('admin.authors.store') }}"
-                method="POST"
-            >
-
-                @csrf
-
-                @include('admin.authors._partials.form')
-
-            </form>
-
-        </x-admin.cards.card>
+        @include('admin.authors._partials.form')
 
     </div>
 

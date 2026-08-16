@@ -35,7 +35,6 @@
             <tbody class="divide-y divide-slate-100">
 
                 @forelse($recentOrders as $order)
-
                     <tr class="transition hover:bg-slate-50">
 
                         <td class="px-2 py-4 text-sm font-medium text-slate-900">
@@ -52,17 +51,15 @@
 
                         <td class="py-4">
 
-                            <x-admin.badges.badge
-                                :variant="match($order->status) {
-                                    'pending' => 'yellow',
-                                    'paid' => 'green',
-                                    'shipped' => 'blue',
-                                    'cancelled' => 'red',
-                                    default => 'gray',
-                                }"
-                            >
-                                {{ ucfirst($order->status) }}
-                            </x-admin.badges.badge>
+                            <x-badges.badge :variant="match ($order->status) {
+                                'pending' => 'yellow',
+                                'paid' => 'green',
+                                'shipped' => 'blue',
+                                'cancelled' => 'red',
+                                default => 'gray',
+                            }">
+                                {{ ucfirst($order->status->value) }}
+                            </x-badges.badge>
 
                         </td>
 
@@ -76,15 +73,11 @@
 
                     <tr>
 
-                        <td
-                            colspan="5"
-                            class="py-8 text-center text-sm text-slate-500"
-                        >
+                        <td colspan="5" class="py-8 text-center text-sm text-slate-500">
                             Nenhum pedido encontrado.
                         </td>
 
                     </tr>
-
                 @endforelse
 
             </tbody>
@@ -95,26 +88,14 @@
 
     <div class="mt-auto pt-6">
 
-        <a
-            href="#"
-            class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 transition hover:text-indigo-700"
-        >
+        <a href="#"
+            class="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 transition hover:text-indigo-700">
 
             Ver todos os pedidos
 
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9 5l7 7-7 7"
-                />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
 
         </a>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-@include('layouts.admin.head')
+@include('layouts.admin._partials.head')
 
 <body class="min-h-screen bg-gray-100 antialiased">
 
@@ -50,7 +50,7 @@
 
     </div>
 
-    @include('layouts.admin.scripts')
+    @include('layouts.admin._partials.scripts')
 
 </body>
 

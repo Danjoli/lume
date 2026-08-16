@@ -2,38 +2,19 @@
 
     <div class="space-y-8">
 
-        <div>
+        <x-admin.headers.page-header title="Editar Autor" description="Atualize as informações do autor.">
 
-            <h1 class="text-3xl font-bold text-slate-900">
+            <x-buttons.secondary-button :href="route('admin.authors.index')">
 
-                Editar Autor
+                Voltar
 
-            </h1>
+            </x-buttons.secondary-button>
 
-            <p class="mt-1 text-slate-500">
+        </x-admin.headers.page-header>
 
-                Atualize os dados do autor.
+        <x-alerts.flash />
 
-            </p>
-
-        </div>
-
-        <x-admin.cards.card>
-
-            <form
-                action="{{ route('admin.authors.update', $author) }}"
-                method="POST"
-            >
-
-                @csrf
-
-                @method('PUT')
-
-                @include('admin.authors._partials.form')
-
-            </form>
-
-        </x-admin.cards.card>
+        @include('admin.authors._partials.form')
 
     </div>
 
