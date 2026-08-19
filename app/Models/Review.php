@@ -14,17 +14,11 @@ class Review extends Model
      * @var list<string>
      */
     protected $fillable = [
-
         'user_id',
-
         'book_id',
-
         'rating',
-
         'comment',
-
         'is_approved',
-
     ];
 
     /**
@@ -33,11 +27,8 @@ class Review extends Model
     protected function casts(): array
     {
         return [
-
             'rating' => 'integer',
-
             'is_approved' => 'boolean',
-
         ];
     }
 
@@ -76,18 +67,14 @@ class Review extends Model
     public function approve(): void
     {
         $this->update([
-
             'is_approved' => true,
-
         ]);
     }
 
     public function reject(): void
     {
         $this->update([
-
             'is_approved' => false,
-
         ]);
     }
 }

@@ -22,7 +22,6 @@ class UpdateShipmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-
             /*
             |--------------------------------------------------------------------------
             | Transportadora
@@ -81,7 +80,6 @@ class UpdateShipmentRequest extends FormRequest
                 'numeric',
                 'min:0',
             ],
-
         ];
     }
 
@@ -91,17 +89,11 @@ class UpdateShipmentRequest extends FormRequest
     public function attributes(): array
     {
         return [
-
             'carrier' => 'transportadora',
-
             'tracking_code' => 'código de rastreio',
-
             'service' => 'serviço',
-
             'status' => 'status',
-
             'shipping_cost' => 'valor do frete',
-
         ];
     }
 }

@@ -1,4 +1,4 @@
-<x-store.layout.app title="Livros">
+<x-store.app-layout title="Livros">
 
     <section class="py-10">
 
@@ -95,4 +95,5 @@
 
     </section>
 
-</x-store.layout.app>
+</x-store.app-layout>
+

@@ -24,19 +24,13 @@ readonly class AdminData
     ): self {
 
         return new self(
-
             name: $request->string('name')->toString(),
-
             email: $request->string('email')->toString(),
-
             role: $request->string('role')->toString(),
-
             password: $request->filled('password')
                 ? $request->string('password')->toString()
                 : null,
-
         );
-
     }
 
     /**
@@ -45,13 +39,9 @@ readonly class AdminData
     public function toArray(): array
     {
         $data = [
-
             'name' => $this->name,
-
             'email' => $this->email,
-
             'role' => $this->role,
-
         ];
 
         if ($this->password !== null) {

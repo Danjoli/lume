@@ -44,11 +44,8 @@ class StoreCategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-
             'name.required' => 'O nome da categoria é obrigatório.',
-
             'name.unique' => 'Já existe uma categoria com este nome.',
-
         ];
     }
 }

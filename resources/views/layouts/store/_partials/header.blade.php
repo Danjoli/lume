@@ -39,28 +39,28 @@
             </a>
 
             <a
-                href="#novidades"
+                href="{{ route('store.catalog.index', ['sort' => 'newest']) }}"
                 class="transition hover:text-[#0D5147]"
             >
                 Novidades
             </a>
 
             <a
-                href="#mais-vendidos"
+                href="{{ route('store.catalog.index', ['sort' => 'best_sellers']) }}"
                 class="transition hover:text-[#0D5147]"
             >
                 Mais Vendidos
             </a>
 
             <a
-                href="#autores"
+                href="{{ route('store.authors.index') }}"
                 class="transition hover:text-[#0D5147]"
             >
                 Autores
             </a>
 
             <a
-                href="#promocoes"
+                href="{{ route('store.catalog.index', ['promotion' => 1]) }}"
                 class="transition hover:text-[#0D5147]"
             >
                 Promoções
@@ -105,16 +105,7 @@
         </form>
 
         {{-- Conta --}}
-        <a
-            href="{{ route('login') }}"
-            class="hidden items-center gap-2 text-sm font-medium md:flex"
-        >
-
-            <x-heroicon-o-user class="h-6 w-6" />
-
-            Entrar
-
-        </a>
+        <x-store.profile.menu />
 
         {{-- Carrinho --}}
         <a
@@ -124,17 +115,18 @@
 
             <x-heroicon-o-shopping-cart class="h-7 w-7" />
 
-            <span
-                class="
-                    absolute -right-2 -top-2
-                    flex h-5 min-w-5 items-center justify-center
-                    rounded-full bg-[#062B25] px-1
-                    text-[10px] font-bold text-white
-                "
-            >
-                {{ $cartCount ?? 0 }}
-            </span>
-
+            @if (($cartCount ?? 0) > 0)
+                <span
+                    class="
+                        absolute -right-2 -top-2
+                        flex h-5 min-w-5 items-center justify-center
+                        rounded-full bg-[#062B25] px-1
+                        text-[10px] font-bold text-white
+                    "
+                >
+                    {{ min($cartCount, 99) }}
+                </span>
+            @endif
         </a>
 
     </div>

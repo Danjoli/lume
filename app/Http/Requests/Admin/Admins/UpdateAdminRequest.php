@@ -54,7 +54,7 @@ class UpdateAdminRequest extends FormRequest
             'role' => [
                 'required',
                 'string',
-                'in:' . implode(',', array_keys(Admin::ROLES)),
+                'in:' . implode(',', array_keys(Admin::ROLES())),
             ],
 
             /*
@@ -66,7 +66,6 @@ class UpdateAdminRequest extends FormRequest
             'password' => [
                 'nullable',
                 'confirmed',
-
                 Password::defaults(),
             ],
 
@@ -79,15 +78,10 @@ class UpdateAdminRequest extends FormRequest
     public function attributes(): array
     {
         return [
-
             'name' => 'nome',
-
             'email' => 'e-mail',
-
             'role' => 'perfil',
-
             'password' => 'senha',
-
         ];
     }
 }

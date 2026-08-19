@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Reviews;
 use App\Exceptions\Domain\CannotApproveReviewException;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
-use App\Services\Admin\Reviews\ReviewService;
+use App\Services\Admin\ReviewService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

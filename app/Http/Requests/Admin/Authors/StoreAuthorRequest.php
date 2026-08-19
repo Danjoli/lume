@@ -46,11 +46,8 @@ class StoreAuthorRequest extends FormRequest
     public function attributes(): array
     {
         return [
-
             'name' => 'nome',
-
             'biography' => 'biografia',
-
         ];
     }
 
@@ -62,13 +59,9 @@ class StoreAuthorRequest extends FormRequest
     public function messages(): array
     {
         return [
-
             'name.required' => 'O nome é obrigatório.',
-
             'name.unique' => 'Já existe um autor com este nome.',
-
             'name.max' => 'O nome deve possuir no máximo :max caracteres.',
-
         ];
     }
 }

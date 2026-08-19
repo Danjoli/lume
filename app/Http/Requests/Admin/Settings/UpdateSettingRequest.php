@@ -3,32 +3,18 @@
 namespace App\Http\Requests\Admin\Settings;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSettingRequest extends FormRequest
 {
-    /**
-     * Determina se o usuário está autorizado.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Regras de validação.
-     *
-     * @return array<string, mixed>
-     */
     public function rules(): array
     {
         return [
-
-            /*
-            |--------------------------------------------------------------------------
-            | Loja
-            |--------------------------------------------------------------------------
-            */
-
             'store_name' => [
                 'required',
                 'string',
@@ -50,16 +36,11 @@ class UpdateSettingRequest extends FormRequest
             'description' => [
                 'nullable',
                 'string',
+                'max:2000',
             ],
 
-            /*
-            |--------------------------------------------------------------------------
-            | Contato
-            |--------------------------------------------------------------------------
-            */
-
             'email' => [
-                'required',
+                'nullable',
                 'email',
                 'max:255',
             ],
@@ -76,16 +57,10 @@ class UpdateSettingRequest extends FormRequest
                 'max:20',
             ],
 
-            /*
-            |--------------------------------------------------------------------------
-            | Endereço
-            |--------------------------------------------------------------------------
-            */
-
             'cep' => [
                 'nullable',
                 'string',
-                'max:10',
+                'max:9',
             ],
 
             'street' => [
@@ -124,71 +99,23 @@ class UpdateSettingRequest extends FormRequest
                 'size:2',
             ],
 
-            /*
-            |--------------------------------------------------------------------------
-            | Redes Sociais
-            |--------------------------------------------------------------------------
-            */
-
-            'facebook' => [
-                'nullable',
-                'url',
-                'max:255',
-            ],
-
-            'instagram' => [
-                'nullable',
-                'url',
-                'max:255',
-            ],
-
-            'linkedin' => [
-                'nullable',
-                'url',
-                'max:255',
-            ],
-
-            'youtube' => [
-                'nullable',
-                'url',
-                'max:255',
-            ],
-
-            'tiktok' => [
-                'nullable',
-                'url',
-                'max:255',
-            ],
-
-            'twitter' => [
-                'nullable',
-                'url',
-                'max:255',
-            ],
-
-            /*
-            |--------------------------------------------------------------------------
-            | Aparência
-            |--------------------------------------------------------------------------
-            */
+            'instagram' => ['nullable', 'url', 'max:255'],
+            'facebook' => ['nullable', 'url', 'max:255'],
+            'youtube' => ['nullable', 'url', 'max:255'],
+            'tiktok' => ['nullable', 'url', 'max:255'],
+            'linkedin' => ['nullable', 'url', 'max:255'],
 
             'logo' => [
                 'nullable',
-                'string',
-                'max:255',
+                'image',
+                'max:2048',
             ],
 
             'favicon' => [
                 'nullable',
-                'string',
-                'max:255',
+                'image',
+                'max:1024',
             ],
-
-            /*
-            |--------------------------------------------------------------------------
-            | SEO
-            |--------------------------------------------------------------------------
-            */
 
             'meta_title' => [
                 'nullable',
@@ -199,61 +126,54 @@ class UpdateSettingRequest extends FormRequest
             'meta_description' => [
                 'nullable',
                 'string',
-            ],
-
-            'keywords' => [
-                'nullable',
-                'string',
                 'max:500',
             ],
 
-            /*
-            |--------------------------------------------------------------------------
-            | Pagamento
-            |--------------------------------------------------------------------------
-            */
-
-            'payment_gateway' => [
-                'nullable',
-                'string',
-                'max:100',
+            'minimum_order_amount' => [
+                'required',
+                'numeric',
+                'min:0',
             ],
 
-            'pix_key' => [
+            'allow_out_of_stock_sales' => [
                 'nullable',
-                'string',
-                'max:255',
+                'boolean',
             ],
 
             'currency' => [
                 'required',
-                'string',
-                'max:10',
+                Rule::in([
+                    'BRL',
+                ]),
             ],
 
-            /*
-            |--------------------------------------------------------------------------
-            | Frete
-            |--------------------------------------------------------------------------
-            */
-
-            'default_carrier' => [
+            'origin_cep' => [
                 'nullable',
                 'string',
-                'max:100',
+                'max:9',
             ],
 
-            'origin_zipcode' => [
+            'free_shipping_threshold' => [
                 'nullable',
-                'string',
-                'max:10',
+                'numeric',
+                'min:0',
             ],
 
-            /*
-            |--------------------------------------------------------------------------
-            | Email
-            |--------------------------------------------------------------------------
-            */
+            'low_stock_threshold' => [
+                'required',
+                'integer',
+                'min:0',
+            ],
+
+            'reviews_require_purchase' => [
+                'nullable',
+                'boolean',
+            ],
+
+            'reviews_auto_approve' => [
+                'nullable',
+                'boolean',
+            ],
 
             'sender_name' => [
                 'nullable',
@@ -266,81 +186,6 @@ class UpdateSettingRequest extends FormRequest
                 'email',
                 'max:255',
             ],
-
-        ];
-    }
-
-    /**
-     * Nome amigável dos campos.
-     */
-    public function attributes(): array
-    {
-        return [
-
-            'store_name' => 'nome da loja',
-
-            'company_name' => 'razão social',
-
-            'cnpj' => 'CNPJ',
-
-            'description' => 'descrição',
-
-            'email' => 'e-mail',
-
-            'phone' => 'telefone',
-
-            'whatsapp' => 'WhatsApp',
-
-            'cep' => 'CEP',
-
-            'street' => 'rua',
-
-            'number' => 'número',
-
-            'complement' => 'complemento',
-
-            'neighborhood' => 'bairro',
-
-            'city' => 'cidade',
-
-            'state' => 'estado',
-
-            'facebook' => 'Facebook',
-
-            'instagram' => 'Instagram',
-
-            'linkedin' => 'LinkedIn',
-
-            'youtube' => 'YouTube',
-
-            'tiktok' => 'TikTok',
-
-            'twitter' => 'X',
-
-            'logo' => 'logo',
-
-            'favicon' => 'favicon',
-
-            'meta_title' => 'título SEO',
-
-            'meta_description' => 'descrição SEO',
-
-            'keywords' => 'palavras-chave',
-
-            'payment_gateway' => 'gateway de pagamento',
-
-            'pix_key' => 'chave Pix',
-
-            'currency' => 'moeda',
-
-            'default_carrier' => 'transportadora',
-
-            'origin_zipcode' => 'CEP de origem',
-
-            'sender_name' => 'nome do remetente',
-
-            'sender_email' => 'e-mail do remetente',
-
         ];
     }
 }

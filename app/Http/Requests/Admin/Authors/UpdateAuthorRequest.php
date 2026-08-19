@@ -23,26 +23,18 @@ class UpdateAuthorRequest extends FormRequest
     public function rules(): array
     {
         return [
-
             'name' => [
-
                 'required',
-
                 'string',
-
                 'max:255',
-
                 Rule::unique('authors', 'name')
                     ->ignore($this->route('author')),
 
             ],
 
             'biography' => [
-
                 'nullable',
-
                 'string',
-
             ],
 
         ];
@@ -56,11 +48,8 @@ class UpdateAuthorRequest extends FormRequest
     public function attributes(): array
     {
         return [
-
             'name' => 'nome',
-
             'biography' => 'biografia',
-
         ];
     }
 
@@ -72,13 +61,9 @@ class UpdateAuthorRequest extends FormRequest
     public function messages(): array
     {
         return [
-
             'name.required' => 'O nome é obrigatório.',
-
             'name.unique' => 'Já existe um autor com este nome.',
-
             'name.max' => 'O nome deve possuir no máximo :max caracteres.',
-
         ];
     }
 }

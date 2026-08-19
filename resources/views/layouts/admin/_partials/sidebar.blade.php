@@ -1,6 +1,13 @@
-<aside class="flex h-screen w-72 flex-col
-    border-r border-slate-800
-    text-white">
+<aside
+    x-cloak
+    x-show="sidebarOpen"
+    x-transition
+    class="
+        flex h-screen w-72 shrink-0 flex-col
+        border-r border-slate-800
+        text-white
+    "
+>
 
     {{-- Logo --}}
     @include('layouts.admin._partials.sidebar-logo')

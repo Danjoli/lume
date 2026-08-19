@@ -38,7 +38,6 @@ class UpdateProfileRequest extends FormRequest
                 Rule::unique('admins')
                     ->ignore(auth('admin')->id()),
             ],
-
         ];
     }
 }

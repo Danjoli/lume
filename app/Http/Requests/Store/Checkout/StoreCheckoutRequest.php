@@ -2,14 +2,16 @@
 
 namespace App\Http\Requests\Store\Checkout;
 
+use App\Enums\PaymentMethod;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreCheckoutRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->check();
+        return true;
     }
 
     public function rules(): array
@@ -25,6 +27,28 @@ class StoreCheckoutRequest extends FormRequest
                         $this->user()->id
                     ),
             ],
+
+            'cpf' => [
+                'required',
+                'string',
+                'max:14',
+            ],
+
+            'phone' => [
+                'required',
+                'string',
+                'max:20',
+            ],
+
+            'shipping_service' => [
+                'required',
+                'string',
+            ],
+
+            'payment_method' => [
+                'required',
+                new Enum(PaymentMethod::class),
+            ],
         ];
     }
 
@@ -36,6 +60,21 @@ class StoreCheckoutRequest extends FormRequest
 
             'address_id.exists' =>
                 'O endereço selecionado é inválido.',
+
+            'cpf.required' =>
+                'Informe seu CPF.',
+
+            'phone.required' =>
+                'Informe seu telefone.',
+
+            'shipping_service.required' =>
+                'Selecione uma forma de entrega.',
+
+            'payment_method.required' =>
+                'Selecione uma forma de pagamento.',
+
+            'payment_method.enum' =>
+                'A forma de pagamento selecionada é inválida.',
         ];
     }
 }

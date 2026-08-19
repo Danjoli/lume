@@ -19,22 +19,16 @@ class ProcessOrderAction
         return DB::transaction(function () use ($order) {
 
             if ($order->status !== OrderStatus::PENDING) {
-
                 throw new InvalidOrderStatusException(
                     'O pedido não pode ser processado.'
                 );
-
             }
 
             $order->update([
-
                 'status' => OrderStatus::PROCESSING,
-
             ]);
 
             return $order->refresh();
-
         });
-
     }
 }

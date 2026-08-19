@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Store;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Store\Cart\StoreCartItemRequest;
+use App\Http\Requests\Store\Cart\ToggleCartItemRequest;
 use App\Http\Requests\Store\Cart\UpdateCartItemRequest;
 use App\Models\CartItem;
 use App\Services\Store\CartService;
@@ -24,7 +25,7 @@ class CartController extends Controller
         ]);
     }
 
-    public function store(
+    public function add(
         StoreCartItemRequest $request
     ): RedirectResponse {
         $this->cartService->add(
@@ -32,12 +33,25 @@ class CartController extends Controller
             $request->integer('quantity')
         );
 
-        return redirect()
-            ->route('store.cart.index')
-            ->with(
-                'success',
-                'Livro adicionado ao carrinho.'
-            );
+        return back()->with(
+            'success',
+            'Livro adicionado ao carrinho.'
+        );
+    }
+
+    public function toggle(
+        ToggleCartItemRequest $request
+    ): RedirectResponse {
+        $added = $this->cartService->toggle(
+            $request->integer('book_id')
+        );
+
+        return back()->with(
+            'success',
+            $added
+                ? 'Livro adicionado ao carrinho.'
+                : 'Livro removido do carrinho.'
+        );
     }
 
     public function update(

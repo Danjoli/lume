@@ -17,6 +17,7 @@ class CartItem extends Model
         'cart_id',
         'book_id',
         'quantity',
+        'unit_price',
     ];
 
     /**
@@ -26,6 +27,7 @@ class CartItem extends Model
     {
         return [
             'quantity' => 'integer',
+            'unit_price' => 'decimal:2',
         ];
     }
 
@@ -53,6 +55,6 @@ class CartItem extends Model
 
     public function getSubtotalAttribute(): float
     {
-        return (float) ($this->book?->current_price ?? 0) * $this->quantity;
+        return (float) $this->unit_price * $this->quantity;
     }
 }

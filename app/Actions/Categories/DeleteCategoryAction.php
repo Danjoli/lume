@@ -15,9 +15,7 @@ class DeleteCategoryAction
     ): void {
 
         if ($category->books()->exists()) {
-
             throw new CannotDeleteCategoryException();
-
         }
 
         $category->delete();

@@ -24,20 +24,14 @@ class CancelOrderAction
             ], true)) {
 
                 throw new CannotCancelOrderException();
-
             }
 
             $order->update([
-
                 'status' => OrderStatus::CANCELLED,
-
                 'cancelled_at' => now(),
-
             ]);
 
             return $order->refresh();
-
         });
-
     }
 }

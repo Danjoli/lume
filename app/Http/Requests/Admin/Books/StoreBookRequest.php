@@ -223,47 +223,26 @@ class StoreBookRequest extends FormRequest
     public function attributes(): array
     {
         return [
-
             'title' => 'título',
-
             'isbn' => 'ISBN',
-
             'description' => 'descrição',
-
             'synopsis' => 'sinopse',
-
             'price' => 'preço',
-
             'sale_price' => 'preço promocional',
-
             'stock' => 'estoque',
-
             'pages' => 'páginas',
-
             'language' => 'idioma',
-
             'edition' => 'edição',
-
             'format' => 'formato',
-
             'publication_date' => 'data de publicação',
-
             'weight' => 'peso',
-
             'height' => 'altura',
-
             'width' => 'largura',
-
             'length' => 'comprimento',
-
             'publisher_id' => 'editora',
-
             'authors' => 'autores',
-
             'categories' => 'categorias',
-
             'images' => 'imagens',
-
         ];
     }
 }

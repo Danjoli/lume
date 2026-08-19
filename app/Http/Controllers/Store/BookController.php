@@ -14,11 +14,15 @@ class BookController extends Controller
     ) {
     }
 
-    public function show(Book $book): View
-    {
-        return view('store.books.show', [
-            'book' => $this->bookService->find($book),
-            'relatedBooks' => $this->bookService->related($book),
-        ]);
+    /**
+     * Exibe os detalhes de um livro.
+     */
+    public function show(
+        Book $book
+    ): View {
+        return view(
+            'store.books.show',
+            $this->bookService->getBookData($book)
+        );
     }
 }

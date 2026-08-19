@@ -47,7 +47,7 @@
         </li>
 
         <li>
-            <x-admin.sidebar.menu-item label="Configurações" route="admin.settings.index" icon="settings" />
+            <x-admin.sidebar.menu-item label="Configurações" route="admin.settings.edit" icon="settings" />
         </li>
 
     </ul>

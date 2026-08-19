@@ -38,7 +38,7 @@ class CatalogService
             ->with([
                 'authors',
                 'publisher',
-                'primaryImage',
+                'images',
             ])
 
             ->withAvg('reviews', 'rating')

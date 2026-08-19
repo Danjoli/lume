@@ -2,35 +2,61 @@
 
 namespace App\Services\Store;
 
+use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
+use App\Enums\ShipmentStatus;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\User;
+use App\Notifications\Orders\OrderCreatedNotification;
+use App\Services\Admin\NotificationService;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class CheckoutService
 {
+    public function __construct(
+        private readonly NotificationService $notificationService,
+    ) {
+    }
+
     public function getCheckoutData(): array
     {
         $cart = $this->getCart();
 
+        $addresses = $this->user()
+            ->addresses()
+            ->orderByDesc('is_default')
+            ->latest()
+            ->get();
+
+        $selectedAddress = $addresses
+            ->firstWhere('is_default', true)
+            ?? $addresses->first();
+
+        $shippingOptions = $selectedAddress
+            ? $this->getShippingOptions(
+                $selectedAddress,
+                $cart
+            )
+            : collect();
+
         return [
             'cart' => $cart,
-
-            'addresses' => auth()
-                ->user()
-                ->addresses()
-                ->orderByDesc('is_default')
-                ->latest()
-                ->get(),
+            'addresses' => $addresses,
+            'shippingOptions' => $shippingOptions,
+            'shippingPrice' => 0,
         ];
     }
 
     /**
-     * Cria o pedido a partir do carrinho.
+     * @param array<string, mixed> $data
      */
     public function checkout(
-        int $addressId
+        array $data
     ): Order {
         $cart = $this->getCart();
 
@@ -40,24 +66,27 @@ class CheckoutService
             ]);
         }
 
-        $address = Address::query()
-            ->where('user_id', auth()->id())
-            ->findOrFail($addressId);
+        $address = $this->getAddress(
+            (int) $data['address_id']
+        );
 
         $this->validateStock($cart);
 
-        return DB::transaction(function () use (
+        $shippingOption = $this->getShippingOption(
+            $address,
             $cart,
-            $address
-        ) {
+            $data['shipping_service']
+        );
 
+        $order = DB::transaction(function () use (
+            $cart,
+            $address,
+            $shippingOption,
+            $data
+        ) {
             $subtotal = $this->calculateSubtotal($cart);
 
-            /*
-             * Por enquanto o frete fica zerado.
-             * Depois conectamos ao serviço de frete.
-             */
-            $shipping = 0;
+            $shipping = (float) $shippingOption['price'];
 
             $discount = 0;
 
@@ -67,11 +96,14 @@ class CheckoutService
                 - $discount;
 
             $order = Order::create([
-                'user_id' => auth()->id(),
+                'user_id' => $this->user()->id,
 
-                'status' => 'pending',
+                'status' => OrderStatus::PENDING,
 
-                'payment_status' => 'pending',
+                'payment_status' => PaymentStatus::PENDING,
+
+                'payment_method' =>
+                    $data['payment_method'],
 
                 'subtotal' => $subtotal,
 
@@ -81,6 +113,9 @@ class CheckoutService
 
                 'total' => $total,
 
+                'cpf' =>
+                    $data['cpf'],
+
                 /*
                  * Snapshot do endereço.
                  */
@@ -88,7 +123,7 @@ class CheckoutService
                     $address->recipient_name,
 
                 'phone' =>
-                    $address->phone,
+                    $data['phone'],
 
                 'street' =>
                     $address->street,
@@ -112,8 +147,10 @@ class CheckoutService
                     $address->cep,
             ]);
 
+            /*
+             * Snapshot dos itens comprados.
+             */
             foreach ($cart->items as $item) {
-
                 $book = $item->book;
 
                 $unitPrice =
@@ -132,19 +169,44 @@ class CheckoutService
                         $unitPrice,
 
                     'subtotal' =>
-                        $unitPrice
+                        (float) $unitPrice
                         * $item->quantity,
                 ]);
             }
 
             /*
-             * Depois de criar o pedido,
-             * esvaziamos o carrinho.
+             * Dados logísticos do pedido.
+             */
+            $order->shipment()->create([
+                'carrier' =>
+                    $shippingOption['carrier']
+                    ?? null,
+
+                'service' =>
+                    $shippingOption['id'],
+
+                'status' =>
+                    ShipmentStatus::PENDING,
+
+                'shipping_cost' =>
+                    $shipping,
+            ]);
+
+            /*
+             * Esvazia o carrinho após
+             * criar o pedido com sucesso.
              */
             $cart->items()->delete();
 
             return $order->refresh();
         });
+
+        $this->notificationService
+            ->notifyAdmins(
+                new OrderCreatedNotification($order)
+            );
+
+        return $order;
     }
 
     private function getCart(): Cart
@@ -156,7 +218,7 @@ class CheckoutService
             ])
             ->where(
                 'user_id',
-                auth()->id()
+                $this->user()->id
             )
             ->first();
 
@@ -169,17 +231,27 @@ class CheckoutService
         return $cart;
     }
 
+    private function getAddress(
+        int $addressId
+    ): Address {
+        return Address::query()
+            ->where(
+                'user_id',
+                $this->user()->id
+            )
+            ->findOrFail($addressId);
+    }
+
     private function calculateSubtotal(
         Cart $cart
     ): float {
         return (float) $cart->items->sum(
             function ($item) {
-
                 $price =
                     $item->book->sale_price
                     ?? $item->book->price;
 
-                return $price
+                return (float) $price
                     * $item->quantity;
             }
         );
@@ -189,7 +261,6 @@ class CheckoutService
         Cart $cart
     ): void {
         foreach ($cart->items as $item) {
-
             if (
                 $item->quantity
                 > $item->book->stock
@@ -200,5 +271,63 @@ class CheckoutService
                 ]);
             }
         }
+    }
+
+    /**
+     * Temporário até integrar
+     * o serviço real de frete.
+     */
+    private function getShippingOptions(
+        Address $address,
+        Cart $cart
+    ): Collection {
+        return collect([
+            [
+                'id' => 'standard',
+                'name' => 'Entrega padrão',
+                'carrier' => 'Transportadora',
+                'price' => 14.90,
+                'delivery_time' => '5 a 8',
+            ],
+
+            [
+                'id' => 'express',
+                'name' => 'Entrega expressa',
+                'carrier' => 'Transportadora',
+                'price' => 24.90,
+                'delivery_time' => '2 a 4',
+            ],
+        ]);
+    }
+
+    private function getShippingOption(
+        Address $address,
+        Cart $cart,
+        string $service
+    ): array {
+        $option = $this->getShippingOptions(
+            $address,
+            $cart
+        )->firstWhere(
+            'id',
+            $service
+        );
+
+        if (! $option) {
+            throw ValidationException::withMessages([
+                'shipping_service' =>
+                    'A forma de entrega selecionada é inválida.',
+            ]);
+        }
+
+        return $option;
+    }
+
+    private function user(): User
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        return $user;
     }
 }

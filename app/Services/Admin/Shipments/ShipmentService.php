@@ -22,7 +22,6 @@ class ShipmentService
     private const PER_PAGE = 15;
 
     public function __construct(
-        private readonly UpdateShipmentAction $updateShipmentAction,
         private readonly GenerateLabelAction $generateLabelAction,
         private readonly PurchaseLabelAction $purchaseLabelAction,
         private readonly ShipShipmentAction $shipShipmentAction,
@@ -116,13 +115,11 @@ class ShipmentService
         Shipment $shipment,
         ShipmentData $data
     ): Shipment {
+        $shipment->update(
+            $data->toArray()
+        );
 
-        return $this->updateShipmentAction
-            ->execute(
-                $shipment,
-                $data
-            );
-
+        return $shipment->refresh();
     }
 
     /**

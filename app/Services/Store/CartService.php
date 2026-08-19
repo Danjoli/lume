@@ -75,6 +75,25 @@ class CartService
         ]);
     }
 
+    public function toggle(int $bookId): bool
+    {
+        $cart = $this->getOrCreateCart();
+
+        $item = $cart->items()
+            ->where('book_id', $bookId)
+            ->first();
+
+        if ($item) {
+            $item->delete();
+
+            return false;
+        }
+
+        $this->add($bookId, 1);
+
+        return true;
+    }
+
     public function update(
         CartItem $cartItem,
         int $quantity

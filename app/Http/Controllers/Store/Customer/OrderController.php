@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Store\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Services\Store\Customer\OrderService;
+use App\Services\Store\OrderService;
 use Illuminate\View\View;
 
 class OrderController extends Controller

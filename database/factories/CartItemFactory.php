@@ -21,9 +21,7 @@ class CartItemFactory extends Factory
     {
         return [
             'cart_id' => Cart::factory(),
-
             'book_id' => Book::factory(),
-
             'quantity' => fake()->numberBetween(1, 5),
         ];
     }

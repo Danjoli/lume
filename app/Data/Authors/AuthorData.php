@@ -22,13 +22,10 @@ readonly class AuthorData
     ): self {
 
         return new self(
-
             name: $request->string('name')->toString(),
-
             biography: $request->filled('biography')
                 ? $request->string('biography')->toString()
                 : null,
-
         );
 
     }
@@ -39,13 +36,9 @@ readonly class AuthorData
     public function toArray(): array
     {
         return [
-
             'name' => $this->name,
-
             'slug' => Str::slug($this->name),
-
             'biography' => $this->biography,
-
         ];
     }
 }

@@ -3,15 +3,18 @@
 
 @include('layouts.admin._partials.head')
 
-<body class="bg-gray-100 antialiased">
+<body
+    x-data="{ sidebarOpen: true }"
+    class="bg-gray-100 antialiased"
+>
 
     <div class="flex h-screen overflow-hidden">
 
-        {{-- navigation.sidebar --}}
+        {{-- Sidebar --}}
         @include('layouts.admin._partials.sidebar')
 
         {{-- Conteúdo --}}
-        <div class="flex flex-1 flex-col overflow-hidden">
+        <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
 
             {{-- Header --}}
             @include('layouts.admin._partials.header')

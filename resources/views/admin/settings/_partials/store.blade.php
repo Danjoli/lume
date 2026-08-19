@@ -1,81 +1,73 @@
 <x-forms.section
     title="Loja"
-    description="Configurações da loja."
+    description="Informações principais da Lume."
 >
 
-    <div class="grid gap-6 md:grid-cols-3">
+    <div class="grid gap-6 md:grid-cols-2">
 
         <div>
 
-            <x-forms.label for="currency">
-
-                Moeda
-
-            </x-forms.label>
-
-            <x-forms.select
-                id="currency"
-                name="currency"
-            >
-
-                <option value="BRL">
-
-                    Real (BRL)
-
-                </option>
-
-                <option value="USD">
-
-                    Dólar (USD)
-
-                </option>
-
-            </x-forms.select>
-
-        </div>
-
-        <div>
-
-            <x-forms.label for="locale">
-
-                Idioma
-
-            </x-forms.label>
-
-            <x-forms.select
-                id="locale"
-                name="locale"
-            >
-
-                <option value="pt_BR">
-
-                    Português
-
-                </option>
-
-                <option value="en">
-
-                    English
-
-                </option>
-
-            </x-forms.select>
-
-        </div>
-
-        <div>
-
-            <x-forms.label for="timezone">
-
-                Timezone
-
+            <x-forms.label for="store_name" required>
+                Nome da loja
             </x-forms.label>
 
             <x-forms.input
-                id="timezone"
-                name="timezone"
-                :value="old('timezone', $settings->timezone)"
+                id="store_name"
+                name="store_name"
+                :value="old('store_name', $settings->store_name)"
+                required
             />
+
+            <x-forms.error field="store_name" />
+
+        </div>
+
+        <div>
+
+            <x-forms.label for="company_name">
+                Razão social
+            </x-forms.label>
+
+            <x-forms.input
+                id="company_name"
+                name="company_name"
+                :value="old('company_name', $settings->company_name)"
+            />
+
+            <x-forms.error field="company_name" />
+
+        </div>
+
+        <div>
+
+            <x-forms.label for="cnpj">
+                CNPJ
+            </x-forms.label>
+
+            <x-forms.input
+                id="cnpj"
+                name="cnpj"
+                :value="old('cnpj', $settings->cnpj)"
+            />
+
+            <x-forms.error field="cnpj" />
+
+        </div>
+
+        <div class="md:col-span-2">
+
+            <x-forms.label for="description">
+                Descrição da loja
+            </x-forms.label>
+
+            <textarea
+                id="description"
+                name="description"
+                rows="4"
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+            >{{ old('description', $settings->description) }}</textarea>
+
+            <x-forms.error field="description" />
 
         </div>
 

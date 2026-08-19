@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\BookImage;
 use App\Models\Book;
+use App\Models\BookImage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,22 +12,26 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class BookImageFactory extends Factory
 {
     /**
-     * Define the model's default state.
+     * Define o estado padrão da factory.
      *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
+        $images = [
+            'books/1984.png',
+            'books/dom-casmurro.png',
+            'books/habitos-atomicos.png',
+            'books/pai-rico-pai-pobre.png',
+            'books/pequeno-principe.png',
+        ];
+
         return [
             'book_id' => Book::factory(),
 
-            'image' => fake()->imageUrl(
-                width: 600,
-                height: 900,
-                category: 'books'
-            ),
+            'image' => fake()->randomElement($images),
 
-            'sort_order' => fake()->numberBetween(0, 10),
+            'sort_order' => fake()->numberBetween(1, 10),
 
             'is_primary' => false,
         ];

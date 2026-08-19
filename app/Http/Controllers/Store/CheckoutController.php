@@ -7,6 +7,7 @@ use App\Http\Requests\Store\Checkout\StoreCheckoutRequest;
 use App\Models\Order;
 use App\Services\Store\CheckoutService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class CheckoutController extends Controller
@@ -34,7 +35,7 @@ class CheckoutController extends Controller
         StoreCheckoutRequest $request
     ): RedirectResponse {
         $order = $this->checkoutService->checkout(
-            $request->integer('address_id')
+            $request->validated()
         );
 
         return redirect()
@@ -48,12 +49,14 @@ class CheckoutController extends Controller
         Order $order
     ): View {
         abort_unless(
-            $order->user_id === auth()->id(),
+            $order->user_id === Auth::id(),
             403
         );
 
         return view('store.checkout.success', [
-            'order' => $order->load('items.book'),
+            'order' => $order->load([
+                'items.book',
+            ]),
         ]);
     }
 }

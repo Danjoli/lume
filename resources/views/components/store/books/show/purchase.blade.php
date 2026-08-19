@@ -38,7 +38,7 @@
     @endif
 
     <form
-        action="{{ route('store.cart.store') }}"
+        action="{{ route('store.cart.add') }}"
         method="POST"
         class="mt-6"
     >

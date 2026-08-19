@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Book extends Model
 {
@@ -101,10 +102,7 @@ class Book extends Model
      */
     public function authors(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Author::class,
-            'book_author'
-        );
+        return $this->belongsToMany(Author::class, 'book_author');
     }
 
     /**
@@ -112,10 +110,7 @@ class Book extends Model
      */
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Category::class,
-            'book_category'
-        );
+        return $this->belongsToMany(Category::class, 'book_category');
     }
 
     /**
@@ -126,6 +121,15 @@ class Book extends Model
         return $this->hasMany(BookImage::class)
             ->orderByDesc('is_primary')
             ->orderBy('sort_order');
+    }
+
+    /**
+     * Imagem principal do livro.
+     */
+    public function primaryImage(): HasOne
+    {
+        return $this->hasOne(BookImage::class)
+            ->where('is_primary', true);
     }
 
     /**
