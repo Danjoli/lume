@@ -12,42 +12,38 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            
             $table->id();
 
-             $table->foreignId('user_id')
+            /*
+            |--------------------------------------------------------------------------
+            | Usuário
+            |--------------------------------------------------------------------------
+            */
+
+            $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete();
 
-            // Status pedido
+            /*
+            |--------------------------------------------------------------------------
+            | Status
+            |--------------------------------------------------------------------------
+            */
+
             $table->string('status')
                 ->default('pending');
 
-            // Status pagamento
             $table->string('payment_status')
                 ->default('pending');
 
-            // Valores
-            $table->decimal('subtotal',10,2);
-            $table->decimal('shipping',10,2)
-                ->default(0);
-            $table->decimal('discount',10,2)
-                ->default(0);
-            $table->decimal('total',10,2);
+            /*
+            |--------------------------------------------------------------------------
+            | Pagamento
+            |--------------------------------------------------------------------------
+            */
 
-            // Snapshot endereço
-            $table->string('recipient_name');
-            $table->string('phone');
-            $table->string('street');
-            $table->string('number');
-            $table->string('complement')
-                ->nullable();
-            $table->string('neighborhood');
-            $table->string('city');
-            $table->string('state',2);
-            $table->string('cep',10);
+            $table->string('payment_method');
 
-            // Pagamento
             $table->string('gateway')
                 ->nullable();
 
@@ -57,10 +53,76 @@ return new class extends Migration
             $table->timestamp('paid_at')
                 ->nullable();
 
+            /*
+            |--------------------------------------------------------------------------
+            | Valores
+            |--------------------------------------------------------------------------
+            */
+
+            $table->decimal('subtotal', 10, 2);
+
+            $table->decimal('shipping', 10, 2)
+                ->default(0);
+
+            $table->decimal('discount', 10, 2)
+                ->default(0);
+
+            $table->decimal('total', 10, 2);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Dados do cliente
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('cpf', 14);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Snapshot do endereço de entrega
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('recipient_name');
+
+            $table->string('phone');
+
+            $table->string('street');
+
+            $table->string('number');
+
+            $table->string('complement')
+                ->nullable();
+
+            $table->string('neighborhood');
+
+            $table->string('city');
+
+            $table->string('state', 2);
+
+            $table->string('cep', 10);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Datas
+            |--------------------------------------------------------------------------
+            */
+
             $table->timestamps();
 
+            /*
+            |--------------------------------------------------------------------------
+            | Índices
+            |--------------------------------------------------------------------------
+            */
+
             $table->index('status');
+
             $table->index('payment_status');
+
+            $table->index('payment_method');
+
+            $table->index('gateway_payment_id');
         });
     }
 

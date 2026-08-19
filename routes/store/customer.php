@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Store\Customer\AddressController;
 use App\Http\Controllers\Store\Customer\OrderController;
-use App\Http\Controllers\Store\Customer\ProfileController;
+use App\Http\Controllers\Store\Customer\Account\ProfileController;
+use App\Http\Controllers\Store\Customer\Account\AccountController;
+use App\Http\Controllers\Store\Customer\Account\SecurityController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('minha-conta')
@@ -23,6 +25,30 @@ Route::prefix('minha-conta')
 
         Route::put('/perfil', [ProfileController::class, 'update'])
             ->name('profile.update');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Segurança
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/seguranca', [SecurityController::class, 'edit'])
+            ->name('security.edit');
+
+        Route::patch('/seguranca', [SecurityController::class, 'update'])
+            ->name('security.update');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Conta
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/excluir-conta', [AccountController::class, 'delete'])
+            ->name('account.delete');
+
+        Route::delete('/excluir-conta', [AccountController::class, 'destroy'])
+            ->name('account.destroy');
 
         /*
         |--------------------------------------------------------------------------

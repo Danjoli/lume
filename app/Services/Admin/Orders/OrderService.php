@@ -17,18 +17,13 @@ class OrderService
     public function getIndexData(Request $request): array
     {
         return [
-
             'orders' => $this->paginate($request),
-
             'statuses' => OrderStatus::cases(),
-
             'paymentStatuses' => PaymentStatus::cases(),
-
             'shipmentStatuses' => ShipmentStatus::cases(),
-
         ];
     }
-    
+
     /**
      * Quantidade de registros por página.
      */
@@ -56,19 +51,14 @@ class OrderService
                 function ($query) use ($request) {
 
                     $query->where(function ($query) use ($request) {
-
                         $query
-
                             ->where('id', $request->search)
-
                             ->orWhere(
                                 'recipient_name',
                                 'like',
                                 '%' . $request->string('search') . '%'
                             );
-
                     });
-
                 }
             )
 
@@ -89,11 +79,8 @@ class OrderService
             )
 
             ->latest()
-
             ->paginate(self::PER_PAGE)
-
             ->withQueryString();
-
     }
 
     /**
@@ -104,14 +91,9 @@ class OrderService
     ): Order {
 
         return $order->load([
-
             'user',
-
             'items.book',
-
             'shipment',
-
         ]);
-
     }
 }

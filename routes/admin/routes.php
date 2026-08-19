@@ -25,5 +25,6 @@ Route::prefix('admin')
                 require __DIR__ . '/settings.php';
                 require __DIR__ . '/shipments.php';
                 require __DIR__ . '/profile.php';
+                require __DIR__ . '/notifications.php';
             });
     });

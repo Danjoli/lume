@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Notifications;
 
 use App\Http\Controllers\Controller;
-use App\Services\Admin\Notifications\NotificationService;
+use App\Services\Admin\NotificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\View\View;
@@ -16,16 +16,29 @@ class NotificationController extends Controller
     }
 
     /**
-     * Exibe a listagem das notificações.
+     * Lista todas as notificações do admin autenticado.
      */
     public function index(): View
     {
         return view('admin.notifications.index', [
-
-            'notifications' => $this->notificationService
-                ->paginate(),
-
+            'notifications' => $this->notificationService->paginate(),
         ]);
+    }
+
+    /**
+     * Abre uma notificação.
+     */
+    public function show(
+        DatabaseNotification $notification
+    ): RedirectResponse {
+        $notification = $this->notificationService
+            ->markAsRead($notification);
+
+        $url = $notification->data['url'] ?? null;
+
+        return $url
+            ? redirect()->to($url)
+            : redirect()->route('admin.notifications.index');
     }
 
     /**
@@ -34,12 +47,10 @@ class NotificationController extends Controller
     public function markAsRead(
         DatabaseNotification $notification
     ): RedirectResponse {
-
         $this->notificationService
             ->markAsRead($notification);
 
         return back();
-
     }
 
     /**
@@ -50,7 +61,10 @@ class NotificationController extends Controller
         $this->notificationService
             ->markAllAsRead();
 
-        return back();
+        return back()->with(
+            'success',
+            'Todas as notificações foram marcadas como lidas.'
+        );
     }
 
     /**
@@ -59,10 +73,12 @@ class NotificationController extends Controller
     public function destroy(
         DatabaseNotification $notification
     ): RedirectResponse {
-
         $this->notificationService
             ->destroy($notification);
 
-        return back();
+        return back()->with(
+            'success',
+            'Notificação removida.'
+        );
     }
 }

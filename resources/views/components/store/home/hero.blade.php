@@ -145,17 +145,36 @@
             </div>
 
             {{-- Imagem --}}
-            <div
-                class="
-                    relative hidden overflow-hidden
-                    rounded-bl-[70px] lg:block
-                "
-            >
+            <div class="relative hidden lg:block">
+
+                <svg
+                    class="absolute h-0 w-0"
+                    aria-hidden="true"
+                >
+                    <defs>
+                        <clipPath
+                            id="hero-curve"
+                            clipPathUnits="objectBoundingBox"
+                        >
+                            <path
+                                d="
+                                    M 0.18,0
+                                    C 0.11,0.10 0.045,0.27 0.025,0.50
+                                    C 0.02,0.70 0.05,0.87 0.09,1
+                                    L 1,1
+                                    L 1,0
+                                    Z
+                                "
+                            />
+                        </clipPath>
+                    </defs>
+                </svg>
 
                 <img
-                    src="{{ asset('images/store/hero-lume.jpg') }}"
+                    src="{{ asset('images/banners/hero-lume.png') }}"
                     alt="Livros Lume"
                     class="h-full w-full object-cover"
+                    style="clip-path: url(#hero-curve);"
                 >
 
             </div>

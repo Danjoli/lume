@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Admins\StoreAdminRequest;
 use App\Http\Requests\Admin\Admins\UpdateAdminRequest;
 use App\Models\Admin;
-use App\Services\Admin\Admins\AdminService;
+use App\Services\Admin\AdminService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

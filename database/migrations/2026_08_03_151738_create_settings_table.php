@@ -21,7 +21,8 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->string('store_name');
+            $table->string('store_name')
+                ->default('Lume');
 
             $table->string('company_name')
                 ->nullable();
@@ -38,12 +39,13 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->string('email');
-
-            $table->string('phone')
+            $table->string('email')
                 ->nullable();
 
-            $table->string('whatsapp')
+            $table->string('phone', 20)
+                ->nullable();
+
+            $table->string('whatsapp', 20)
                 ->nullable();
 
             /*
@@ -52,13 +54,13 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->string('cep', 10)
+            $table->string('cep', 9)
                 ->nullable();
 
             $table->string('street')
                 ->nullable();
 
-            $table->string('number')
+            $table->string('number', 20)
                 ->nullable();
 
             $table->string('complement')
@@ -79,13 +81,10 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->string('facebook')
-                ->nullable();
-
             $table->string('instagram')
                 ->nullable();
 
-            $table->string('linkedin')
+            $table->string('facebook')
                 ->nullable();
 
             $table->string('youtube')
@@ -94,7 +93,7 @@ return new class extends Migration
             $table->string('tiktok')
                 ->nullable();
 
-            $table->string('twitter')
+            $table->string('linkedin')
                 ->nullable();
 
             /*
@@ -121,22 +120,23 @@ return new class extends Migration
             $table->text('meta_description')
                 ->nullable();
 
-            $table->string('keywords')
-                ->nullable();
-
             /*
             |--------------------------------------------------------------------------
-            | Pagamento
+            | Vendas
             |--------------------------------------------------------------------------
             */
 
-            $table->string('payment_gateway')
-                ->nullable();
+            $table->decimal(
+                'minimum_order_amount',
+                10,
+                2
+            )->default(0);
 
-            $table->string('pix_key')
-                ->nullable();
+            $table->boolean(
+                'allow_out_of_stock_sales'
+            )->default(false);
 
-            $table->string('currency')
+            $table->string('currency', 3)
                 ->default('BRL');
 
             /*
@@ -145,15 +145,42 @@ return new class extends Migration
             |--------------------------------------------------------------------------
             */
 
-            $table->string('default_carrier')
+            $table->string('origin_cep', 9)
                 ->nullable();
 
-            $table->string('origin_zipcode', 10)
-                ->nullable();
+            $table->decimal(
+                'free_shipping_threshold',
+                10,
+                2
+            )->nullable();
 
             /*
             |--------------------------------------------------------------------------
-            | Email
+            | Estoque
+            |--------------------------------------------------------------------------
+            */
+
+            $table->unsignedInteger(
+                'low_stock_threshold'
+            )->default(5);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Avaliações
+            |--------------------------------------------------------------------------
+            */
+
+            $table->boolean(
+                'reviews_require_purchase'
+            )->default(true);
+
+            $table->boolean(
+                'reviews_auto_approve'
+            )->default(false);
+
+            /*
+            |--------------------------------------------------------------------------
+            | E-mail
             |--------------------------------------------------------------------------
             */
 
@@ -164,7 +191,6 @@ return new class extends Migration
                 ->nullable();
 
             $table->timestamps();
-
         });
     }
 

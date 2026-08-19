@@ -22,15 +22,11 @@ readonly class UserData
     ): self {
 
         return new self(
-
             name: $request->string('name')->toString(),
-
             email: $request->string('email')->toString(),
-
             status: UserStatus::from(
                 $request->string('status')->toString()
             ),
-
         );
 
     }
@@ -41,13 +37,9 @@ readonly class UserData
     public function toArray(): array
     {
         return [
-
             'name' => $this->name,
-
             'email' => $this->email,
-
             'status' => $this->status,
-
         ];
     }
 }

@@ -85,7 +85,7 @@
         </a>
 
         <a
-            href="{{ route('admin.settings.index') }}"
+            href="{{ route('admin.settings.edit') }}"
             class="block px-4 py-3 text-sm text-gray-700 transition hover:bg-gray-100"
         >
             Configurações

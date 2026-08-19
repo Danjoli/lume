@@ -49,17 +49,11 @@ readonly class ShipmentData
     public function toArray(): array
     {
         return [
-
             'carrier' => $this->carrier,
-
             'tracking_code' => $this->trackingCode,
-
             'service' => $this->service,
-
             'status' => $this->status,
-
             'shipping_cost' => $this->shippingCost,
-
         ];
     }
 }

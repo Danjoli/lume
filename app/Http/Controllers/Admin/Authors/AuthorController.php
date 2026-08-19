@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Authors\StoreAuthorRequest;
 use App\Http\Requests\Admin\Authors\UpdateAuthorRequest;
 use App\Models\Author;
-use App\Services\Admin\Authors\AuthorService;
+use App\Services\Admin\AuthorService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

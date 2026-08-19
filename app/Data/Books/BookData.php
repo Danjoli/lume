@@ -41,11 +41,8 @@ readonly class BookData
         return new self(
 
             title: $request->string('title')->toString(),
-
             isbn: $request->string('isbn')->toString(),
-
             description: $request->input('description'),
-
             synopsis: $request->input('synopsis'),
 
             price: $request->filled('price')
@@ -63,13 +60,9 @@ readonly class BookData
                 : null,
 
             language: $request->input('language', 'Português'),
-
             edition: $request->input('edition'),
-
             format: $request->input('format', 'Capa comum'),
-
             publicationDate: $request->input('publication_date'),
-
             weight: (float) $request->input('weight', 0),
 
             height: $request->filled('height')
@@ -89,62 +82,36 @@ readonly class BookData
                 : null,
 
             isFeatured: $request->boolean('is_featured'),
-
             isActive: $request->boolean('is_active', true),
-
             authors: $request->input('authors', []),
-
             categories: $request->input('categories', []),
-
             images: $request->file('images', []),
-
         );
     }
 
     public function toArray(): array
     {
         return [
-
             'title' => $this->title,
-
             'slug' => Str::slug($this->title),
-
             'isbn' => $this->isbn,
-
             'description' => $this->description,
-
             'synopsis' => $this->synopsis,
-
             'price' => $this->price,
-
             'sale_price' => $this->salePrice,
-
             'stock' => $this->stock,
-
             'pages' => $this->pages,
-
             'language' => $this->language,
-
             'edition' => $this->edition,
-
             'format' => $this->format,
-
             'publication_date' => $this->publicationDate,
-
             'weight' => $this->weight,
-
             'height' => $this->height,
-
             'width' => $this->width,
-
             'length' => $this->length,
-
             'publisher_id' => $this->publisherId,
-
             'is_featured' => $this->isFeatured,
-
             'is_active' => $this->isActive,
-
         ];
     }
 }

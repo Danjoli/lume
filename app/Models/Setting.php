@@ -9,167 +9,64 @@ class Setting extends Model
 {
     use HasFactory;
 
-    /**
-     * Campos preenchíveis.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
-
-        /*
-        |--------------------------------------------------------------------------
-        | Loja
-        |--------------------------------------------------------------------------
-        */
-
         'store_name',
-
         'company_name',
-
         'cnpj',
-
         'description',
 
-        /*
-        |--------------------------------------------------------------------------
-        | Contato
-        |--------------------------------------------------------------------------
-        */
-
         'email',
-
         'phone',
-
         'whatsapp',
 
-        /*
-        |--------------------------------------------------------------------------
-        | Endereço
-        |--------------------------------------------------------------------------
-        */
-
         'cep',
-
         'street',
-
         'number',
-
         'complement',
-
         'neighborhood',
-
         'city',
-
         'state',
 
-        /*
-        |--------------------------------------------------------------------------
-        | Redes Sociais
-        |--------------------------------------------------------------------------
-        */
-
-        'facebook',
-
         'instagram',
-
+        'facebook',
+        'youtube',
+        'tiktok',
         'linkedin',
 
-        'youtube',
-
-        'tiktok',
-
-        'twitter',
-
-        /*
-        |--------------------------------------------------------------------------
-        | Aparência
-        |--------------------------------------------------------------------------
-        */
-
         'logo',
-
         'favicon',
 
-        /*
-        |--------------------------------------------------------------------------
-        | SEO
-        |--------------------------------------------------------------------------
-        */
-
         'meta_title',
-
         'meta_description',
 
-        'keywords',
-
-        /*
-        |--------------------------------------------------------------------------
-        | Pagamento
-        |--------------------------------------------------------------------------
-        */
-
-        'payment_gateway',
-
-        'pix_key',
-
+        'minimum_order_amount',
+        'allow_out_of_stock_sales',
         'currency',
 
-        /*
-        |--------------------------------------------------------------------------
-        | Frete
-        |--------------------------------------------------------------------------
-        */
+        'origin_cep',
+        'free_shipping_threshold',
 
-        'default_carrier',
+        'low_stock_threshold',
 
-        'origin_zipcode',
-
-        /*
-        |--------------------------------------------------------------------------
-        | Email
-        |--------------------------------------------------------------------------
-        */
+        'reviews_require_purchase',
+        'reviews_auto_approve',
 
         'sender_name',
-
         'sender_email',
-
     ];
 
-    /**
-     * Conversões de atributos.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
+            'minimum_order_amount' => 'decimal:2',
+            'free_shipping_threshold' => 'decimal:2',
 
-            'created_at' => 'datetime',
+            'allow_out_of_stock_sales' => 'boolean',
 
-            'updated_at' => 'datetime',
+            'low_stock_threshold' => 'integer',
 
+            'reviews_require_purchase' => 'boolean',
+            'reviews_auto_approve' => 'boolean',
         ];
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Helpers
-    |--------------------------------------------------------------------------
-    */
-
-    /**
-     * Retorna a configuração da loja.
-     */
-    public static function current(): self
-    {
-        return static::firstOrCreate(
-            [],
-            [
-                'store_name' => 'Lume',
-                'email' => 'contato@lume.com',
-                'currency' => 'BRL',
-            ]
-        );
     }
 }

@@ -6,34 +6,70 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
 
-            // Pedido relacionado
+            /*
+            |--------------------------------------------------------------------------
+            | Pedido
+            |--------------------------------------------------------------------------
+            */
+
             $table->foreignId('order_id')
+                ->unique()
                 ->constrained()
                 ->cascadeOnDelete();
 
-            // Transportadora
-            $table->string('carrier')->nullable();
+            /*
+            |--------------------------------------------------------------------------
+            | Transportadora / Serviço
+            |--------------------------------------------------------------------------
+            */
 
-            // Código de rastreio
-            $table->string('tracking_code')->nullable();
+            $table->string('carrier')
+                ->nullable();
 
-            // Serviço contratado
-            $table->string('service')->nullable();
+            $table->string('service')
+                ->nullable();
 
-            // Status do envio
+            /*
+            |--------------------------------------------------------------------------
+            | Rastreamento
+            |--------------------------------------------------------------------------
+            */
+
+            $table->string('tracking_code')
+                ->nullable();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Status
+            |--------------------------------------------------------------------------
+            */
+
             $table->string('status')
                 ->default('pending');
 
-            // Valores
+            /*
+            |--------------------------------------------------------------------------
+            | Valores
+            |--------------------------------------------------------------------------
+            */
+
             $table->decimal('shipping_cost', 10, 2)
                 ->default(0);
 
-            // Datas importantes
+            /*
+            |--------------------------------------------------------------------------
+            | Datas logísticas
+            |--------------------------------------------------------------------------
+            */
+
             $table->timestamp('shipped_at')
                 ->nullable();
 
@@ -42,11 +78,21 @@ return new class extends Migration
 
             $table->timestamps();
 
+            /*
+            |--------------------------------------------------------------------------
+            | Índices
+            |--------------------------------------------------------------------------
+            */
+
             $table->index('tracking_code');
+
             $table->index('status');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
         Schema::dropIfExists('shipments');

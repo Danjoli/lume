@@ -19,24 +19,17 @@ class RefundOrderAction
         return DB::transaction(function () use ($order) {
 
             if ($order->payment_status !== PaymentStatus::PAID) {
-
                 throw new InvalidOrderStatusException(
                     'Somente pedidos pagos podem ser reembolsados.'
                 );
-
             }
 
             $order->update([
-
                 'payment_status' => PaymentStatus::REFUNDED,
-
                 'refunded_at' => now(),
-
             ]);
 
             return $order->refresh();
-
         });
-
     }
 }

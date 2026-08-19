@@ -19,24 +19,17 @@ class DeliverOrderAction
         return DB::transaction(function () use ($order) {
 
             if ($order->status !== OrderStatus::SHIPPED) {
-
                 throw new InvalidOrderStatusException(
                     'O pedido não pode ser entregue.'
                 );
-
             }
 
             $order->update([
-
                 'status' => OrderStatus::DELIVERED,
-
                 'delivered_at' => now(),
-
             ]);
 
             return $order->refresh();
-
         });
-
     }
 }

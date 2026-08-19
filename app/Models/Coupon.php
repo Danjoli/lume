@@ -14,29 +14,17 @@ class Coupon extends Model
      * @var list<string>
      */
     protected $fillable = [
-
         'code',
-
         'slug',
-
         'description',
-
         'type',
-
         'value',
-
         'minimum_amount',
-
         'usage_limit',
-
         'used_count',
-
         'starts_at',
-
         'expires_at',
-
         'is_active',
-
     ];
 
     /**
@@ -45,19 +33,12 @@ class Coupon extends Model
     protected function casts(): array
     {
         return [
-
             'type' => CouponType::class,
-
             'value' => 'decimal:2',
-
             'minimum_amount' => 'decimal:2',
-
             'starts_at' => 'datetime',
-
             'expires_at' => 'datetime',
-
             'is_active' => 'boolean',
-
         ];
     }
 
@@ -86,9 +67,7 @@ class Coupon extends Model
     public function remainingUses(): ?int
     {
         if (! $this->hasUsageLimit()) {
-
             return null;
-
         }
 
         return max(
@@ -100,30 +79,22 @@ class Coupon extends Model
     public function canBeUsed(): bool
     {
         if (! $this->is_active) {
-
             return false;
-
         }
 
         if (! $this->hasStarted()) {
-
             return false;
-
         }
 
         if ($this->isExpired()) {
-
             return false;
-
         }
 
         if (
             $this->hasUsageLimit()
             && $this->used_count >= $this->usage_limit
         ) {
-
             return false;
-
         }
 
         return true;

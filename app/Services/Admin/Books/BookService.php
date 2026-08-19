@@ -2,14 +2,9 @@
 
 namespace App\Services\Admin\Books;
 
-use App\Actions\Books\CreateBookAction;
-use App\Actions\Books\DeleteBookAction;
-use App\Actions\Books\SyncAuthorsAction;
-use App\Actions\Books\SyncCategoriesAction;
-use App\Actions\Books\UpdateBookAction;
 use App\Data\Books\BookData;
-use App\Models\Book;
 use App\Models\Author;
+use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -20,18 +15,10 @@ class BookService
     private const PER_PAGE = 10;
 
     public function __construct(
-        private readonly CreateBookAction $createBookAction,
-        private readonly UpdateBookAction $updateBookAction,
-        private readonly DeleteBookAction $deleteBookAction,
-        private readonly SyncAuthorsAction $syncAuthorsAction,
-        private readonly SyncCategoriesAction $syncCategoriesAction,
         private readonly BookImageService $bookImageService,
     ) {
     }
 
-    /**
-     * Dados da tela de listagem.
-     */
     public function getIndexData(Request $request): array
     {
         return array_merge(
@@ -42,29 +29,20 @@ class BookService
         );
     }
 
-    /**
-     * Dados utilizados no formulário.
-     */
     public function getFormData(): array
     {
         return $this->getRelations();
     }
 
-    /**
-     * Lista paginada dos livros.
-     */
     public function paginate(
         Request $request
     ): LengthAwarePaginator {
-
         return Book::query()
-
             ->with([
                 'publisher',
                 'authors',
                 'categories',
             ])
-
             ->when(
                 $request->filled('search'),
                 fn ($query) => $query->where(
@@ -73,113 +51,74 @@ class BookService
                     '%' . $request->string('search') . '%'
                 )
             )
-
             ->latest()
-
             ->paginate(self::PER_PAGE)
-
             ->withQueryString();
-
     }
 
-    /**
-     * Cadastra um livro.
-     */
     public function store(
         BookData $data
     ): Book {
+        $book = Book::create(
+            $data->toArray()
+        );
 
-        $book = $this->createBookAction
-            ->execute($data);
+        $book->authors()->sync(
+            $data->authors
+        );
 
-        $this->syncAuthorsAction
-            ->execute(
-                $book,
-                $data->authors
-            );
-
-        $this->syncCategoriesAction
-            ->execute(
-                $book,
-                $data->categories
-            );
+        $book->categories()->sync(
+            $data->categories
+        );
 
         if (! empty($data->images)) {
-
-            $this->bookImageService
-                ->store(
-                    $book,
-                    $data->images
-                );
-
+            $this->bookImageService->store(
+                $book,
+                $data->images
+            );
         }
 
         return $book->refresh();
-
     }
 
-    /**
-     * Atualiza um livro.
-     */
     public function update(
         Book $book,
         BookData $data
     ): Book {
+        $book->update(
+            $data->toArray()
+        );
 
-        $book = $this->updateBookAction
-            ->execute(
-                $book,
-                $data
-            );
+        $book->authors()->sync(
+            $data->authors
+        );
 
-        $this->syncAuthorsAction
-            ->execute(
-                $book,
-                $data->authors
-            );
-
-        $this->syncCategoriesAction
-            ->execute(
-                $book,
-                $data->categories
-            );
+        $book->categories()->sync(
+            $data->categories
+        );
 
         if (! empty($data->images)) {
-
-            $this->bookImageService
-                ->store(
-                    $book,
-                    $data->images
-                );
-
+            $this->bookImageService->store(
+                $book,
+                $data->images
+            );
         }
 
-        return $book;
-
+        return $book->refresh();
     }
 
-    /**
-     * Remove um livro.
-     */
     public function destroy(
         Book $book
     ): void {
-
         $this->bookImageService
             ->deleteAll($book);
 
-        $this->deleteBookAction
-            ->execute($book);
-
+        $book->delete();
     }
 
-    /**
-     * Relacionamentos utilizados nos formulários.
-     */
     private function getRelations(): array
     {
         return [
-
             'authors' => Author::query()
                 ->orderBy('name')
                 ->get(),
@@ -191,7 +130,6 @@ class BookService
             'publishers' => Publisher::query()
                 ->orderBy('name')
                 ->get(),
-
         ];
     }
 }

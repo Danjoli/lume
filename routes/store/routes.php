@@ -21,7 +21,7 @@ require __DIR__ . '/catalog.php';
 require __DIR__ . '/categories.php';
 require __DIR__ . '/authors.php';
 require __DIR__ . '/publishers.php';
-require __DIR__ . '/cart.php';
+require __DIR__ . '/pages.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +35,5 @@ Route::middleware('auth')
         require __DIR__ . '/checkout.php';
         require __DIR__ . '/wishlist.php';
         require __DIR__ . '/customer.php';
+        require __DIR__ . '/cart.php';
     });

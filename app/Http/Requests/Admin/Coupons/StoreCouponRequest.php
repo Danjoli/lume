@@ -84,25 +84,15 @@ class StoreCouponRequest extends FormRequest
     public function attributes(): array
     {
         return [
-
             'code' => 'código',
-
             'description' => 'descrição',
-
             'type' => 'tipo',
-
             'value' => 'valor',
-
             'minimum_amount' => 'valor mínimo',
-
             'usage_limit' => 'limite de uso',
-
             'starts_at' => 'data inicial',
-
             'expires_at' => 'data final',
-
             'is_active' => 'status',
-
         ];
     }
 }

@@ -22,15 +22,11 @@ readonly class CategoryData
     ): self {
 
         return new self(
-
             name: $request->string('name')->toString(),
-
             description: $request->filled('description')
                 ? $request->string('description')->toString()
                 : null,
-
         );
-
     }
 
     /**
@@ -39,13 +35,9 @@ readonly class CategoryData
     public function toArray(): array
     {
         return [
-
             'name' => $this->name,
-
             'slug' => Str::slug($this->name),
-
             'description' => $this->description,
-
         ];
     }
 }

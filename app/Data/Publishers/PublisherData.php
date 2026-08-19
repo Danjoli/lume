@@ -23,7 +23,6 @@ readonly class PublisherData
     ): self {
 
         return new self(
-
             name: $request->string('name')->toString(),
 
             description: $request->filled('description')
@@ -33,7 +32,6 @@ readonly class PublisherData
             website: $request->filled('website')
                 ? $request->string('website')->toString()
                 : null,
-
         );
 
     }
@@ -44,15 +42,10 @@ readonly class PublisherData
     public function toArray(): array
     {
         return [
-
             'name' => $this->name,
-
             'slug' => Str::slug($this->name),
-
             'description' => $this->description,
-
             'website' => $this->website,
-
         ];
     }
 }

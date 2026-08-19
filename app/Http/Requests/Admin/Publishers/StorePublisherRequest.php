@@ -57,7 +57,6 @@ class StorePublisherRequest extends FormRequest
     public function messages(): array
     {
         return [
-
             'name.required' => 'O nome da editora é obrigatório.',
             'name.unique' => 'Já existe uma editora com este nome.',
 
@@ -65,7 +64,6 @@ class StorePublisherRequest extends FormRequest
             'email.unique' => 'Este e-mail já está sendo utilizado.',
 
             'website.url' => 'Informe uma URL válida.',
-
         ];
     }
 }

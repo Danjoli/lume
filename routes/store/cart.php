@@ -10,8 +10,11 @@ Route::prefix('carrinho')
         Route::get('/', [CartController::class, 'index'])
             ->name('index');
 
-        Route::post('/items', [CartController::class, 'store'])
-            ->name('store');
+        Route::post('/items', [CartController::class, 'add'])
+            ->name('add');
+
+        Route::post('/items/toggle', [CartController::class, 'toggle'])
+            ->name('toggle');
 
         Route::patch('/items/{cartItem}', [CartController::class, 'update'])
             ->name('update');

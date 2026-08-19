@@ -19,24 +19,17 @@ class MarkOrderPaidAction
         return DB::transaction(function () use ($order) {
 
             if ($order->payment_status === PaymentStatus::PAID) {
-
                 throw new InvalidOrderStatusException(
                     'O pedido já foi pago.'
                 );
-
             }
 
             $order->update([
-
                 'payment_status' => PaymentStatus::PAID,
-
                 'paid_at' => now(),
-
             ]);
 
             return $order->refresh();
-
         });
-
     }
 }

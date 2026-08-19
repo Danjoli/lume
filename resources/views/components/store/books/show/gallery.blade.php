@@ -42,10 +42,10 @@
         "
     >
 
-        @if($book->primaryImage)
+        @if($book->images->first())
 
             <img
-                src="{{ Storage::url($book->primaryImage->image) }}"
+                src="{{ Storage::url($book->images->first()->image) }}"
                 alt="{{ $book->title }}"
                 class="
                     max-h-[520px]

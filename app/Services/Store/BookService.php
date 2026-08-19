@@ -29,7 +29,7 @@ class BookService
 
             ->with([
                 'authors',
-                'primaryImage',
+                'images',
             ])
 
             ->withAvg(

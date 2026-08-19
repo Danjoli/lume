@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Order extends Model
 {
@@ -23,11 +25,14 @@ class Order extends Model
 
         'status',
         'payment_status',
+        'payment_method',
 
         'subtotal',
         'shipping',
         'discount',
         'total',
+
+        'cpf',
 
         'recipient_name',
         'phone',
@@ -54,21 +59,18 @@ class Order extends Model
     protected function casts(): array
     {
         return [
-
             'status' => OrderStatus::class,
 
             'payment_status' => PaymentStatus::class,
 
+            'payment_method' => PaymentMethod::class,
+
             'subtotal' => 'decimal:2',
-
             'shipping' => 'decimal:2',
-
             'discount' => 'decimal:2',
-
             'total' => 'decimal:2',
 
             'paid_at' => 'datetime',
-
         ];
     }
 
@@ -78,19 +80,33 @@ class Order extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Usuário que realizou o pedido.
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Itens do pedido.
+     */
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
+    /**
+     * Envio relacionado ao pedido.
+     */
+    public function shipment(): HasOne
+    {
+        return $this->hasOne(Shipment::class);
+    }
+
     /*
     |--------------------------------------------------------------------------
-    | Helpers - Status do Pedido
+    | Helpers - Status do pedido
     |--------------------------------------------------------------------------
     */
 
@@ -121,7 +137,7 @@ class Order extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Helpers - Status do Pagamento
+    | Helpers - Pagamento
     |--------------------------------------------------------------------------
     */
 
@@ -147,25 +163,38 @@ class Order extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Regras de Negócio
+    | Regras de negócio
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Pedido pode começar a ser processado.
+     */
     public function canBeProcessed(): bool
     {
-        return $this->status === OrderStatus::PENDING;
+        return $this->status === OrderStatus::PENDING
+            && $this->isPaid();
     }
 
+    /**
+     * Pedido pode ser enviado.
+     */
     public function canBeShipped(): bool
     {
         return $this->status === OrderStatus::PROCESSING;
     }
 
+    /**
+     * Pedido pode ser marcado como entregue.
+     */
     public function canBeDelivered(): bool
     {
         return $this->status === OrderStatus::SHIPPED;
     }
 
+    /**
+     * Pedido pode ser cancelado.
+     */
     public function canBeCancelled(): bool
     {
         return ! in_array(
@@ -178,6 +207,9 @@ class Order extends Model
         );
     }
 
+    /**
+     * Pagamento pode ser reembolsado.
+     */
     public function canBeRefunded(): bool
     {
         return $this->payment_status === PaymentStatus::PAID;

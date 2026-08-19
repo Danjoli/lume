@@ -37,8 +37,8 @@
 
                     @foreach($wishlist as $item)
 
-                        <x-store.wishlist.item
-                            :item="$item"
+                        <x-store.books.card
+                            :book="$item->book"
                         />
 
                     @endforeach

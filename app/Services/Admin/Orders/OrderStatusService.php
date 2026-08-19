@@ -31,7 +31,6 @@ class OrderStatusService
 
         return $this->markOrderPaidAction
             ->execute($order);
-
     }
 
     /**
@@ -43,7 +42,6 @@ class OrderStatusService
 
         return $this->processOrderAction
             ->execute($order);
-
     }
 
     /**
@@ -55,7 +53,6 @@ class OrderStatusService
 
         return $this->shipOrderAction
             ->execute($order);
-
     }
 
     /**
@@ -67,7 +64,6 @@ class OrderStatusService
 
         return $this->deliverOrderAction
             ->execute($order);
-
     }
 
     /**
@@ -79,7 +75,6 @@ class OrderStatusService
 
         return $this->cancelOrderAction
             ->execute($order);
-
     }
 
     /**
@@ -91,6 +86,5 @@ class OrderStatusService
 
         return $this->refundOrderAction
             ->execute($order);
-
     }
 }

@@ -74,27 +74,16 @@ readonly class CouponData
     public function toArray(): array
     {
         return [
-
             'code' => $this->code,
-
             'slug' => Str::slug($this->code),
-
             'description' => $this->description,
-
             'type' => $this->type,
-
             'value' => $this->value,
-
             'minimum_amount' => $this->minimumAmount,
-
             'usage_limit' => $this->usageLimit,
-
             'starts_at' => $this->startsAt,
-
             'expires_at' => $this->expiresAt,
-
             'is_active' => $this->isActive,
-
         ];
     }
 }

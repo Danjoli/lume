@@ -51,7 +51,7 @@ class StoreAdminRequest extends FormRequest
             'role' => [
                 'required',
                 'string',
-                'in:' . implode(',', array_keys(Admin::ROLES)),
+                'in:' . implode(',', array_keys(Admin::ROLES())),
             ],
 
             /*
@@ -63,10 +63,8 @@ class StoreAdminRequest extends FormRequest
             'password' => [
                 'required',
                 'confirmed',
-
                 Password::defaults(),
             ],
-
         ];
     }
 
@@ -76,15 +74,10 @@ class StoreAdminRequest extends FormRequest
     public function attributes(): array
     {
         return [
-
             'name' => 'nome',
-
             'email' => 'e-mail',
-
             'role' => 'perfil',
-
             'password' => 'senha',
-
         ];
     }
 }

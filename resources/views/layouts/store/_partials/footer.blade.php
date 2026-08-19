@@ -63,25 +63,25 @@
                 <ul class="mt-5 space-y-3 text-sm text-white/65">
 
                     <li>
-                        <a href="#" class="hover:text-white">
+                        <a href="{{ route('store.pages.about') }}" class="hover:text-white">
                             Sobre a Lume
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="hover:text-white">
+                        <a href="{{ route('store.pages.contact') }}" class="hover:text-white">
                             Contato
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="hover:text-white">
+                        <a href="{{ route('store.pages.privacy') }}" class="hover:text-white">
                             Política de privacidade
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="hover:text-white">
+                        <a href="{{ route('store.pages.terms') }}" class="hover:text-white">
                             Termos de uso
                         </a>
                     </li>
@@ -101,25 +101,25 @@
                 <ul class="mt-5 space-y-3 text-sm text-white/65">
 
                     <li>
-                        <a href="#" class="hover:text-white">
+                        <a href="{{ route('store.pages.help') }}" class="hover:text-white">
                             Central de ajuda
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="hover:text-white">
+                        <a href="{{ route('store.pages.shipping') }}" class="hover:text-white">
                             Entregas
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="hover:text-white">
+                        <a href="{{ route('store.pages.returns') }}" class="hover:text-white">
                             Trocas e devoluções
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="hover:text-white">
+                        <a href="{{ route('store.pages.payments') }}" class="hover:text-white">
                             Formas de pagamento
                         </a>
                     </li>

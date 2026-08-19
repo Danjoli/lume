@@ -20,9 +20,7 @@
 
                 <x-store.books.horizontal-card
                     :book="$book"
-                    :position="$loop->iteration <= 3
-                        ? $loop->iteration
-                        : null"
+                    :position="$loop->iteration"
                 />
 
             @endforeach

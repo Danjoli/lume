@@ -20,8 +20,9 @@ class Shipment extends Model
         'order_id',
 
         'carrier',
-        'tracking_code',
         'service',
+
+        'tracking_code',
 
         'status',
 
@@ -39,15 +40,12 @@ class Shipment extends Model
     protected function casts(): array
     {
         return [
-
             'status' => ShipmentStatus::class,
 
             'shipping_cost' => 'decimal:2',
 
             'shipped_at' => 'datetime',
-
             'delivered_at' => 'datetime',
-
         ];
     }
 
@@ -57,6 +55,9 @@ class Shipment extends Model
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Pedido relacionado ao envio.
+     */
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
@@ -64,7 +65,7 @@ class Shipment extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Helpers
+    | Helpers - Status
     |--------------------------------------------------------------------------
     */
 
@@ -100,25 +101,37 @@ class Shipment extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | Regras de Negócio
+    | Regras de negócio
     |--------------------------------------------------------------------------
     */
 
+    /**
+     * Pode gerar etiqueta de envio.
+     */
     public function canGenerateLabel(): bool
     {
-        return $this->isPending();
+        return $this->status === ShipmentStatus::PENDING;
     }
 
+    /**
+     * Pode ser marcado como enviado.
+     */
     public function canBeShipped(): bool
     {
         return $this->status === ShipmentStatus::PREPARING;
     }
 
+    /**
+     * Pode ser marcado como entregue.
+     */
     public function canBeDelivered(): bool
     {
         return $this->status === ShipmentStatus::SHIPPED;
     }
 
+    /**
+     * Pode ser cancelado.
+     */
     public function canBeCancelled(): bool
     {
         return ! in_array(

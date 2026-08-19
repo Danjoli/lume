@@ -20,13 +20,9 @@ readonly class ProfileData
     ): self {
 
         return new self(
-
             name: $request->string('name')->toString(),
-
             email: $request->string('email')->toString(),
-
         );
-
     }
 
     /**
@@ -37,11 +33,8 @@ readonly class ProfileData
     public function toArray(): array
     {
         return [
-
             'name' => $this->name,
-
             'email' => $this->email,
-
         ];
     }
 }
