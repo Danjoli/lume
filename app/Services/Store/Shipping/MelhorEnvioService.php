@@ -107,11 +107,19 @@ class MelhorEnvioService
         return $response->json();
     }
 
-    public function printUrl(Shipment $shipment): ?string
+    public function printUrl(Shipment $shipment): string
     {
         $response = $this->client()->post('/me/shipment/print', ['orders' => [$shipment->melhor_envio_order_id], 'mode' => 'private']);
+        if ($response->failed()) {
+            throw new RuntimeException($response->json('message', 'Falha ao obter a etiqueta para impressão.'));
+        }
 
-        return $response->successful() ? $response->json('url') : null;
+        $url = $response->json('url');
+        if (! is_string($url) || $url === '') {
+            throw new RuntimeException('O Melhor Envio não retornou a URL de impressão da etiqueta.');
+        }
+
+        return $url;
     }
 
     public function tracking(Shipment $shipment): array

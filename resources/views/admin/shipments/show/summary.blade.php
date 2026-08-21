@@ -1,81 +1,23 @@
-<x-admin.cards.card>
+<x-admin.cards.card title="Resumo do envio" content-class="p-4">
+    <dl class="grid grid-cols-2 gap-x-5 gap-y-4 md:grid-cols-4">
+        @php
+            $items = [
+                ['Pedido', '#'.$shipment->order->number],
+                ['Transportadora', $shipment->carrier ?: '-'],
+                ['Serviço', $shipment->service ?: '-'],
+                ['Frete', 'R$ '.number_format((float) $shipment->shipping_cost, 2, ',', '.')],
+                ['Prazo', ($shipment->delivery_min_days && $shipment->delivery_max_days) ? $shipment->delivery_min_days.' a '.$shipment->delivery_max_days.' dias úteis' : '-'],
+                ['Criado em', $shipment->created_at->format('d/m/Y H:i')],
+                ['Postado em', $shipment->shipped_at?->format('d/m/Y H:i') ?: '-'],
+                ['Entregue em', $shipment->delivered_at?->format('d/m/Y H:i') ?: '-'],
+            ];
+        @endphp
 
-    <h2 class="mb-6 text-lg font-semibold">
-
-        Resumo
-
-    </h2>
-
-    <dl class="grid gap-6 md:grid-cols-2">
-
-        <div>
-
-            <dt>Pedido</dt>
-
-            <dd>
-
-                #{{ $shipment->order->number }}
-
-            </dd>
-
-        </div>
-
-        <div>
-
-            <dt>Status</dt>
-
-            <dd>
-
-            <x-badges.status-badge :status="$shipment->status" />
-
-            </dd>
-
-        </div>
-
-        <div>
-
-            <dt>Transportadora</dt>
-
-            <dd>
-
-                {{ $shipment->carrier }}
-
-            </dd>
-
-        </div>
-
-        <div>
-
-            <dt>Criado em</dt>
-
-            <dd>
-
-                {{ $shipment->created_at->format('d/m/Y H:i') }}
-
-            </dd>
-
-        </div>
-
-        <div>
-            <dt>Serviço</dt>
-            <dd>{{ $shipment->service ?: '-' }}</dd>
-        </div>
-
-        <div>
-            <dt>Custo do frete</dt>
-            <dd>R$ {{ number_format((float) $shipment->shipping_cost, 2, ',', '.') }}</dd>
-        </div>
-
-        <div>
-            <dt>Prazo estimado</dt>
-            <dd>{{ $shipment->delivery_min_days }} a {{ $shipment->delivery_max_days }} dias úteis</dd>
-        </div>
-
-        <div>
-            <dt>Postado em</dt>
-            <dd>{{ $shipment->shipped_at?->format('d/m/Y H:i') ?: '-' }}</dd>
-        </div>
-
+        @foreach ($items as [$label, $value])
+            <div class="min-w-0">
+                <dt class="text-xs font-medium uppercase tracking-wide text-slate-400">{{ $label }}</dt>
+                <dd class="mt-1 truncate text-sm font-semibold text-slate-800" title="{{ $value }}">{{ $value }}</dd>
+            </div>
+        @endforeach
     </dl>
-
 </x-admin.cards.card>
