@@ -186,6 +186,20 @@ class MelhorEnvioService
             throw new RuntimeException($response->json('message', 'Falha ao consultar rastreamento.'));
         }
 
-        return $response->json($shipment->melhor_envio_order_id, $response->json());
+        $payload = $response->json();
+        if (! is_array($payload) || $payload === []) {
+            return [];
+        }
+
+        $tracking = $payload[$shipment->melhor_envio_order_id] ?? null;
+        if (is_array($tracking)) {
+            return $tracking;
+        }
+
+        if (array_is_list($payload) && is_array($payload[0] ?? null)) {
+            return $payload[0];
+        }
+
+        return $payload;
     }
 }

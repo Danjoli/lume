@@ -66,7 +66,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 
 - [x] Formatação do backend com Laravel Pint
 - [x] Compilação das views e validação das rotas após a reorganização
-- [x] Suíte atual: 40 testes e 127 assertions, incluindo smoke test do Sandbox, payload de etiquetas, OAuth, webhooks e URLs amigáveis
+- [x] Suíte atual: 41 testes e 128 assertions, incluindo rastreamento vazio do Sandbox, smoke test, OAuth, webhooks e URLs amigáveis
 - [ ] Ampliar testes de integração do checkout e das chamadas externas de logística
 - [ ] Cobrir regras críticas de estoque, cupons, reembolso e avaliações
 - [ ] Adicionar rate limiting específico para login, contato e webhooks
