@@ -9,6 +9,8 @@
 
         <x-alerts.flash />
 
+        @include('admin.settings._partials.melhor-envio')
+
         <form
             method="POST"
             action="{{ route('admin.settings.update') }}"

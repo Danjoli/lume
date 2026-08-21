@@ -12,17 +12,12 @@ use RuntimeException;
 
 class MelhorEnvioService
 {
+    public function __construct(private readonly MelhorEnvioTokenService $tokens) {}
+
     private function client(): PendingRequest
     {
-        $token = (string) config('services.melhor_envio.token');
-        if ($token === '') {
-            $environment = strtoupper((string) config('services.melhor_envio.environment', 'sandbox'));
-
-            throw new RuntimeException("Configure MELHOR_ENVIO_{$environment}_TOKEN no arquivo .env.");
-        }
-
         return Http::baseUrl(rtrim((string) config('services.melhor_envio.base_url'), '/'))
-            ->withToken($token)
+            ->withToken($this->tokens->accessToken())
             ->withHeaders(['User-Agent' => config('services.melhor_envio.user_agent')])
             ->acceptJson()->timeout(30)->retry(2, 300, throw: false);
     }
