@@ -3,6 +3,8 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\Admin;
+use App\Models\Shipment;
+use Database\Seeders\ShipmentSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -23,5 +25,28 @@ class AdminEntryTest extends TestCase
         $this->actingAs($admin, 'admin')
             ->get('/admin')
             ->assertRedirect(route('admin.dashboard'));
+    }
+
+    public function test_authenticated_admin_can_open_shipments_listing_with_filters(): void
+    {
+        $admin = Admin::factory()->create();
+        Shipment::factory()->create(['carrier' => 'Melhor Envio']);
+
+        $this->actingAs($admin, 'admin')
+            ->get(route('admin.shipments.index'))
+            ->assertOk()
+            ->assertSee('Pendente')
+            ->assertSee('Melhor Envio');
+    }
+
+    public function test_shipment_seeder_populates_every_logistics_scenario(): void
+    {
+        Shipment::factory()->count(6)->create();
+
+        $this->seed(ShipmentSeeder::class);
+
+        foreach (['pending', 'preparing', 'shipped', 'delivered', 'returned', 'cancelled'] as $status) {
+            $this->assertDatabaseHas('shipments', ['status' => $status]);
+        }
     }
 }

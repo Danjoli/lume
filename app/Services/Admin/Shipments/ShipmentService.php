@@ -12,6 +12,7 @@ use App\Data\Shipments\ShipmentData;
 use App\Models\Shipment;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ShipmentService
 {
@@ -66,6 +67,12 @@ class ShipmentService
                                 'service',
                                 'like',
                                 '%'.$request->string('search').'%'
+                            )
+
+                            ->orWhereHas('order', fn ($orderQuery) => $orderQuery
+                                ->where('number', 'like', '%'.$request->string('search').'%')
+                                ->orWhereHas('user', fn ($userQuery) => $userQuery
+                                    ->where('name', 'like', '%'.$request->string('search').'%'))
                             );
 
                     });
@@ -81,12 +88,32 @@ class ShipmentService
                 )
             )
 
+            ->when(
+                $request->filled('carrier'),
+                fn ($query) => $query->where('carrier', $request->string('carrier'))
+            )
+
             ->latest()
 
             ->paginate(self::PER_PAGE)
 
             ->withQueryString();
 
+    }
+
+    /**
+     * Transportadoras disponíveis nos envios cadastrados.
+     *
+     * @return Collection<int, string>
+     */
+    public function carriers(): Collection
+    {
+        return Shipment::query()
+            ->whereNotNull('carrier')
+            ->where('carrier', '!=', '')
+            ->distinct()
+            ->orderBy('carrier')
+            ->pluck('carrier');
     }
 
     /**

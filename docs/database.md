@@ -892,6 +892,8 @@ Os envios podem armazenar `melhor_envio_order_id`, `melhor_envio_protocol`, `lab
 
 O endpoint `POST /webhooks/melhor-envio` recebe mudanças do ciclo da etiqueta. Cada payload aceito é registrado em `tracking_history` com um hash, evitando duplicação do mesmo evento. A atualização local não permite que eventos antigos rebaixem um envio já entregue, devolvido ou cancelado.
 
+O `ShipmentSeeder`, executado depois do `OrderSeeder`, garante registros demonstrativos nos estados `pending`, `preparing`, `shipped`, `delivered`, `returned` e `cancelled`. Os cenários usam pedidos com itens já populados e incluem, conforme a etapa, identificador do Melhor Envio, protocolo, etiqueta, rastreamento, prazos e histórico fictícios próprios para desenvolvimento.
+
 ## Funcionalidades futuras
 
 - histórico de auditoria;
