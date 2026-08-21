@@ -22,7 +22,7 @@
 
 <meta
     name="theme-color"
-    content="#111827"
+    content="#062B25"
 >
 
 <meta
@@ -32,6 +32,11 @@
 
 <link
     rel="icon"
-    type="image/png"
+    type="image/svg+xml"
+    href="{{ asset('favicon.svg') }}"
+>
+
+<link
+    rel="alternate icon"
     href="{{ asset('favicon.ico') }}"
 >
