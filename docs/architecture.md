@@ -47,6 +47,10 @@ Avaliações são tratadas por `Store/Catalog/ReviewService`; criação e repeti
 
 Os agregadores `routes/admin/routes.php` e `routes/store/routes.php` apenas aplicam middleware e carregam módulos. Cada domínio possui seu arquivo. A área do cliente é subdividida em `routes/store/customer` para evitar um único arquivo concentrando perfil, segurança, endereços e pedidos.
 
+As pastas `routes/admin` e `routes/store` permanecem majoritariamente planas: cada arquivo já representa um domínio pequeno e reconhecível. A subpasta `routes/store/customer` existe porque reúne vários módulos sob o mesmo prefixo `minha-conta` (`profile`, `security`, `account`, `addresses`, `orders` e `preferences`). Novas subpastas só devem ser criadas quando um domínio exigir vários arquivos próprios, não apenas para agrupamento visual.
+
+Prefixos não devem ser repetidos dentro do módulo. Por exemplo, o dashboard de relatórios usa `/admin/reports`, e não `/admin/reports/reports`.
+
 ## Views
 
 - `components`: elementos reutilizáveis, com API por props/slots.

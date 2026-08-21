@@ -10,6 +10,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 - [x] Models, relacionamentos, enums, policies e observers
 - [x] Form Requests, Services, Actions e objetos Data
 - [x] Rotas separadas por área e domínio
+- [x] Prefixos de rotas revisados, sem segmentos duplicados
 - [x] Controllers, Form Requests e Services alinhados por domínio
 - [x] Views organizadas entre componentes reutilizáveis e `_partials`
 - [x] Factories e seeders com cenários relacionados

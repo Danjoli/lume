@@ -7,7 +7,7 @@ Route::prefix('reports')
     ->name('reports.')
     ->group(function () {
 
-        Route::get('/reports', [ReportController::class, 'dashboard'])
+        Route::get('/', [ReportController::class, 'dashboard'])
             ->name('dashboard');
 
         Route::get('/sales', [ReportController::class, 'sales'])
