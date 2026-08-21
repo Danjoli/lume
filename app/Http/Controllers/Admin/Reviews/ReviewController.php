@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Reviews;
 use App\Exceptions\Domain\CannotApproveReviewException;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
-use App\Services\Admin\ReviewService;
+use App\Services\Admin\Reviews\ReviewService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -14,8 +14,7 @@ class ReviewController extends Controller
 {
     public function __construct(
         private readonly ReviewService $reviewService,
-    ) {
-    }
+    ) {}
 
     /**
      * Exibe a listagem das avaliações.

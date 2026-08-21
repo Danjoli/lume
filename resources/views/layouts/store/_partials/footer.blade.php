@@ -146,13 +146,21 @@
                     diretamente no seu e-mail.
                 </p>
 
-                <form class="mt-5">
+                <form
+                    action="{{ route('store.newsletter.store') }}"
+                    method="POST"
+                    class="mt-5"
+                >
+                    @csrf
 
                     <div class="flex">
 
                         <input
                             type="email"
+                            name="email"
+                            value="{{ old('email') }}"
                             placeholder="Seu e-mail"
+                            autocomplete="email"
                             class="
                                 min-w-0 flex-1
                                 rounded-l-lg border
@@ -168,6 +176,7 @@
 
                         <button
                             type="submit"
+                            title="Cadastrar e-mail"
                             class="
                                 rounded-r-lg
                                 bg-white px-4
@@ -182,6 +191,32 @@
                         </button>
 
                     </div>
+
+                    @if(session('newsletter_success'))
+
+                        <p class="mt-3 text-xs font-medium text-emerald-300">
+                            {{ session('newsletter_success') }}
+                        </p>
+
+                    @endif
+
+                    @error('email', 'newsletter')
+
+                        <p class="mt-3 text-xs text-red-300">
+                            {{ $message }}
+                        </p>
+
+                    @enderror
+
+                    <p
+                        class="
+                            mt-3 text-[11px]
+                            leading-5 text-white/45
+                        "
+                    >
+                        Ao se cadastrar, você concorda em receber comunicações
+                        da Lume. Você poderá cancelar a inscrição quando quiser.
+                    </p>
 
                 </form>
 

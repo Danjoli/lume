@@ -13,8 +13,7 @@ readonly class ShipmentData
         public string $service,
         public ShipmentStatus $status,
         public float $shippingCost,
-    ) {
-    }
+    ) {}
 
     /**
      * Cria um DTO a partir do Form Request.

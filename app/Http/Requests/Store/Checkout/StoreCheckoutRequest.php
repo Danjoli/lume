@@ -55,26 +55,19 @@ class StoreCheckoutRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'address_id.required' =>
-                'Selecione um endereço para entrega.',
+            'address_id.required' => 'Selecione um endereço para entrega.',
 
-            'address_id.exists' =>
-                'O endereço selecionado é inválido.',
+            'address_id.exists' => 'O endereço selecionado é inválido.',
 
-            'cpf.required' =>
-                'Informe seu CPF.',
+            'cpf.required' => 'Informe seu CPF.',
 
-            'phone.required' =>
-                'Informe seu telefone.',
+            'phone.required' => 'Informe seu telefone.',
 
-            'shipping_service.required' =>
-                'Selecione uma forma de entrega.',
+            'shipping_service.required' => 'Selecione uma forma de entrega.',
 
-            'payment_method.required' =>
-                'Selecione uma forma de pagamento.',
+            'payment_method.required' => 'Selecione uma forma de pagamento.',
 
-            'payment_method.enum' =>
-                'A forma de pagamento selecionada é inválida.',
+            'payment_method.enum' => 'A forma de pagamento selecionada é inválida.',
         ];
     }
 }

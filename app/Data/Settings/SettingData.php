@@ -47,8 +47,7 @@ final readonly class SettingData
 
         public ?string $senderName,
         public ?string $senderEmail,
-    ) {
-    }
+    ) {}
 
     public static function fromRequest(
         UpdateSettingRequest $request

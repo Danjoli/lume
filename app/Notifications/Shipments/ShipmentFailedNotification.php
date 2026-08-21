@@ -12,8 +12,7 @@ class ShipmentFailedNotification extends Notification
 
     public function __construct(
         private readonly Shipment $shipment
-    ) {
-    }
+    ) {}
 
     public function via(object $notifiable): array
     {

@@ -28,7 +28,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('store.home', absolute: false));
+        return redirect()->intended(route('store.home', absolute: false))
+            ->with('success', 'Login realizado com sucesso. Bem-vindo de volta!');
     }
 
     /**
@@ -42,6 +43,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('store.home')
+            ->with('success', 'Você saiu da sua conta com segurança.');
     }
 }

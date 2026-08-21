@@ -12,8 +12,7 @@ class NotificationController extends Controller
 {
     public function __construct(
         private readonly NotificationService $notificationService,
-    ) {
-    }
+    ) {}
 
     /**
      * Lista todas as notificações do admin autenticado.

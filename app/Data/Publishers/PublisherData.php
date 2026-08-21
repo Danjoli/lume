@@ -12,8 +12,7 @@ readonly class PublisherData
         public string $name,
         public ?string $description,
         public ?string $website,
-    ) {
-    }
+    ) {}
 
     /**
      * Cria um DTO a partir do Form Request.

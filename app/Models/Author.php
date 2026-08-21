@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Author extends Model
@@ -18,7 +18,7 @@ class Author extends Model
         'is_active',
     ];
 
-     protected function casts(): array
+    protected function casts(): array
     {
         return [
             'is_active' => 'boolean',

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Store\AuthorController;
+use App\Http\Controllers\Store\Catalog\AuthorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/autores', [AuthorController::class, 'index'])

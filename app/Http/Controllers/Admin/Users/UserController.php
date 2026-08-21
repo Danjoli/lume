@@ -7,7 +7,7 @@ use App\Exceptions\Domain\CannotDeactivateUserException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\UpdateUserRequest;
 use App\Models\User;
-use App\Services\Admin\UserService;
+use App\Services\Admin\Users\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -16,8 +16,7 @@ class UserController extends Controller
 {
     public function __construct(
         private readonly UserService $userService,
-    ) {
-    }
+    ) {}
 
     /**
      * Exibe a listagem dos usuários.
@@ -103,6 +102,7 @@ class UserController extends Controller
     {
         try {
             $this->userService->deactivate($user);
+
             return back()->with(
                 'success',
                 'Usuário desativado com sucesso.'

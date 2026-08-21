@@ -26,7 +26,7 @@
 
             <dd>
 
-                {{ $shipment->label_id ?: '-' }}
+                {{ $shipment->melhor_envio_order_id ?: '-' }}
 
             </dd>
 
@@ -45,5 +45,9 @@
         </div>
 
     </dl>
+
+    @if($shipment->tracking_url)
+        <a target="_blank" rel="noopener" href="{{ $shipment->tracking_url }}" class="mt-5 inline-flex rounded-lg border px-4 py-2 text-sm font-semibold">Acompanhar na transportadora</a>
+    @endif
 
 </x-admin.cards.card>

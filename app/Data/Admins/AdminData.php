@@ -13,8 +13,7 @@ readonly class AdminData
         public string $email,
         public string $role,
         public ?string $password,
-    ) {
-    }
+    ) {}
 
     /**
      * Cria um DTO a partir do Form Request.

@@ -28,6 +28,23 @@
 
     </div>
 
+    @auth
+        <form method="POST" action="{{ route('store.books.reviews.store', $book) }}" class="mt-7 rounded-xl bg-[#F7F6F2] p-5">
+            @csrf
+            <h3 class="font-semibold text-[#17231F]">Avalie este livro</h3>
+            <div class="mt-4 flex gap-3">
+                @for($note = 1; $note <= 5; $note++)
+                    <label class="cursor-pointer"><input class="sr-only peer" type="radio" name="rating" value="{{ $note }}" @checked(old('rating') == $note)><span class="inline-flex rounded-lg border bg-white px-3 py-2 text-sm peer-checked:border-[#062B25] peer-checked:bg-[#062B25] peer-checked:text-white">{{ $note }} ★</span></label>
+                @endfor
+            </div>
+            <textarea name="comment" rows="4" maxlength="2000" required class="mt-4 w-full rounded-lg border border-[#DDDCD7] p-3 text-sm" placeholder="Conte como foi sua experiência com a leitura...">{{ old('comment') }}</textarea>
+            @foreach($errors->all() as $error)<p class="mt-2 text-xs text-red-600">{{ $error }}</p>@endforeach
+            <button class="mt-4 rounded-lg bg-[#062B25] px-5 py-2.5 text-sm font-semibold text-white">Enviar avaliação</button>
+        </form>
+    @else
+        <p class="mt-6 rounded-xl bg-[#F7F6F2] p-4 text-sm text-[#69736F]"><a class="font-semibold text-[#062B25]" href="{{ route('login') }}">Entre na sua conta</a> para avaliar este livro.</p>
+    @endauth
+
     <div class="mt-7 divide-y divide-[#ECEAE6]">
 
         @forelse($book->reviews as $review)

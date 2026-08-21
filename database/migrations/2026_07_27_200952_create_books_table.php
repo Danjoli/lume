@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->longText('synopsis')->nullable();
 
-            //Preços
+            // Preços
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('sale_price', 10, 2)->nullable();
 

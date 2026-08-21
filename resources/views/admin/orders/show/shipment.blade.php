@@ -14,7 +14,7 @@
 
             <dd>
 
-                <x-badges.shipment-status-badge :status="$order->shipment_status" />
+                <x-badges.status-badge :status="$order->shipment_status" />
 
             </dd>
 

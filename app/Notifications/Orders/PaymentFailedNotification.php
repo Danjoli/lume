@@ -12,8 +12,7 @@ class PaymentFailedNotification extends Notification
 
     public function __construct(
         private readonly Order $order
-    ) {
-    }
+    ) {}
 
     public function via(object $notifiable): array
     {

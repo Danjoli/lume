@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Coupons\StoreCouponRequest;
 use App\Http\Requests\Admin\Coupons\UpdateCouponRequest;
 use App\Models\Coupon;
-use App\Services\Admin\CouponService;
+use App\Services\Admin\Coupons\CouponService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -17,8 +17,7 @@ class CouponController extends Controller
 {
     public function __construct(
         private readonly CouponService $couponService,
-    ) {
-    }
+    ) {}
 
     /**
      * Exibe a listagem dos cupons.

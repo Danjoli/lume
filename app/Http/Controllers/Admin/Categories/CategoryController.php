@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreCategoryRequest;
 use App\Http\Requests\Admin\Categories\UpdateCategoryRequest;
 use App\Models\Category;
-use App\Services\Admin\CategoryService;
+use App\Services\Admin\Categories\CategoryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -17,8 +17,7 @@ class CategoryController extends Controller
 {
     public function __construct(
         private readonly CategoryService $categoryService
-    ) {
-    }
+    ) {}
 
     /**
      * Exibe a listagem das categorias.

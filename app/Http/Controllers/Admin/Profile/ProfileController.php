@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Profile;
 use App\Data\Profile\ProfileData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Profile\UpdateProfileRequest;
-use App\Services\Admin\ProfileService;
+use App\Services\Admin\Profile\ProfileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -13,8 +13,7 @@ class ProfileController extends Controller
 {
     public function __construct(
         private readonly ProfileService $profileService,
-    ) {
-    }
+    ) {}
 
     /**
      * Exibe a página do perfil.

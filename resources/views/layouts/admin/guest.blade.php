@@ -5,6 +5,8 @@
 
 <body class="min-h-screen bg-gray-100 antialiased">
 
+    <x-alerts.flash />
+
     <div class="flex min-h-screen items-center justify-center p-6">
 
         <div class="w-full max-w-md">

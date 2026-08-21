@@ -48,6 +48,15 @@ class Order extends Model
         'gateway',
         'gateway_payment_id',
 
+        'gateway_customer_id',
+        'payment_url',
+        'bank_slip_url',
+        'pix_payload',
+        'pix_qr_code',
+        'payment_due_date',
+        'gateway_status',
+        'gateway_error',
+
         'paid_at',
     ];
 
@@ -71,6 +80,7 @@ class Order extends Model
             'total' => 'decimal:2',
 
             'paid_at' => 'datetime',
+            'payment_due_date' => 'date',
         ];
     }
 

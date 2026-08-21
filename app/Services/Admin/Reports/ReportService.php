@@ -11,8 +11,7 @@ class ReportService
         private readonly BooksReportService $booksReportService,
         private readonly CustomersReportService $customersReportService,
         private readonly FinanceReportService $financeReportService,
-    ) {
-    }
+    ) {}
 
     /**
      * Dashboard de relatórios.

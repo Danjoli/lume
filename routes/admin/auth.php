@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\LogoutController;
+use App\Http\Controllers\Admin\Auth\NewPasswordController;
+use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest.admin')->group(function () {
@@ -11,6 +13,11 @@ Route::middleware('guest.admin')->group(function () {
 
     Route::post('/login', [LoginController::class, 'store'])
         ->name('login.store');
+
+    Route::get('/esqueci-minha-senha', [PasswordResetLinkController::class, 'create'])->name('password.request');
+    Route::post('/esqueci-minha-senha', [PasswordResetLinkController::class, 'store'])->name('password.email');
+    Route::get('/redefinir-senha/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::post('/redefinir-senha', [NewPasswordController::class, 'store'])->name('password.update');
 
 });
 

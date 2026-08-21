@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Publishers\StorePublisherRequest;
 use App\Http\Requests\Admin\Publishers\UpdatePublisherRequest;
 use App\Models\Publisher;
-use App\Services\Admin\PublisherService;
+use App\Services\Admin\Publishers\PublisherService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -17,8 +17,7 @@ class PublisherController extends Controller
 {
     public function __construct(
         private readonly PublisherService $publisherService
-    ) {
-    }
+    ) {}
 
     /**
      * Exibe a listagem das editoras.

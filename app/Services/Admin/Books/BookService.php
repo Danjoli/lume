@@ -16,8 +16,7 @@ class BookService
 
     public function __construct(
         private readonly BookImageService $bookImageService,
-    ) {
-    }
+    ) {}
 
     public function getIndexData(Request $request): array
     {
@@ -48,7 +47,7 @@ class BookService
                 fn ($query) => $query->where(
                     'title',
                     'like',
-                    '%' . $request->string('search') . '%'
+                    '%'.$request->string('search').'%'
                 )
             )
             ->latest()

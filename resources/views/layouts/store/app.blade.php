@@ -28,6 +28,8 @@
 
 <body class="bg-[#FCFBF8] text-[#101816] antialiased">
 
+    <x-alerts.flash />
+
     @include('layouts.store._partials.topbar')
 
     @include('layouts.store._partials.header')

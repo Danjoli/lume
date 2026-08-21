@@ -19,8 +19,7 @@ class OrderStatusService
         private readonly DeliverOrderAction $deliverOrderAction,
         private readonly CancelOrderAction $cancelOrderAction,
         private readonly RefundOrderAction $refundOrderAction,
-    ) {
-    }
+    ) {}
 
     /**
      * Marca o pedido como pago.

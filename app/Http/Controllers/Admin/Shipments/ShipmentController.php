@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin\Shipments;
 
 use App\Data\Shipments\ShipmentData;
-use App\Exceptions\Domain\CannotGenerateLabelException;
-use App\Exceptions\Domain\CannotPurchaseShipmentException;
 use App\Exceptions\Domain\InvalidShipmentStatusException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Shipments\UpdateShipmentRequest;
@@ -14,14 +12,14 @@ use App\Services\Admin\Shipments\ShipmentTrackingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Throwable;
 
 class ShipmentController extends Controller
 {
     public function __construct(
         private readonly ShipmentService $shipmentService,
         private readonly ShipmentTrackingService $trackingService,
-    ) {
-    }
+    ) {}
 
     /**
      * Lista os envios.
@@ -93,7 +91,7 @@ class ShipmentController extends Controller
             );
 
         } catch (
-            CannotGenerateLabelException $exception
+            Throwable $exception
         ) {
 
             return back()->with(
@@ -123,8 +121,7 @@ class ShipmentController extends Controller
             );
 
         } catch (
-            CannotPurchaseShipmentException |
-            InvalidShipmentStatusException $exception
+            Throwable $exception
         ) {
 
             return back()->with(
@@ -143,8 +140,13 @@ class ShipmentController extends Controller
         Shipment $shipment
     ): RedirectResponse {
 
-        $this->trackingService
-            ->sync($shipment);
+        try {
+            $this->trackingService->sync($shipment);
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return back()->with('error', $exception->getMessage());
+        }
 
         return back()->with(
             'success',

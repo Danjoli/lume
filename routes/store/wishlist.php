@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Store\WishlistController;
+use App\Http\Controllers\Store\Shopping\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('wishlist')

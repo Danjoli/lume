@@ -54,7 +54,7 @@ class UpdateAdminRequest extends FormRequest
             'role' => [
                 'required',
                 'string',
-                'in:' . implode(',', array_keys(Admin::ROLES())),
+                'in:'.implode(',', array_keys(Admin::ROLES())),
             ],
 
             /*

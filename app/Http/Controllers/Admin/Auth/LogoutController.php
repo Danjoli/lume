@@ -19,8 +19,8 @@ class LogoutController extends Controller
 
         $request->session()->regenerateToken();
 
-
         return redirect()
-            ->route('admin.login');
+            ->route('admin.login')
+            ->with('success', 'Sessão administrativa encerrada com segurança.');
     }
 }

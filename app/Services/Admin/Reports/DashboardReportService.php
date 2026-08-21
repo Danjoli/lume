@@ -106,12 +106,12 @@ class DashboardReportService
                 '>',
                 0
             )
-            ->where(
-                'stock',
-                '<=',
-                5
-            )
-            ->count(),
+                ->where(
+                    'stock',
+                    '<=',
+                    5
+                )
+                ->count(),
 
         ];
     }

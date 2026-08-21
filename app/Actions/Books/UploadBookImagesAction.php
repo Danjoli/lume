@@ -5,7 +5,6 @@ namespace App\Actions\Books;
 use App\Exceptions\Domain\InvalidBookImageException;
 use App\Models\Book;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UploadBookImagesAction
@@ -13,7 +12,7 @@ class UploadBookImagesAction
     /**
      * Salva as imagens do livro.
      *
-     * @param array<int, UploadedFile> $images
+     * @param  array<int, UploadedFile>  $images
      */
     public function execute(
         Book $book,

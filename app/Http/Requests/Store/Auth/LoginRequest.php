@@ -33,6 +33,15 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Informe seu e-mail.',
+            'email.email' => 'Informe um endereço de e-mail válido.',
+            'password.required' => 'Informe sua senha.',
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *
@@ -46,7 +55,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'E-mail ou senha incorretos. Confira os dados e tente novamente.',
             ]);
         }
 
@@ -69,10 +78,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+            'email' => "Muitas tentativas de acesso. Tente novamente em {$seconds} segundos.",
         ]);
     }
 

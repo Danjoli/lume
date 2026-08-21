@@ -10,8 +10,7 @@ class ReportController extends Controller
 {
     public function __construct(
         private readonly ReportService $reportService,
-    ) {
-    }
+    ) {}
 
     /**
      * Dashboard de relatórios.

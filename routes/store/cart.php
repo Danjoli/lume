@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Store\CartController;
+use App\Http\Controllers\Store\Shopping\CartController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('carrinho')

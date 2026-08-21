@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Store\PublisherController;
+use App\Http\Controllers\Store\Catalog\PublisherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/editoras', [PublisherController::class, 'index'])

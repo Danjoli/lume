@@ -574,3 +574,88 @@ Cliente
 | 29/07/2026 | Autenticação administrativa separada implementada com guard admin |
 | 29/07/2026 | Middleware e rotas protegidas do painel administrativo criados    |
 | 29/07/2026 | Layouts e componentes Blade separados por contexto                |
+| 20/08/2026 | Checkout e pagamentos integrados ao Asaas                         |
+| 20/08/2026 | Logística integrada ao Melhor Envio                              |
+| 21/08/2026 | Autenticação, avaliações, alertas e dados de demonstração revistos |
+| 21/08/2026 | Rotas, Services e views reorganizados por domínio                 |
+| 21/08/2026 | Suíte de autenticação e perfil alinhada ao fluxo atual             |
+
+# 023 - Integrações externas isoladas
+
+## Decisão
+
+Manter Asaas e Melhor Envio em serviços próprios, configurados por `config/services.php` e variáveis de ambiente.
+
+## Motivo
+
+Evitar chamadas externas em Controllers ou Models, impedir segredos no código e permitir troca de ambiente entre sandbox e produção.
+
+# 024 - Webhooks como fonte de conciliação
+
+## Decisão
+
+Receber eventos do Asaas por endpoint dedicado, validar o token configurado e tornar a atualização de pagamento idempotente.
+
+## Motivo
+
+O retorno do navegador não é garantia de pagamento. A confirmação deve vir do gateway e eventos repetidos não podem duplicar efeitos.
+
+# 025 - Rotas organizadas por domínio
+
+## Decisão
+
+Usar arquivos agregadores para as áreas administrativa e pública e subdividir a conta do cliente em perfil, segurança, conta, endereços e pedidos.
+
+## Motivo
+
+Arquivos menores facilitam localização, revisão de middleware e manutenção de nomes de rota.
+
+# 026 - Componentes e partials nas views
+
+## Decisão
+
+Usar componentes Blade para interfaces reutilizáveis e `_partials` para blocos específicos de uma tela ou domínio.
+
+## Motivo
+
+Reduzir duplicação sem transformar cada trecho visual em uma abstração global. Arquivos `index`, `show`, `create` e `edit` devem priorizar composição.
+
+# 027 - Dados de demonstração coerentes
+
+## Decisão
+
+Factories e seeders geram clientes com pedidos, itens, avaliações e envios em estados variados, usando senhas conhecidas somente em desenvolvimento.
+
+## Motivo
+
+Permitir testar dashboards e fluxos reais sem cadastros manuais. Credenciais de demonstração nunca devem ser utilizadas em produção.
+
+# 028 - Alertas e validação localizados
+
+## Decisão
+
+Centralizar validações em Form Requests e apresentar retornos de sucesso, erro, aviso e informação por um componente compartilhado, com mensagens em português.
+
+## Motivo
+
+Oferecer comportamento consistente entre loja e painel e evitar mensagens internas do framework na interface.
+
+# 029 - Camadas espelhadas por domínio
+
+## Decisão
+
+Organizar Controllers, Form Requests e Services pelos mesmos limites de domínio. Na loja, os grupos principais são `Catalog`, `Shopping`, `Content` e `Customer`; no painel, cada recurso mantém sua pasta correspondente.
+
+## Motivo
+
+Facilitar a descoberta dos arquivos de um caso de uso sem criar uma pasta para cada classe. Serviços transversais permanecem na raiz e integrações financeiras ficam em `Services/Payments`.
+
+# 030 - Controllers sem persistência de regras de negócio
+
+## Decisão
+
+Extrair elegibilidade e moderação de avaliações, orquestração de cobranças e conciliação de webhooks para Services dedicados.
+
+## Motivo
+
+Manter a camada HTTP pequena e testável, centralizar transações e permitir reutilização das regras fora de uma rota web.

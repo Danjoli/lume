@@ -29,4 +29,4 @@
             </button>
         </form>
     </div>
-    <x-customer.guest-layout>
+</x-customer.guest-layout>

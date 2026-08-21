@@ -1,5 +1,8 @@
 <?php
 
+$asaasEnvironment = env('ASAAS_ENVIRONMENT', 'sandbox');
+$melhorEnvioEnvironment = env('MELHOR_ENVIO_ENVIRONMENT', 'sandbox');
+
 return [
 
     /*
@@ -33,6 +36,34 @@ return [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
+    ],
+
+    'asaas' => [
+        'environment' => $asaasEnvironment,
+        'base_url' => $asaasEnvironment === 'production'
+            ? env('ASAAS_PRODUCTION_BASE_URL', 'https://api.asaas.com/v3')
+            : env('ASAAS_SANDBOX_BASE_URL', 'https://api-sandbox.asaas.com/v3'),
+        'api_key' => $asaasEnvironment === 'production'
+            ? env('ASAAS_PRODUCTION_API_KEY')
+            : env('ASAAS_SANDBOX_API_KEY'),
+        'webhook_token' => $asaasEnvironment === 'production'
+            ? env('ASAAS_PRODUCTION_WEBHOOK_TOKEN')
+            : env('ASAAS_SANDBOX_WEBHOOK_TOKEN'),
+        'due_days' => (int) env('ASAAS_DUE_DAYS', 3),
+    ],
+
+    'melhor_envio' => [
+        'environment' => $melhorEnvioEnvironment,
+        'base_url' => $melhorEnvioEnvironment === 'production'
+            ? env('MELHOR_ENVIO_PRODUCTION_BASE_URL', 'https://melhorenvio.com.br/api/v2')
+            : env('MELHOR_ENVIO_SANDBOX_BASE_URL', 'https://sandbox.melhorenvio.com.br/api/v2'),
+        'token' => $melhorEnvioEnvironment === 'production'
+            ? env('MELHOR_ENVIO_PRODUCTION_TOKEN')
+            : env('MELHOR_ENVIO_SANDBOX_TOKEN'),
+        'from_postal_code' => $melhorEnvioEnvironment === 'production'
+            ? env('MELHOR_ENVIO_PRODUCTION_FROM_POSTAL_CODE')
+            : env('MELHOR_ENVIO_SANDBOX_FROM_POSTAL_CODE'),
+        'user_agent' => env('MELHOR_ENVIO_USER_AGENT', env('APP_NAME', 'Lume').' contato@example.com'),
     ],
 
 ];

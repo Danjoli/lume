@@ -14,7 +14,7 @@ class DeletePublisherAction
         Publisher $publisher
     ): void {
         if ($publisher->books()->exists()) {
-            throw new CannotDeletePublisherException();
+            throw new CannotDeletePublisherException;
         }
         $publisher->delete();
     }

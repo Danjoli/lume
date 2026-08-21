@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Book;
 use App\Enums\BookFormat;
+use App\Models\Book;
 use App\Models\Publisher;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -48,7 +48,7 @@ class BookFactory extends Factory
             // Informações do livro
             'pages' => fake()->numberBetween(80, 1200),
             'language' => 'Português',
-            'edition' => fake()->numberBetween(1, 10) . 'ª edição',
+            'edition' => fake()->numberBetween(1, 10).'ª edição',
             'format' => fake()->randomElement(BookFormat::cases()),
             'publication_date' => fake()->date(),
 

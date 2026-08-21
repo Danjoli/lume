@@ -50,7 +50,7 @@
 
             <dd>
 
-                <x-badges.order-status-badge :status="$order->status" />
+                <x-badges.status-badge :status="$order->status" />
 
             </dd>
 
