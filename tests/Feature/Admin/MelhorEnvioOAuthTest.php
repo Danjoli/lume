@@ -4,6 +4,8 @@ namespace Tests\Feature\Admin;
 
 use App\Models\Admin;
 use App\Models\IntegrationCredential;
+use App\Models\Shipment;
+use App\Services\Store\Shipping\MelhorEnvioService;
 use App\Services\Store\Shipping\MelhorEnvioTokenService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -82,5 +84,24 @@ class MelhorEnvioOAuthTest extends TestCase
         $this->artisan('melhor-envio:smoke-test')
             ->expectsOutput('Este comando só pode ser executado com MELHOR_ENVIO_ENVIRONMENT=sandbox.')
             ->assertFailed();
+    }
+
+    public function test_empty_sandbox_tracking_response_is_handled_as_an_empty_array(): void
+    {
+        config()->set('services.melhor_envio.base_url', 'https://sandbox.melhorenvio.test/api/v2');
+        IntegrationCredential::create([
+            'provider' => 'melhor_envio',
+            'environment' => 'sandbox',
+            'access_token' => 'valid-token',
+            'refresh_token' => 'refresh-token',
+            'expires_at' => now()->addHour(),
+        ]);
+        $shipment = Shipment::factory()->create(['melhor_envio_order_id' => 'label-without-tracking']);
+
+        Http::fake([
+            'sandbox.melhorenvio.test/api/v2/me/shipment/tracking*' => Http::response(null),
+        ]);
+
+        $this->assertSame([], app(MelhorEnvioService::class)->tracking($shipment));
     }
 }

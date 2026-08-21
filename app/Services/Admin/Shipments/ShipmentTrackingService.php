@@ -25,6 +25,10 @@ class ShipmentTrackingService
             return;
         }
         $tracking = $this->melhorEnvioService->tracking($shipment);
+        if ($tracking === []) {
+            return;
+        }
+
         $status = match (strtolower((string) ($tracking['status'] ?? ''))) {
             'posted', 'in_transit' => ShipmentStatus::SHIPPED,
             'delivered' => ShipmentStatus::DELIVERED,
