@@ -90,6 +90,8 @@ O menu **Envios** concentra a operação do Melhor Envio. Em cada envio, o admin
 
 As ações externas só funcionam após configurar Client ID, Client Secret e o CEP de origem do ambiente ativo. Em **Administração > Configurações**, clique em **Conectar Melhor Envio** para autorizar a conta. Access token e refresh token são armazenados criptografados no banco e renovados automaticamente; eles não pertencem ao `.env`. Recomenda-se homologar todo o fluxo no sandbox antes de selecionar `production`.
 
+Para homologação automatizada no Sandbox, use `php artisan melhor-envio:smoke-test` para apenas cotar, `--prepare` para criar e preparar um pedido técnico ou `--purchase` para solicitar confirmação e executar compra, geração e impressão. O comando recusa execução em produção e mantém o pedido criado disponível no painel para inspeção.
+
 ## Contas de demonstração
 
 Após executar os seeders:
