@@ -41,7 +41,7 @@ Não é obrigatório criar uma subpasta para cada classe. Uma pasta é criada qu
 - Action: operação de domínio pequena e reutilizável, especialmente uma transição de estado.
 - Model: relações, casts, scopes e comportamento diretamente ligado ao próprio estado.
 
-Avaliações são tratadas por `Store/Catalog/ReviewService`; criação e repetição de cobranças por `Payments/OrderPaymentService`; conciliação de eventos por `Payments/AsaasWebhookService`. Os respectivos Controllers não consultam nem atualizam essas entidades diretamente.
+Avaliações são tratadas por `Store/Catalog/ReviewService`; criação e repetição de cobranças por `Payments/OrderPaymentService`; conciliação financeira por `Payments/AsaasWebhookService`; eventos logísticos por `Store/Shipping/MelhorEnvioWebhookService`. Os respectivos Controllers não consultam nem atualizam essas entidades diretamente.
 
 ## Rotas
 
@@ -59,9 +59,14 @@ Prefixos não devem ser repetidos dentro do módulo. Por exemplo, o dashboard de
 
 Páginas institucionais usam `x-store.pages.hero`, `x-store.pages.cta` e `x-store.pages.legal-navigation`. Telas administrativas extensas, como newsletter e atendimento, são compostas por partials específicos.
 
+A página de detalhes do livro mantém a galeria em `components/store/books/show/gallery`, com estado local Alpine para alternar a imagem sem nova requisição. No mobile, miniaturas usam rolagem horizontal e a imagem principal reduz sua altura mínima.
+
+O cabeçalho expõe busca, conta, carrinho e menu em telas pequenas. Elementos controlados por Alpine usam `x-cloak` para não aparecer antes da inicialização do JavaScript.
+
 ## Convenções
 
 - Nomes de rotas: `area.dominio.acao`.
+- Recursos públicos com slug: livros, autores, categorias e editoras usam o slug no route model binding; IDs permanecem para entidades sem identificador textual estável.
 - Mensagens ao usuário: chaves de sessão `success`, `error`, `warning` ou `info`.
 - Valores financeiros: calculados no backend; nunca confiar em preços enviados pelo navegador.
 - Consultas públicas de avaliações: somente avaliações aprovadas.
@@ -69,4 +74,5 @@ Páginas institucionais usam `x-store.pages.hero`, `x-store.pages.cta` e `x-stor
 - Integrações externas: adapters próprios em `Services/Payments` e `Services/Store/Shipping`.
 - Processamento demorado: Jobs e filas, sem bloquear a resposta HTTP.
 - Webhooks: controllers dedicados, autenticação do emissor e processamento idempotente.
+- Melhor Envio: `X-ME-Signature` validada por HMAC-SHA256 sobre o corpo bruto, usando o client secret do aplicativo ativo.
 - Pastas e namespaces: nomes em inglês, no plural para domínios de recursos administrativos e por capacidade para módulos da loja.

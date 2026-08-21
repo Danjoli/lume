@@ -60,6 +60,12 @@ return [
         'token' => $melhorEnvioEnvironment === 'production'
             ? env('MELHOR_ENVIO_PRODUCTION_TOKEN')
             : env('MELHOR_ENVIO_SANDBOX_TOKEN'),
+        'client_id' => $melhorEnvioEnvironment === 'production'
+            ? env('MELHOR_ENVIO_PRODUCTION_CLIENT_ID')
+            : env('MELHOR_ENVIO_SANDBOX_CLIENT_ID'),
+        'client_secret' => $melhorEnvioEnvironment === 'production'
+            ? env('MELHOR_ENVIO_PRODUCTION_CLIENT_SECRET')
+            : env('MELHOR_ENVIO_SANDBOX_CLIENT_SECRET'),
         'from_postal_code' => $melhorEnvioEnvironment === 'production'
             ? env('MELHOR_ENVIO_PRODUCTION_FROM_POSTAL_CODE')
             : env('MELHOR_ENVIO_SANDBOX_FROM_POSTAL_CODE'),

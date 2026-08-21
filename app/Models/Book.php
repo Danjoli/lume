@@ -13,6 +13,11 @@ class Book extends Model
 {
     use HasFactory;
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     /**
      * Os atributos que podem ser preenchidos em massa.
      *

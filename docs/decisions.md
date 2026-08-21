@@ -669,3 +669,23 @@ Manter `routes/admin` e os módulos principais de `routes/store` planos, com um 
 ## Motivo
 
 Evitar hierarquias sem ganho prático e manter os arquivos fáceis de localizar. Uma nova subpasta só é criada quando o próprio domínio passa a precisar de vários arquivos.
+
+# 032 - Webhook logístico autenticado
+
+## Decisão
+
+Receber eventos de etiqueta do Melhor Envio em `/webhooks/melhor-envio`, validando `X-ME-Signature` com HMAC-SHA256 e o client secret do ambiente ativo.
+
+## Motivo
+
+Atualizar rastreamento sem depender exclusivamente de consultas manuais, rejeitar payloads sem autenticidade e tolerar reenvios ou eventos atrasados sem regredir o estado logístico.
+
+# 033 - URLs públicas por slug
+
+## Decisão
+
+Usar `slug` como chave de rota de livros, autores, categorias e editoras. Entidades transacionais ou sem nome público estável continuam utilizando seu identificador interno.
+
+## Motivo
+
+Produzir endereços legíveis, compartilháveis e adequados para indexação sem aplicar slugs artificiais a pedidos, usuários ou registros operacionais.

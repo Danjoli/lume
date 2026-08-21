@@ -14,7 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
 
-        $middleware->validateCsrfTokens(except: ['webhooks/asaas']);
+        $middleware->validateCsrfTokens(except: [
+            'webhooks/asaas',
+            'webhooks/melhor-envio',
+        ]);
 
         $middleware->alias([
             'admin' => AdminMiddleware::class,
