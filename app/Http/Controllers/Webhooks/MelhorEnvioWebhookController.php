@@ -13,15 +13,22 @@ class MelhorEnvioWebhookController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
-        $secret = (string) config('services.melhor_envio.client_secret');
-        abort_if($secret === '', 503, 'Webhook do Melhor Envio não configurado.');
+        $secrets = array_values(array_filter(
+            (array) config('services.melhor_envio.webhook_secrets', []),
+            fn ($secret) => is_string($secret) && $secret !== ''
+        ));
+        abort_if($secrets === [], 503, 'Webhook do Melhor Envio não configurado.');
 
-        $signature = (string) $request->header('X-ME-Signature');
-        $expectedSignature = base64_encode(
-            hash_hmac('sha256', $request->getContent(), $secret, true)
-        );
+        $signature = trim((string) $request->header('X-ME-Signature'));
+        $signatureIsValid = collect($secrets)->contains(function (string $secret) use ($request, $signature): bool {
+            $expectedSignature = base64_encode(
+                hash_hmac('sha256', $request->getContent(), $secret, true)
+            );
 
-        abort_if($signature === '' || ! hash_equals($expectedSignature, $signature), 401);
+            return $signature !== '' && hash_equals($expectedSignature, $signature);
+        });
+
+        abort_unless($signatureIsValid, 401);
 
         $payload = $request->json()->all();
         abort_unless(is_string($payload['event'] ?? null) && is_array($payload['data'] ?? null), 422);

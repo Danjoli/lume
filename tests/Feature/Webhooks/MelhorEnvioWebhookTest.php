@@ -18,7 +18,7 @@ class MelhorEnvioWebhookTest extends TestCase
     {
         parent::setUp();
 
-        config()->set('services.melhor_envio.client_secret', self::SECRET);
+        config()->set('services.melhor_envio.webhook_secrets', [self::SECRET, 'production-secret']);
     }
 
     public function test_rejects_an_invalid_signature(): void
@@ -47,6 +47,21 @@ class MelhorEnvioWebhookTest extends TestCase
         $this->assertNotNull($shipment->shipped_at);
         $this->assertNotNull($shipment->delivered_at);
         $this->assertCount(1, $shipment->tracking_history);
+    }
+
+    public function test_accepts_the_secret_from_another_configured_environment(): void
+    {
+        $shipment = Shipment::factory()->create(['melhor_envio_order_id' => 'label-123']);
+        $payload = $this->payload();
+        $json = json_encode($payload, JSON_UNESCAPED_SLASHES);
+        $signature = base64_encode(hash_hmac('sha256', $json, 'production-secret', true));
+
+        $this->call('POST', route('webhooks.melhor-envio'), [], [], [], [
+            'CONTENT_TYPE' => 'application/json',
+            'HTTP_X_ME_SIGNATURE' => $signature,
+        ], $json)->assertOk();
+
+        $this->assertSame(ShipmentStatus::DELIVERED, $shipment->refresh()->status);
     }
 
     public function test_ignores_a_duplicated_event_and_does_not_regress_status(): void
