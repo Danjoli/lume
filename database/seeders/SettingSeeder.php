@@ -16,9 +16,17 @@ class SettingSeeder extends Seeder
             ['id' => 1],
             [
                 'store_name' => 'Lume',
-
-                'email' => 'contato@lume.com',
-
+                'company_name' => 'Livraria Lume',
+                'cnpj' => '11.444.777/0001-61',
+                'email' => 'contato@lume.test',
+                'phone' => '(11) 3333-4444',
+                'cep' => '01001-000',
+                'origin_cep' => '01001-000',
+                'street' => 'Praça da Sé',
+                'number' => '100',
+                'neighborhood' => 'Sé',
+                'city' => 'São Paulo',
+                'state' => 'SP',
                 'currency' => 'BRL',
             ]
         );

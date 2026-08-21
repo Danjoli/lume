@@ -22,17 +22,11 @@ class ShipmentFactory extends Factory
         return [
             'order_id' => Order::factory(),
 
-            'carrier' => fake()->randomElement([
-                'Correios',
-                'Jadlog',
-                'Melhor Envio',
-            ]),
-
-            'service' => fake()->randomElement([
-                'PAC',
-                'SEDEX',
-                'Express',
-                'Standard',
+            ...fake()->randomElement([
+                ['carrier' => 'Correios', 'service' => '1'],
+                ['carrier' => 'Correios', 'service' => '2'],
+                ['carrier' => 'Jadlog', 'service' => '3'],
+                ['carrier' => 'Jadlog', 'service' => '4'],
             ]),
 
             'tracking_code' => fake()->optional()->bothify('BR###########'),
