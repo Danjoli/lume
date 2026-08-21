@@ -50,6 +50,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 - [x] Central de envios no menu administrativo com preparação, compra, geração, impressão e transições logísticas
 - [x] Interface logística compacta e responsiva com ações condicionadas ao estágio da etiqueta
 - [x] Payload de etiqueta com remetente completo e IDs reais de serviço nos dados de demonstração
+- [x] Comando protegido de smoke test para homologação automatizada no Sandbox
 - [x] Variáveis sensíveis centralizadas no `.env`
 - [x] OAuth2 do Melhor Envio com tokens criptografados e renovação automática
 
@@ -65,7 +66,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 
 - [x] Formatação do backend com Laravel Pint
 - [x] Compilação das views e validação das rotas após a reorganização
-- [x] Suíte atual: 39 testes e 125 assertions, incluindo payload completo de etiquetas, regras visuais, OAuth, webhooks e URLs amigáveis
+- [x] Suíte atual: 40 testes e 127 assertions, incluindo smoke test do Sandbox, payload de etiquetas, OAuth, webhooks e URLs amigáveis
 - [ ] Ampliar testes de integração do checkout e das chamadas externas de logística
 - [ ] Cobrir regras críticas de estoque, cupons, reembolso e avaliações
 - [ ] Adicionar rate limiting específico para login, contato e webhooks

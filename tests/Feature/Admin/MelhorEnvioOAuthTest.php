@@ -74,4 +74,13 @@ class MelhorEnvioOAuthTest extends TestCase
         $this->assertSame('renewed-token', app(MelhorEnvioTokenService::class)->accessToken());
         $this->assertSame('renewed-refresh-token', IntegrationCredential::firstOrFail()->refresh_token);
     }
+
+    public function test_smoke_test_command_refuses_to_run_against_production(): void
+    {
+        config()->set('services.melhor_envio.environment', 'production');
+
+        $this->artisan('melhor-envio:smoke-test')
+            ->expectsOutput('Este comando só pode ser executado com MELHOR_ENVIO_ENVIRONMENT=sandbox.')
+            ->assertFailed();
+    }
 }
