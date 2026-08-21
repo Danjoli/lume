@@ -659,3 +659,13 @@ Extrair elegibilidade e moderação de avaliações, orquestração de cobrança
 ## Motivo
 
 Manter a camada HTTP pequena e testável, centralizar transações e permitir reutilização das regras fora de uma rota web.
+
+# 031 - Estrutura de rotas rasa por padrão
+
+## Decisão
+
+Manter `routes/admin` e os módulos principais de `routes/store` planos, com um arquivo por domínio. A conta do cliente permanece em `routes/store/customer` porque compartilha o prefixo `minha-conta` e possui vários módulos relacionados.
+
+## Motivo
+
+Evitar hierarquias sem ganho prático e manter os arquivos fáceis de localizar. Uma nova subpasta só é criada quando o próprio domínio passa a precisar de vários arquivos.

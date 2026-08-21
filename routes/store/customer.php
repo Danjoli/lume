@@ -8,5 +8,5 @@ Route::prefix('minha-conta')->name('store.customer.')->group(function () {
     require __DIR__.'/customer/account.php';
     require __DIR__.'/customer/addresses.php';
     require __DIR__.'/customer/orders.php';
-    require __DIR__.'/preferences.php';
+    require __DIR__.'/customer/preferences.php';
 });
