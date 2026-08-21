@@ -1,49 +1,7 @@
-<x-admin.cards.card>
-
-    <h2 class="mb-6 text-lg font-semibold">
-
-        Destinatário
-
-    </h2>
-
-    <dl class="space-y-4">
-
-        <div>
-
-            <dt>Nome</dt>
-
-            <dd>
-
-                {{ $shipment->order->recipient_name }}
-
-            </dd>
-
-        </div>
-
-        <div>
-
-            <dt>E-mail</dt>
-
-            <dd>
-
-                {{ $shipment->order->user->email }}
-
-            </dd>
-
-        </div>
-
-        <div>
-
-            <dt>Telefone</dt>
-
-            <dd>
-
-                {{ $shipment->order->phone }}
-
-            </dd>
-
-        </div>
-
-    </dl>
-
+<x-admin.cards.card title="Destinatário" content-class="p-4">
+    <div class="space-y-1.5 text-sm">
+        <p class="font-semibold text-slate-900">{{ $shipment->order->recipient_name }}</p>
+        <p class="truncate text-slate-600" title="{{ $shipment->order->user->email }}">{{ $shipment->order->user->email }}</p>
+        <p class="text-slate-600">{{ $shipment->order->phone ?: 'Telefone não informado' }}</p>
+    </div>
 </x-admin.cards.card>

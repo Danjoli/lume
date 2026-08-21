@@ -1,8 +1,8 @@
-<x-admin.cards.card>
+<x-admin.cards.card content-class="p-4">
 
     <form method="GET" action="{{ route('admin.shipments.index') }}">
 
-        <div class="grid gap-6 lg:grid-cols-5">
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
 
             <div class="lg:col-span-2">
 

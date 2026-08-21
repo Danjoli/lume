@@ -61,14 +61,29 @@ class AdminEntryTest extends TestCase
         $this->actingAs($admin, 'admin')
             ->get(route('admin.shipments.show', $pending))
             ->assertOk()
-            ->assertSee('Preparar etiqueta');
+            ->assertSee('Preparar etiqueta')
+            ->assertDontSee('Comprar e gerar etiqueta')
+            ->assertDontSee('Imprimir etiqueta');
 
         $this->get(route('admin.shipments.show', $preparing))
             ->assertOk()
-            ->assertSee('Comprar e gerar etiqueta');
+            ->assertSee('Comprar e gerar etiqueta')
+            ->assertDontSee('Imprimir etiqueta')
+            ->assertDontSee('Marcar como enviado');
 
         $this->get(route('admin.shipments.show', $generated))
             ->assertOk()
-            ->assertSee('Imprimir etiqueta');
+            ->assertSee('Imprimir etiqueta')
+            ->assertDontSee('Comprar e gerar etiqueta');
+
+        $readyToShip = Shipment::factory()->preparing()->create([
+            'label_url' => 'https://sandbox.melhorenvio.test/label.pdf',
+        ]);
+
+        $this->get(route('admin.shipments.show', $readyToShip))
+            ->assertOk()
+            ->assertSee('Imprimir etiqueta')
+            ->assertSee('Marcar como enviado')
+            ->assertDontSee('Comprar e gerar etiqueta');
     }
 }

@@ -18,7 +18,7 @@ class PurchaseLabelAction
         Shipment $shipment
     ): Shipment {
 
-        if (! $shipment->isPreparing()) {
+        if (! $shipment->canPurchaseLabel()) {
 
             throw new CannotPurchaseShipmentException;
         }

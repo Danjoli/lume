@@ -1,8 +1,8 @@
 <x-admin.app-layout title="Envios">
 
-    <div class="space-y-8">
+    <div class="space-y-5">
 
-        <x-admin.headers.page-header title="Envios" description="Gerencie os envios dos pedidos." />
+        <x-admin.headers.page-header title="Envios" description="Etiquetas, rastreamento e andamento das entregas em um só lugar." />
 
         <x-alerts.flash />
 

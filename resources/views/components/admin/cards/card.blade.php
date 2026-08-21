@@ -1,6 +1,7 @@
 @props([
     'title' => null,
     'subtitle' => null,
+    'contentClass' => 'p-6',
 ])
 
 <div
@@ -31,7 +32,7 @@
 
     @endif
 
-    <div class="flex flex-1 flex-col p-6">
+    <div @class(['flex flex-1 flex-col', $contentClass])>
 
         {{ $slot }}
 

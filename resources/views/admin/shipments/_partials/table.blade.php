@@ -1,4 +1,4 @@
-<x-admin.cards.card class="overflow-hidden p-0">
+<x-admin.cards.card class="overflow-hidden" content-class="p-0">
 
     <x-admin.tables.table>
 
@@ -71,7 +71,8 @@
 
                     <x-admin.tables.td>
 
-                        {{ $shipment->carrier }}
+                        <span class="font-medium text-slate-800">{{ $shipment->carrier ?: '-' }}</span>
+                        <span class="block text-xs text-slate-500">{{ $shipment->service ?: 'Serviço não informado' }}</span>
 
                     </x-admin.tables.td>
 

@@ -121,7 +121,24 @@ class Shipment extends Model
      */
     public function canGenerateLabel(): bool
     {
-        return $this->status === ShipmentStatus::PENDING;
+        return $this->isPending() && blank($this->melhor_envio_order_id);
+    }
+
+    public function canPurchaseLabel(): bool
+    {
+        return $this->isPreparing()
+            && filled($this->melhor_envio_order_id)
+            && blank($this->label_url);
+    }
+
+    public function canPrintLabel(): bool
+    {
+        return filled($this->label_url);
+    }
+
+    public function canSyncTracking(): bool
+    {
+        return filled($this->melhor_envio_order_id);
     }
 
     /**
@@ -129,7 +146,7 @@ class Shipment extends Model
      */
     public function canBeShipped(): bool
     {
-        return $this->status === ShipmentStatus::PREPARING;
+        return $this->isPreparing() && $this->canPrintLabel();
     }
 
     /**
