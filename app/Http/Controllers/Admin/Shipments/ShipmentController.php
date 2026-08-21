@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Shipments;
 
 use App\Data\Shipments\ShipmentData;
+use App\Enums\ShipmentStatus;
 use App\Exceptions\Domain\InvalidShipmentStatusException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Shipments\UpdateShipmentRequest;
@@ -30,6 +31,10 @@ class ShipmentController extends Controller
 
             'shipments' => $this->shipmentService
                 ->paginate($request),
+
+            'statuses' => ShipmentStatus::cases(),
+
+            'carriers' => $this->shipmentService->carriers(),
 
         ]);
     }

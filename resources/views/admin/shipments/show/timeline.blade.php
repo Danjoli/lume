@@ -8,23 +8,25 @@
 
     <ul class="space-y-4">
 
-        @foreach ($shipment->histories as $history)
+        @forelse ($shipment->tracking_history ?? [] as $event)
             <li>
 
                 <p class="font-medium">
 
-                    {{ $history->title }}
+                    {{ data_get($event, 'description', data_get($event, 'status', 'Atualização do envio')) }}
 
                 </p>
 
                 <p class="text-sm text-slate-500">
 
-                    {{ $history->created_at->format('d/m/Y H:i') }}
+                    {{ ($date = data_get($event, 'date')) ? \Illuminate\Support\Carbon::parse($date)->format('d/m/Y H:i') : 'Data não informada' }}
 
                 </p>
 
             </li>
-        @endforeach
+        @empty
+            <li class="text-sm text-slate-500">Nenhum evento de rastreamento registrado.</li>
+        @endforelse
 
     </ul>
 
