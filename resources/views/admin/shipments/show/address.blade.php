@@ -10,29 +10,29 @@
 
         <p>
 
-            {{ $shipment->order->address->street }},
-            {{ $shipment->order->address->number }}
+            {{ $shipment->order->street }},
+            {{ $shipment->order->number }}
 
         </p>
 
         <p>
 
-            {{ $shipment->order->address->district }}
+            {{ $shipment->order->neighborhood }}
 
         </p>
 
         <p>
 
-            {{ $shipment->order->address->city }}
+            {{ $shipment->order->city }}
             /
-            {{ $shipment->order->address->state }}
+            {{ $shipment->order->state }}
 
         </p>
 
         <p>
 
             CEP:
-            {{ $shipment->order->address->zip_code }}
+            {{ $shipment->order->cep }}
 
         </p>
 

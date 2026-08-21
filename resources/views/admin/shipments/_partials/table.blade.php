@@ -97,7 +97,11 @@
 
                         <x-admin.tables.actions>
 
-                            <x-buttons.icon-button :href="route('admin.shipments.show', $shipment)">
+                            <x-buttons.icon-button
+                                :href="route('admin.shipments.show', $shipment)"
+                                :aria-label="'Visualizar envio do pedido #' . $shipment->order->number"
+                                title="Visualizar envio"
+                            >
 
                                 <x-admin.icons.icon name="eye" color="yellow" />
 
