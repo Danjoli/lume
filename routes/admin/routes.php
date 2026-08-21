@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\EntryController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
+
+        Route::get('/', EntryController::class)
+            ->name('entry');
 
         require __DIR__.'/auth.php';
 

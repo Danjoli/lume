@@ -10,6 +10,7 @@ E-commerce de livros desenvolvido com Laravel 12, Blade, Alpine.js, Tailwind CSS
 - pagamentos por PIX, boleto e cartão via Asaas;
 - cotação, etiqueta e rastreamento via Melhor Envio;
 - pedidos e envios visíveis pelo cliente e pelo painel;
+- central administrativa de envios com compra, geração e impressão de etiquetas, sincronização de rastreamento e controle do ciclo logístico;
 - avaliações com moderação administrativa;
 - autenticação e recuperação de senha para clientes e administradores;
 - newsletter, formulário de contato, notificações e alertas de sessão;
@@ -71,6 +72,20 @@ O valor `sandbox` seleciona apenas as credenciais de teste. Para publicar, alter
 Cadastre no aplicativo do Melhor Envio o webhook `https://seu-dominio.com.br/webhooks/melhor-envio`. A assinatura `X-ME-Signature` é validada com o `CLIENT_SECRET` do ambiente ativo. A URL de callback OAuth é diferente do webhook e ainda depende da implementação do fluxo de autorização.
 
 Nunca versione tokens reais. Para processar campanhas, notificações e demais tarefas assíncronas, mantenha um worker de fila ativo com `php artisan queue:work`.
+
+### Administração e envios
+
+Acesse `/admin`. Visitantes são encaminhados para `/admin/login`; administradores autenticados seguem para `/admin/dashboard`.
+
+O menu **Envios** concentra a operação do Melhor Envio. Em cada envio, o administrador pode:
+
+1. preparar a etiqueta, incluindo o pedido no carrinho do Melhor Envio;
+2. comprar e gerar a etiqueta;
+3. abrir a URL de impressão fornecida pela integração;
+4. sincronizar código, link, eventos e status de rastreamento;
+5. registrar manualmente postagem, entrega, devolução ou cancelamento quando necessário.
+
+As ações externas só funcionam após configurar as credenciais e o CEP de origem do ambiente ativo. Recomenda-se homologar todo o fluxo no sandbox antes de selecionar `production`.
 
 ## Contas de demonstração
 

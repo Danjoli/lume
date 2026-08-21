@@ -155,6 +155,21 @@ class ShipmentController extends Controller
 
     }
 
+    public function ship(Shipment $shipment): RedirectResponse
+    {
+        return $this->transition($shipment, 'ship', 'Envio marcado como enviado.');
+    }
+
+    public function deliver(Shipment $shipment): RedirectResponse
+    {
+        return $this->transition($shipment, 'deliver', 'Envio marcado como entregue.');
+    }
+
+    public function return(Shipment $shipment): RedirectResponse
+    {
+        return $this->transition($shipment, 'return', 'Envio marcado como devolvido.');
+    }
+
     /**
      * Cancela o envio.
      */
@@ -183,5 +198,19 @@ class ShipmentController extends Controller
 
         }
 
+    }
+
+    private function transition(
+        Shipment $shipment,
+        string $transition,
+        string $message,
+    ): RedirectResponse {
+        try {
+            $this->shipmentService->{$transition}($shipment);
+
+            return back()->with('success', $message);
+        } catch (InvalidShipmentStatusException $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
     }
 }

@@ -19,6 +19,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 
 - [x] Cadastro, login e logout do cliente
 - [x] Login e logout administrativo com guard próprio
+- [x] Entrada `/admin` com encaminhamento automático para login ou dashboard
 - [x] Recuperação e redefinição de senha nas duas áreas
 - [x] Mensagens de validação em português e alertas de retorno
 - [x] Perfil, senha, endereços, preferências e exclusão da conta
@@ -45,6 +46,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 - [x] Integração Melhor Envio para cotação, compra e etiqueta
 - [x] Webhook do Melhor Envio autenticado por HMAC-SHA256
 - [x] Rastreamento e controle de status no painel e na conta
+- [x] Central de envios no menu administrativo com preparação, compra, geração, impressão e transições logísticas
 - [x] Variáveis sensíveis centralizadas no `.env`
 
 ## Pendente de homologação externa
@@ -59,7 +61,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 
 - [x] Formatação do backend com Laravel Pint
 - [x] Compilação das views e validação das rotas após a reorganização
-- [x] Suíte atual: 30 testes e 82 assertions, incluindo webhook logístico e URLs amigáveis
+- [x] Suíte atual: 32 testes e 86 assertions, incluindo entrada administrativa, webhook logístico e URLs amigáveis
 - [ ] Ampliar testes de integração do checkout e das chamadas externas de logística
 - [ ] Cobrir regras críticas de estoque, cupons, reembolso e avaliações
 - [ ] Adicionar rate limiting específico para login, contato e webhooks
