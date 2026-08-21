@@ -11,8 +11,7 @@ readonly class CategoryData
     public function __construct(
         public string $name,
         public ?string $description,
-    ) {
-    }
+    ) {}
 
     /**
      * Cria um DTO a partir do Form Request.

@@ -15,9 +15,9 @@ class DeleteAuthorAction
     ): void {
 
         if ($author->books()->exists()) {
-            throw new CannotDeleteAuthorException();
+            throw new CannotDeleteAuthorException;
         }
-        
+
         $author->delete();
     }
 }

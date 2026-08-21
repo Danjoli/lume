@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\Store\PageController;
+use App\Http\Controllers\Store\Content\ContactController;
+use App\Http\Controllers\Store\Content\PageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/sobre-a-lume', [PageController::class, 'about'])
@@ -26,3 +27,6 @@ Route::get('/trocas-e-devolucoes', [PageController::class, 'returns'])
 
 Route::get('/formas-de-pagamento', [PageController::class, 'payments'])
     ->name('store.pages.payments');
+
+Route::post('/contato', [ContactController::class, 'store'])
+    ->name('store.pages.contact.store');

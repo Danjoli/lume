@@ -88,6 +88,12 @@
                             :shipping-options="$shippingOptions ?? collect()"
                         />
 
+                        @if($shippingError ?? false)
+                            <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                                {{ $shippingError }}
+                            </div>
+                        @endif
+
                         {{-- 4. Pagamento --}}
                         <x-store.checkout.payment />
 

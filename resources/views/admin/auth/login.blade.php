@@ -63,6 +63,7 @@
 
         </div>
 
+        <a class="block text-center text-sm font-semibold text-slate-600 hover:text-slate-900" href="{{ route('admin.password.request') }}">Esqueci minha senha</a>
     </form>
 
 </x-admin.guest-layout>

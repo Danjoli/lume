@@ -19,8 +19,7 @@ readonly class CouponData
         public ?string $startsAt,
         public ?string $expiresAt,
         public bool $isActive,
-    ) {
-    }
+    ) {}
 
     /**
      * Cria um DTO a partir do Form Request.

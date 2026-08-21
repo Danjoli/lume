@@ -9,8 +9,7 @@ readonly class ProfileData
     public function __construct(
         public string $name,
         public string $email,
-    ) {
-    }
+    ) {}
 
     /**
      * Cria um DTO a partir da Request.

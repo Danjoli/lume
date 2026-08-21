@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Store\Customer\Account;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Store\Customer\UpdateProfileRequest;
+use App\Http\Requests\Store\Customer\Account\UpdateProfileRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

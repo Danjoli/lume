@@ -1,302 +1,69 @@
-# 🗺️ Roadmap - Lume
+# Roadmap — Lume
 
-Roadmap de desenvolvimento do e-commerce de livros **Lume**.
-
-O projeto será desenvolvido em etapas, priorizando uma base sólida, organização arquitetural e boas práticas antes da implementação das funcionalidades finais.
-
----
-
-# Fase 1 — Fundação
-
-## Planejamento
-
-* [x] Definição do nome do projeto
-* [x] Definição da stack
-* [x] Definição da arquitetura
-* [x] Modelagem inicial do banco de dados
-
-## Documentação
-
-* [x] README.md
-* [x] architecture.md
-* [x] database.md
-* [x] decisions.md
-* [x] roadmap.md
-
-## Banco de Dados
-
-* [x] Migration de admins
-* [x] Migration de users
-* [x] Migration de authors
-* [x] Migration de publishers
-* [x] Migration de categories
-* [x] Migration de books
-* [x] Migration de book_images
-* [x] Migration de book_author
-* [x] Migration de book_category
-* [x] Migration de addresses
-* [x] Migration de carts
-* [x] Migration de cart_items
-* [x] Migration de orders
-* [x] Migration de order_items
-* [x] Migration de reviews
-* [x] Migration de wishlists
-* [x] Migration de shipments
-
----
-
-# Fase 2 — Estrutura Laravel
-
-## Models
-
-* [x] Admin
-* [x] User
-* [x] Author
-* [x] Publisher
-* [x] Category
-* [x] Book
-* [x] BookImage
-* [x] Address
-* [x] Cart
-* [x] CartItem
-* [x] Order
-* [x] OrderItem
-* [x] Review
-* [x] Wishlist
-* [x] Shipment
-
-## Relacionamentos
-
-* [x] Configuração dos relacionamentos Eloquent
-
-## Estrutura da aplicação
-
-* [x] Enums
-* [x] Factories
-* [x] Seeders
-* [x] Policies
-* [x] Observers
-* [x] Providers
-* [ ] Form Requests
-* [ ] Services
-* [ ] Actions
-* [ ] DTOs
-* [ ] Exceptions
-* [ ] Support
-
----
-
-# Fase 3 — Autenticação
-
-## Cliente
-
-* [x] Cadastro
-* [x] Login
-* [ ] Recuperação de senha
-* [ ] Verificação de e-mail
-* [ ] Perfil
-* [ ] Alteração de senha
-* [ ] Gerenciamento de endereços
-
-## Administrador
-
-* [x] Login administrativo
-* [x] Middleware Admin
-* [x] Controle de permissões
-* [x] Controle de cargos
-
----
-
-# Fase 4 — Painel Administrativo
-
-## Dashboard
-
-* [x] Dashboard inicial
-* [ ] Estatísticas
-* [ ] Pedidos recentes
-* [ ] Livros mais vendidos
-* [ ] Livros com baixo estoque
-
-## Catálogo
-
-* [ ] CRUD de livros
-* [ ] CRUD de autores
-* [ ] CRUD de editoras
-* [ ] CRUD de categorias
-* [ ] Upload de imagens
-* [ ] Controle de estoque
-
-## Usuários
-
-* [ ] Listagem de clientes
-* [ ] Visualização de pedidos
-* [ ] Gerenciamento de administradores
-
-## Pedidos
-
-* [ ] Listagem de pedidos
-* [ ] Visualização de detalhes
-* [ ] Atualização de status
-* [ ] Gerenciamento de envio
-
----
-
-# Fase 5 — Loja Pública
-
-## Página inicial
-
-* [ ] Banner principal
-* [ ] Livros em destaque
-* [ ] Novidades
-* [ ] Categorias
-* [ ] Editoras
-
-## Catálogo
-
-* [ ] Listagem de livros
-* [ ] Busca
-* [ ] Paginação
-* [ ] Ordenação
-* [ ] Filtros
-
-## Página do livro
-
-* [ ] Informações completas
-* [ ] Galeria de imagens
-* [ ] Autores
-* [ ] Categorias
-* [ ] Avaliações
-* [ ] Livros relacionados
-
----
-
-# Fase 6 — Carrinho e Checkout
-
-## Carrinho
-
-* [ ] Adicionar livros
-* [ ] Remover livros
-* [ ] Alterar quantidade
-* [ ] Atualização automática
-
-## Checkout
-
-* [ ] Seleção de endereço
-* [ ] Cálculo de frete
-* [ ] Resumo da compra
-* [ ] Criação do pedido
-
----
-
-# Fase 7 — Pagamentos e Logística
-
-## Pagamentos
-
-* [ ] Integração com gateway
-* [ ] PIX
-* [ ] Cartão
-* [ ] Boleto
-* [ ] Webhooks
-* [ ] Atualização automática do pedido
-
-## Envio
-
-* [ ] Integração com transportadora
-* [ ] Geração de etiqueta
-* [ ] Rastreamento
-* [ ] Atualização de status do envio
-
----
-
-# Fase 8 — Recursos do Cliente
-
-* [ ] Lista de desejos
-* [ ] Avaliações
-* [ ] Histórico de pedidos
-* [ ] Recompra
-* [ ] Favoritos
-
----
-
-# Fase 9 — Qualidade
-
-## Segurança
-
-* [ ] Validação de dados
-* [ ] Policies
-* [ ] Rate Limiting
-* [ ] Auditoria
-
-## Performance
-
-* [ ] Cache
-* [ ] Eager Loading
-* [ ] Otimização de consultas
-* [ ] Compressão de imagens
-
-## SEO
-
-* [ ] Sitemap
-* [ ] Meta Tags
-* [ ] Open Graph
-* [ ] URLs amigáveis
-* [ ] Dados estruturados
-
----
-
-# Fase 10 — Testes
-
-* [x] Testes de Models
-* [ ] Testes de Requests
-* [ ] Testes de Services
-* [ ] Testes de Controllers
-* [ ] Testes do fluxo de compra
-* [ ] Testes de integração
-
----
-
-# Fase 11 — Deploy
-
-* [ ] Configuração do servidor
-* [ ] Ambiente de produção
-* [ ] Banco de dados
-* [ ] Build do frontend
-* [ ] Filas
-* [ ] Logs
-* [ ] Monitoramento
-* [ ] Backup
-
----
-
-# Status Atual
+Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concluída está implementada; isso não substitui homologação com credenciais reais ou testes de produção.
 
 ## Concluído
 
-* [x] Planejamento do projeto
-* [x] Definição da arquitetura
-* [x] Documentação inicial
-* [x] Modelagem do banco de dados
-* [x] Migrations
-* [x] Models
-* [x] Relacionamentos Eloquent
-* [x] Enums
-* [x] Factories
-* [x] Seeders
-* [x] Testes das Factories
-* [x] Testes dos Seeders
-* [x] Policies
-* [x] Observers
-* [x] Providers
+### Fundação e arquitetura
 
-## Em andamento
+- [x] Laravel 12, Blade, Alpine.js, Tailwind CSS e Vite
+- [x] Models, relacionamentos, enums, policies e observers
+- [x] Form Requests, Services, Actions e objetos Data
+- [x] Rotas separadas por área e domínio
+- [x] Controllers, Form Requests e Services alinhados por domínio
+- [x] Views organizadas entre componentes reutilizáveis e `_partials`
+- [x] Factories e seeders com cenários relacionados
 
-* [ ] Form Requests
-* [ ] Services
+### Autenticação e conta
 
-## Próximo passo
+- [x] Cadastro, login e logout do cliente
+- [x] Login e logout administrativo com guard próprio
+- [x] Recuperação e redefinição de senha nas duas áreas
+- [x] Mensagens de validação em português e alertas de retorno
+- [x] Perfil, senha, endereços, preferências e exclusão da conta
+- [x] Histórico e acompanhamento de pedidos e envios
 
-➡️ Implementar a camada de regras de negócio da aplicação:
+### Loja e administração
 
-* Policies para controle de acesso
-* Form Requests para validação
-* Services e Actions para organização da lógica
+- [x] Home, catálogo, busca, filtros e paginação
+- [x] Livros, autores, editoras, categorias e imagens
+- [x] Carrinho, cupons e lista de desejos
+- [x] Avaliações de produtos com aprovação administrativa
+- [x] Dashboard, relatórios, pedidos, clientes e administradores
+- [x] Contato, newsletter, configurações e notificações
+
+### Checkout, pagamentos e logística
+
+- [x] Endereço, estoque, frete, desconto e resumo do checkout
+- [x] Criação consistente de pedido e itens
+- [x] Integração Asaas preparada para PIX, boleto e cartão
+- [x] Retorno de pagamento e webhook autenticado
+- [x] Integração Melhor Envio para cotação, compra e etiqueta
+- [x] Rastreamento e controle de status no painel e na conta
+- [x] Variáveis sensíveis centralizadas no `.env`
+
+## Pendente de homologação externa
+
+- [ ] Validar pagamentos ponta a ponta com uma conta sandbox real do Asaas
+- [ ] Configurar e validar o webhook público do Asaas
+- [ ] Comprar e imprimir uma etiqueta no sandbox do Melhor Envio
+- [ ] Validar rastreamento com eventos reais do Melhor Envio
+- [ ] Configurar provedor real de e-mail e worker de fila persistente
+
+## Qualidade e produção
+
+- [x] Formatação do backend com Laravel Pint
+- [x] Compilação das views e validação das rotas após a reorganização
+- [x] Suíte atual de autenticação, perfil e páginas principais: 25 testes e 61 assertions
+- [ ] Ampliar testes de integração do checkout, webhooks e logística
+- [ ] Cobrir regras críticas de estoque, cupons, reembolso e avaliações
+- [ ] Adicionar rate limiting específico para login, contato e webhooks
+- [ ] Configurar CI, monitoramento, backup e política de logs
+- [ ] Revisar SEO técnico, acessibilidade e desempenho em produção
+
+## Próximos passos recomendados
+
+1. Homologar Asaas e Melhor Envio em sandbox com tokens próprios.
+2. Criar testes automatizados dos fluxos financeiros e logísticos.
+3. Configurar e-mail, filas e scheduler no ambiente de publicação.
+4. Executar revisão de segurança e checklist de deploy.

@@ -9,10 +9,9 @@ class DashboardController extends Controller
 {
     public function __construct(
         private DashboardService $dashboardService
-    ) {
-    }
+    ) {}
 
-    public function  __invoke()
+    public function __invoke()
     {
         return view(
             'admin.dashboard.index',

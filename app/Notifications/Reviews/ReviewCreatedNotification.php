@@ -12,8 +12,7 @@ class ReviewCreatedNotification extends Notification
 
     public function __construct(
         private readonly Review $review
-    ) {
-    }
+    ) {}
 
     public function via(object $notifiable): array
     {

@@ -140,6 +140,11 @@ class Book extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function approvedReviews(): HasMany
+    {
+        return $this->hasMany(Review::class)->where('is_approved', true);
+    }
+
     /**
      * Itens de carrinho relacionados ao livro.
      */

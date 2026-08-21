@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Store\Customer\Account;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Store\Customer\DeleteAccountRequest;
+use App\Http\Requests\Store\Customer\Account\DeleteAccountRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;

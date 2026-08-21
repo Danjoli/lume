@@ -1,46 +1,6 @@
 <x-store.app-layout title="Entregas">
 
-    <section class="border-b border-[#ECEAE6] py-14 lg:py-16">
-
-        <x-store.ui.container>
-
-            <div class="mx-auto max-w-5xl">
-
-                <span
-                    class="
-                        inline-flex rounded-full
-                        bg-[#EDF0EC] px-4 py-1.5
-                        text-xs font-semibold text-[#233A35]
-                    "
-                >
-                    Atendimento
-                </span>
-
-                <h1
-                    class="
-                        mt-5 text-4xl font-bold
-                        tracking-[-0.035em] text-[#10211E]
-                        lg:text-5xl
-                    "
-                >
-                    Entregas
-                </h1>
-
-                <p
-                    class="
-                        mt-4 max-w-2xl
-                        text-base leading-7 text-[#64706D]
-                    "
-                >
-                    Saiba como funcionam os prazos, o acompanhamento
-                    e o recebimento dos seus pedidos na Lume.
-                </p>
-
-            </div>
-
-        </x-store.ui.container>
-
-    </section>
+    <x-store.pages.hero eyebrow="Atendimento" title="Entregas" description="Saiba como funcionam os prazos, o acompanhamento e o recebimento dos seus pedidos na Lume." />
 
     <section class="py-14 lg:py-20">
 
@@ -364,50 +324,6 @@
 
     </section>
 
-    <section
-        class="
-            border-t border-[#ECEAE6]
-            bg-[#F7F6F2] py-14
-        "
-    >
-
-        <x-store.ui.container>
-
-            <div class="mx-auto max-w-3xl text-center">
-
-                <h2 class="text-2xl font-bold text-[#17231F]">
-                    Precisa de ajuda com uma entrega?
-                </h2>
-
-                <p
-                    class="
-                        mx-auto mt-3 max-w-xl
-                        text-sm leading-6 text-[#69736F]
-                    "
-                >
-                    Se você tiver alguma dúvida sobre o andamento do seu
-                    pedido, entre em contato com a equipe da Lume.
-                </p>
-
-                <a
-                    href="{{ route('store.pages.contact') }}"
-                    class="
-                        mt-6 inline-flex h-11
-                        items-center justify-center
-                        rounded-lg bg-[#062B25]
-                        px-6 text-sm font-semibold
-                        text-white transition
-                        hover:bg-[#0B3C34]
-                    "
-                >
-                    Entrar em contato
-                </a>
-
-            </div>
-
-        </x-store.ui.container>
-
-    </section>
+    <x-store.pages.cta title="Precisa de ajuda com uma entrega?" description="Se você tiver alguma dúvida sobre o andamento do seu pedido, entre em contato com a equipe da Lume." :href="route('store.pages.contact')" label="Entrar em contato" />
 
 </x-store.app-layout>
-

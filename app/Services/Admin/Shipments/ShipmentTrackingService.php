@@ -5,13 +5,14 @@ namespace App\Services\Admin\Shipments;
 use App\Actions\Shipments\SyncShipmentTrackingAction;
 use App\Enums\ShipmentStatus;
 use App\Models\Shipment;
+use App\Services\Store\Shipping\MelhorEnvioService;
 
 class ShipmentTrackingService
 {
     public function __construct(
         private readonly SyncShipmentTrackingAction $syncShipmentTrackingAction,
-    ) {
-    }
+        private readonly MelhorEnvioService $melhorEnvioService,
+    ) {}
 
     /**
      * Sincroniza o rastreamento do envio.
@@ -20,22 +21,25 @@ class ShipmentTrackingService
         Shipment $shipment
     ): void {
 
-        /*
-        |--------------------------------------------------------------------------
-        | Futuramente:
-        | MelhorEnvioService->tracking($shipment)
-        |--------------------------------------------------------------------------
-        */
-
-        // Exemplo:
-        //
-        // $tracking = $this->melhorEnvioService
-        //     ->tracking($shipment);
-        //
-        // $this->updateStatus(
-        //     $shipment,
-        //     ShipmentStatus::from($tracking['status'])
-        // );
+        if (! $shipment->melhor_envio_order_id) {
+            return;
+        }
+        $tracking = $this->melhorEnvioService->tracking($shipment);
+        $status = match (strtolower((string) ($tracking['status'] ?? ''))) {
+            'posted', 'in_transit' => ShipmentStatus::SHIPPED,
+            'delivered' => ShipmentStatus::DELIVERED,
+            'returned' => ShipmentStatus::RETURNED,
+            'canceled', 'cancelled' => ShipmentStatus::CANCELLED,
+            default => $shipment->status,
+        };
+        $shipment->update([
+            'tracking_code' => $tracking['tracking'] ?? $shipment->tracking_code,
+            'tracking_url' => $tracking['tracking_url'] ?? $shipment->tracking_url,
+            'tracking_history' => is_array($tracking['events'] ?? null) ? $tracking['events'] : [$tracking],
+        ]);
+        if ($status !== $shipment->status) {
+            $this->updateStatus($shipment, $status);
+        }
 
     }
 
@@ -69,7 +73,7 @@ class ShipmentTrackingService
         |--------------------------------------------------------------------------
         */
 
-        return [];
+        return $shipment->tracking_history ?? [];
 
     }
 
@@ -87,7 +91,7 @@ class ShipmentTrackingService
         |--------------------------------------------------------------------------
         */
 
-        return [];
+        return $shipment->melhor_envio_order_id ? $this->melhorEnvioService->tracking($shipment) : [];
 
     }
 }

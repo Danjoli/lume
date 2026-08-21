@@ -1,46 +1,6 @@
 <x-store.app-layout title="Contato">
 
-    <section class="border-b border-[#ECEAE6] py-14 lg:py-16">
-
-        <x-store.ui.container>
-
-            <div class="mx-auto max-w-5xl">
-
-                <span
-                    class="
-                        inline-flex rounded-full
-                        bg-[#EDF0EC] px-4 py-1.5
-                        text-xs font-semibold text-[#233A35]
-                    "
-                >
-                    Atendimento
-                </span>
-
-                <h1
-                    class="
-                        mt-5 text-4xl font-bold
-                        tracking-[-0.035em] text-[#10211E]
-                        lg:text-5xl
-                    "
-                >
-                    Entre em contato
-                </h1>
-
-                <p
-                    class="
-                        mt-4 max-w-2xl
-                        text-base leading-7 text-[#64706D]
-                    "
-                >
-                    Tem alguma dúvida, sugestão ou precisa de ajuda com um pedido?
-                    Fale com a equipe da Lume.
-                </p>
-
-            </div>
-
-        </x-store.ui.container>
-
-    </section>
+    <x-store.pages.hero eyebrow="Atendimento" title="Entre em contato" description="Tem alguma dúvida, sugestão ou precisa de ajuda com um pedido? Fale com a equipe da Lume." />
 
     <section class="py-14 lg:py-20">
 
@@ -167,7 +127,7 @@
                     </p>
 
                     <form
-                        action="#"
+                        action="{{ route('store.pages.contact.store') }}"
                         method="POST"
                         class="mt-8 space-y-5"
                     >
@@ -186,7 +146,7 @@
                                 id="name"
                                 type="text"
                                 name="name"
-                                value="{{ old('name') }}"
+                                value="{{ old('email', Auth::user()?->name) }}"
                                 placeholder="Seu nome"
                                 class="
                                     h-11 w-full rounded-lg
@@ -212,7 +172,7 @@
                                 id="email"
                                 type="email"
                                 name="email"
-                                value="{{ old('email') }}"
+                                value="{{ old('email', Auth::user()?->email) }}"
                                 placeholder="seu@email.com"
                                 class="
                                     h-11 w-full rounded-lg
@@ -249,24 +209,53 @@
                                     Selecione um assunto
                                 </option>
 
-                                <option value="pedido">
+                                <option
+                                    value="order"
+                                    @selected(old('subject') === 'order')
+                                >
                                     Pedido
                                 </option>
 
-                                <option value="entrega">
+                                <option
+                                    value="shipping"
+                                    @selected(old('subject') === 'shipping')
+                                >
                                     Entrega
                                 </option>
 
-                                <option value="troca">
-                                    Troca ou devolução
-                                </option>
-
-                                <option value="pagamento">
+                                <option
+                                    value="payment"
+                                    @selected(old('subject') === 'payment')
+                                >
                                     Pagamento
                                 </option>
 
-                                <option value="outro">
-                                    Outro
+                                <option
+                                    value="exchange"
+                                    @selected(old('subject') === 'exchange')
+                                >
+                                    Trocas e devoluções
+                                </option>
+
+                                <option
+                                    value="product"
+                                    @selected(old('subject') === 'product')
+                                >
+                                    Produto
+                                </option>
+
+                                <option
+                                    value="account"
+                                    @selected(old('subject') === 'account')
+                                >
+                                    Conta
+                                </option>
+
+                                <option
+                                    value="other"
+                                    @selected(old('subject') === 'other')
+                                >
+                                    Outros
                                 </option>
                             </select>
 
@@ -321,4 +310,3 @@
     </section>
 
 </x-store.app-layout>
-

@@ -296,7 +296,7 @@
                             </a>
 
                             <a
-                                href="#"
+                                href="{{ route('store.checkout.payment', $order) }}"
                                 class="
                                     inline-flex h-11
                                     items-center justify-center

@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Shipment;
 use App\Enums\ShipmentStatus;
 use App\Models\Order;
+use App\Models\Shipment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

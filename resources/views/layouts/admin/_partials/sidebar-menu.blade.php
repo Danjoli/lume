@@ -27,6 +27,14 @@
         </li>
 
         <li>
+            <x-admin.sidebar.menu-item label="Atendimentos" route="admin.contact-messages.index" icon="contact" />
+        </li>
+
+        <li>
+            <x-admin.sidebar.menu-item label="Newsletter" route="admin.newsletter.index" icon="newsletter" />
+        </li>
+
+        <li>
             <x-admin.sidebar.menu-item label="Admins" route="admin.admins.index" icon="admins" />
         </li>
 

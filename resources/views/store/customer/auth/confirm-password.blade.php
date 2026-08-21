@@ -13,7 +13,7 @@
             <x-forms.input id="password" class="block mt-1 w-full" type="password" name="password" required
                 autocomplete="current-password" />
 
-            <x-forms.input :messages="$errors->get('password')" class="mt-2" />
+            <x-forms.error field="password" />
         </div>
 
         <div class="flex justify-end mt-4">
@@ -22,4 +22,4 @@
             </x-buttons.primary-button>
         </div>
     </form>
-    <x-customer.guest-layout>
+</x-customer.guest-layout>

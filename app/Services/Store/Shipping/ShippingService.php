@@ -10,8 +10,7 @@ class ShippingService
 {
     public function __construct(
         private readonly MelhorEnvioService $melhorEnvioService
-    ) {
-    }
+    ) {}
 
     public function calculate(
         Address $address,

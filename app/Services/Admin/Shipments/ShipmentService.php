@@ -8,7 +8,6 @@ use App\Actions\Shipments\GenerateLabelAction;
 use App\Actions\Shipments\PurchaseLabelAction;
 use App\Actions\Shipments\ReturnShipmentAction;
 use App\Actions\Shipments\ShipShipmentAction;
-use App\Actions\Shipments\UpdateShipmentAction;
 use App\Data\Shipments\ShipmentData;
 use App\Models\Shipment;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -28,8 +27,7 @@ class ShipmentService
         private readonly DeliverShipmentAction $deliverShipmentAction,
         private readonly ReturnShipmentAction $returnShipmentAction,
         private readonly CancelShipmentAction $cancelShipmentAction,
-    ) {
-    }
+    ) {}
 
     /**
      * Lista paginada dos envios.
@@ -55,19 +53,19 @@ class ShipmentService
                             ->where(
                                 'tracking_code',
                                 'like',
-                                '%' . $request->string('search') . '%'
+                                '%'.$request->string('search').'%'
                             )
 
                             ->orWhere(
                                 'carrier',
                                 'like',
-                                '%' . $request->string('search') . '%'
+                                '%'.$request->string('search').'%'
                             )
 
                             ->orWhere(
                                 'service',
                                 'like',
-                                '%' . $request->string('search') . '%'
+                                '%'.$request->string('search').'%'
                             );
 
                     });

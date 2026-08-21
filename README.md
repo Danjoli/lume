@@ -1,167 +1,92 @@
-# 📚 Lume
+# Lume
 
-Lume é um e-commerce de livros desenvolvido com Laravel, focado em arquitetura organizada, boas práticas de desenvolvimento e escalabilidade.
+E-commerce de livros desenvolvido com Laravel 12, Blade, Alpine.js, Tailwind CSS e Vite. O projeto possui loja pública, conta do cliente e painel administrativo, com checkout integrado ao Asaas e logística integrada ao Melhor Envio.
 
-O projeto está sendo construído como um sistema completo de livraria online, com o objetivo de aplicar conceitos profissionais de desenvolvimento web e servir como projeto de aprendizado e portfólio.
+## Recursos principais
 
----
+- catálogo de livros, autores, editoras e categorias;
+- carrinho, cupons, lista de desejos e checkout;
+- pagamentos por PIX, boleto e cartão via Asaas;
+- cotação, etiqueta e rastreamento via Melhor Envio;
+- pedidos e envios visíveis pelo cliente e pelo painel;
+- avaliações com moderação administrativa;
+- autenticação e recuperação de senha para clientes e administradores;
+- newsletter, formulário de contato, notificações e alertas de sessão;
+- factories e seeders com clientes, catálogo, pedidos, avaliações e envios.
 
-## 🚀 Tecnologias
+## Requisitos
 
-* PHP 8.4+
-* Laravel 12
-* MySQL / MariaDB
-* Blade
-* Tailwind CSS
-* Vite
-* JavaScript
-* Eloquent ORM
+- PHP 8.2 ou superior;
+- Composer;
+- Node.js e npm;
+- extensões PHP exigidas pelo Laravel;
+- banco compatível com Laravel (SQLite é o padrão do `.env.example`).
 
----
+## Instalação
 
-## ✨ Funcionalidades
-
-### Área pública
-
-* Catálogo de livros
-* Busca de livros
-* Filtro por categorias
-* Navegação por autores
-* Navegação por editoras
-* Página de detalhes do livro
-* Carrinho de compras
-* Lista de desejos
-* Avaliações de livros
-* Cadastro de clientes
-* Autenticação de usuários
-
----
-
-### Área do cliente
-
-* Gerenciamento de perfil
-* Gerenciamento de endereços
-* Histórico de pedidos
-* Acompanhamento de compras
-* Lista de desejos
-
----
-
-### Painel administrativo
-
-* Dashboard administrativo
-* Gerenciamento de livros
-* Gerenciamento de autores
-* Gerenciamento de editoras
-* Gerenciamento de categorias
-* Gerenciamento de clientes
-* Gerenciamento de pedidos
-* Gerenciamento de administradores
-* Controle de permissões
-
----
-
-## 📂 Estrutura do projeto
-
-```
-app/
-├── Actions/
-├── DTOs/
-├── Enums/
-├── Exceptions/
-├── Http/
-├── Models/
-├── Policies/
-├── Services/
-└── Support/
-
-docs/
-├── architecture.md
-├── database.md
-├── decisions.md
-└── roadmap.md
+```bash
+composer install
+copy .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+npm install
+npm run build
+php artisan serve
 ```
 
----
+No Linux ou macOS, use `cp .env.example .env`. Durante o desenvolvimento, `composer run dev` inicia servidor, fila, logs e Vite em conjunto.
 
-## 🗄️ Banco de dados
+## Integrações externas
 
-O sistema possui as seguintes entidades principais:
+Preencha no `.env` apenas quando for utilizar as integrações:
 
-* Users
-* Admins
-* Books
-* Authors
-* Publishers
-* Categories
-* Book Images
-* Addresses
-* Carts
-* Cart Items
-* Orders
-* Order Items
-* Reviews
-* Wishlists
-* Shipments
+```dotenv
+ASAAS_ENVIRONMENT=sandbox
+ASAAS_DUE_DAYS=3
+ASAAS_SANDBOX_BASE_URL=https://api-sandbox.asaas.com/v3
+ASAAS_SANDBOX_API_KEY=
+ASAAS_SANDBOX_WEBHOOK_TOKEN=
+ASAAS_PRODUCTION_BASE_URL=https://api.asaas.com/v3
+ASAAS_PRODUCTION_API_KEY=
+ASAAS_PRODUCTION_WEBHOOK_TOKEN=
 
-O banco foi estruturado utilizando migrations do Laravel, seguindo boas práticas de relacionamento e organização de dados.
+MELHOR_ENVIO_ENVIRONMENT=sandbox
+MELHOR_ENVIO_SANDBOX_BASE_URL=https://sandbox.melhorenvio.com.br/api/v2
+MELHOR_ENVIO_SANDBOX_TOKEN=
+MELHOR_ENVIO_SANDBOX_FROM_POSTAL_CODE=
+MELHOR_ENVIO_PRODUCTION_BASE_URL=https://melhorenvio.com.br/api/v2
+MELHOR_ENVIO_PRODUCTION_TOKEN=
+MELHOR_ENVIO_PRODUCTION_FROM_POSTAL_CODE=
+MELHOR_ENVIO_USER_AGENT="Lume contato@seudominio.com.br"
+```
 
----
+O valor `sandbox` seleciona apenas as credenciais de teste. Para publicar, altere o seletor correspondente para `production`; não duplique nomes de variáveis.
 
-## 📖 Documentação
+Nunca versione tokens reais. Para processar campanhas, notificações e demais tarefas assíncronas, mantenha um worker de fila ativo com `php artisan queue:work`.
 
-Toda a documentação do projeto está organizada na pasta `docs/`.
+## Contas de demonstração
 
-Arquivos principais:
+Após executar os seeders:
 
-* `architecture.md` → definição da arquitetura e organização do projeto
-* `database.md` → documentação da estrutura do banco de dados
-* `decisions.md` → registro das decisões técnicas tomadas durante o desenvolvimento
-* `roadmap.md` → planejamento das próximas etapas e evolução do projeto
+| Área | E-mail principal | Senha padrão |
+| --- | --- | --- |
+| Cliente | `cliente@lume.test` | `Lume@2026!Demo` |
+| Administração | `admin@lume.test` | `Lume@2026!Admin` |
 
----
+Usuários e administradores aleatórios criados pelas factories usam a senha padrão da respectiva área. Essas credenciais são exclusivas do ambiente de desenvolvimento.
 
-## 📌 Status do projeto
+## Qualidade
 
-🚧 Em desenvolvimento.
+```bash
+php artisan test
+vendor/bin/pint --test
+php artisan route:list
+php artisan view:cache
+```
 
-### ✅ Concluído
+## Documentação
 
-* Estrutura inicial do projeto
-* Definição da arquitetura
-* Modelagem do banco de dados
-* Criação das migrations
-* Criação dos Models Eloquent
-* Relacionamentos entre entidades
-* Documentação inicial
-* Enums
-* Factories
-* Testes das Factories
-* Seeders
-* População do banco de desenvolvimento
-* Testes dos dados gerados
-* Policies
-* Observers
-* Providers
-
-### 🔄 Em andamento
-
-* Form Requests
-* Services
-
-### 📋 Próximas etapas
-
-* Actions
-* Controllers
-* Área administrativa
-* Área pública
-* Carrinho e checkout
-* Integração de pagamentos
-* Sistema de envio
-* Testes automatizados
-
----
-
-## 📄 Licença
-
-Este projeto foi desenvolvido para fins de estudo, prática de desenvolvimento e composição de portfólio.
+- `docs/architecture.md`: organização e convenções do código;
+- `docs/database.md`: entidades, relacionamentos e integrações persistidas;
+- `docs/decisions.md`: decisões técnicas e arquiteturais;
+- `docs/roadmap.md`: estado atual e próximos passos.

@@ -13,8 +13,7 @@ class BookImageService
         private readonly UploadBookImagesAction $uploadBookImagesAction,
         private readonly DeleteBookImagesAction $deleteBookImagesAction,
         private readonly SetPrimaryBookImageAction $setPrimaryBookImageAction,
-    ) {
-    }
+    ) {}
 
     public function store(
         Book $book,

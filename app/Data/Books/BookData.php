@@ -31,8 +31,7 @@ readonly class BookData
         public array $authors,
         public array $categories,
         public array $images,
-    ) {
-    }
+    ) {}
 
     public static function fromRequest(
         StoreBookRequest|UpdateBookRequest $request

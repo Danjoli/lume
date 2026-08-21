@@ -13,5 +13,3 @@ Route::prefix('profile')
         Route::put('/', [ProfileController::class, 'update'])
             ->name('update');
     });
-
-

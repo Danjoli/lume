@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Enums\UserStatus;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -18,12 +19,12 @@ class UserSeeder extends Seeder
             'name' => 'Cliente Teste',
             'email' => 'cliente@lume.test',
             'status' => UserStatus::ACTIVE,
+            'password' => Hash::make('Lume@2026!Demo'),
         ]);
-
 
         // Usuários adicionais para testes
         User::factory()
-            ->count(20)
+            ->count(60)
             ->create([
                 'status' => UserStatus::ACTIVE,
             ]);

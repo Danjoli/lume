@@ -24,7 +24,7 @@ class AdminFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => Hash::make('password'),
+            'password' => Hash::make('Lume@2026!Admin'),
             'remember_token' => Str::random(10),
             'role' => fake()->randomElement([
                 AdminRole::SUPPORT,
@@ -36,8 +36,7 @@ class AdminFactory extends Factory
         ];
     }
 
-
-     /*
+    /*
     |--------------------------------------------------------------------------
     | Estados
     |--------------------------------------------------------------------------
@@ -50,7 +49,6 @@ class AdminFactory extends Factory
         ]);
     }
 
-
     public function admin(): static
     {
         return $this->state(fn () => [
@@ -58,14 +56,12 @@ class AdminFactory extends Factory
         ]);
     }
 
-
     public function support(): static
     {
         return $this->state(fn () => [
             'role' => AdminRole::SUPPORT,
         ]);
     }
-
 
     public function inactive(): static
     {

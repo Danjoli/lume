@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -16,12 +19,15 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
-
     /**
      * Realiza o login do administrador.
      */
     public function store(Request $request)
     {
+        $key = Str::lower((string) $request->input('email')).'|'.$request->ip();
+        if (RateLimiter::tooManyAttempts($key, 5)) {
+            throw ValidationException::withMessages(['email' => 'Muitas tentativas. Tente novamente em '.RateLimiter::availableIn($key).' segundos.']);
+        }
         $credentials = $request->validate([
             'email' => [
                 'required',
@@ -31,21 +37,28 @@ class LoginController extends Controller
             'password' => [
                 'required',
             ],
+        ], [
+            'email.required' => 'Informe seu e-mail administrativo.',
+            'email.email' => 'Informe um endereço de e-mail válido.',
+            'password.required' => 'Informe sua senha.',
         ]);
 
+        if (Auth::guard('admin')->attempt([...$credentials, 'is_active' => true])) {
 
-        if (Auth::guard('admin')->attempt($credentials)) {
+            RateLimiter::clear($key);
 
             $request->session()->regenerate();
 
             return redirect()
-                ->route('admin.dashboard');
+                ->route('admin.dashboard')
+                ->with('success', 'Login administrativo realizado com sucesso.');
         }
 
+        RateLimiter::hit($key, 60);
 
         return back()
             ->withErrors([
-                'email' => 'Credenciais inválidas.',
+                'email' => 'E-mail ou senha incorretos, ou esta conta administrativa está inativa.',
             ])
             ->onlyInput('email');
     }

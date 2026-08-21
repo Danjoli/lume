@@ -10,9 +10,9 @@ use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {
-    use HasFactory, SoftDeletes, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
-     /**
+    /**
      * Os atributos que podem ser preenchidos em massa.
      *
      * @var list<string>

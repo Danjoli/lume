@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Settings;
 use App\Data\Settings\SettingData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Settings\UpdateSettingRequest;
-use App\Services\Admin\SettingService;
+use App\Services\Admin\Settings\SettingService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -13,8 +13,7 @@ class SettingController extends Controller
 {
     public function __construct(
         private readonly SettingService $settingService,
-    ) {
-    }
+    ) {}
 
     public function edit(): View
     {

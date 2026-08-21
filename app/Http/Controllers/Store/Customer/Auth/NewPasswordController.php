@@ -21,7 +21,7 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request): View
     {
-        return view('customer.auth.reset-password', ['request' => $request]);
+        return view('store.customer.auth.reset-password', ['request' => $request]);
     }
 
     /**
@@ -58,6 +58,6 @@ class NewPasswordController extends Controller
         return $status == Password::PASSWORD_RESET
             ? redirect()->route('login')->with('status', __($status))
             : back()->withInput($request->only('email'))
-            ->withErrors(['email' => __($status)]);
+                ->withErrors(['email' => __($status)]);
     }
 }

@@ -26,7 +26,7 @@
 
             <dd>
 
-                <x-badges.shipment-status-badge :status="$shipment->status" />
+            <x-badges.status-badge :status="$shipment->status" />
 
             </dd>
 

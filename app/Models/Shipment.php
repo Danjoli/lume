@@ -24,6 +24,15 @@ class Shipment extends Model
 
         'tracking_code',
 
+        'melhor_envio_order_id',
+        'melhor_envio_protocol',
+        'label_url',
+        'tracking_url',
+        'delivery_min_days',
+        'delivery_max_days',
+        'tracking_history',
+        'gateway_payload',
+
         'status',
 
         'shipping_cost',
@@ -46,6 +55,8 @@ class Shipment extends Model
 
             'shipped_at' => 'datetime',
             'delivered_at' => 'datetime',
+            'tracking_history' => 'array',
+            'gateway_payload' => 'array',
         ];
     }
 

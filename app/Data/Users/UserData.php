@@ -11,8 +11,7 @@ readonly class UserData
         public string $name,
         public string $email,
         public UserStatus $status,
-    ) {
-    }
+    ) {}
 
     /**
      * Cria um DTO a partir do Form Request.

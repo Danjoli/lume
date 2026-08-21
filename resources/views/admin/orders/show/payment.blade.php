@@ -26,7 +26,7 @@
 
             <dd>
 
-                <x-badges.payment-status-badge :status="$order->payment_status" />
+                <x-badges.status-badge :status="$order->payment_status" />
 
             </dd>
 

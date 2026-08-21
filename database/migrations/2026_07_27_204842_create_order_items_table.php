@@ -26,7 +26,7 @@ return new class extends Migration
 
             // Snapshot livro
             $table->string('title');
-            $table->decimal('price',10,2);
+            $table->decimal('price', 10, 2);
             $table->unsignedInteger('quantity');
 
             $table->timestamps();

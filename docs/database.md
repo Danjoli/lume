@@ -864,14 +864,35 @@ A estrutura foi planejada para:
 * permitir novas funcionalidades;
 * manter boas práticas de desenvolvimento.
 
-Funcionalidades futuras previstas:
+## Atendimento e newsletter
 
-* cupons de desconto;
-* histórico de alterações;
-* avaliações com fotos;
-* múltiplos endereços de entrega;
-* integração com transportadoras;
-* relatórios administrativos.
+### contact_messages
 
-```
-```
+Armazena mensagens enviadas pela página de contato, associadas opcionalmente a um cliente. Os campos principais são `user_id`, `name`, `email`, `subject`, `message`, `status` e `answered_at`.
+
+### newsletter_subscribers
+
+Mantém inscrições únicas por e-mail e o histórico de ativação. Os campos principais são `email`, `is_active`, `subscribed_at` e `unsubscribed_at`.
+
+### newsletter_campaigns
+
+Registra campanhas preparadas pelo painel. Contém `subject`, `title`, `content`, `status` e `sent_at`; o envio é executado por tarefas em fila.
+
+## Persistência das integrações
+
+### Asaas em orders
+
+Além dos dados financeiros do pedido, a integração utiliza `gateway`, `gateway_payment_id`, `gateway_customer_id`, `gateway_status`, `payment_url`, `bank_slip_url`, `pix_payload`, `pix_qr_code`, `payment_due_date` e `gateway_error`.
+
+Esses campos permitem conciliar o retorno do gateway sem armazenar chaves secretas ou dados completos de cartão. Tokens permanecem no `.env`.
+
+### Melhor Envio em shipments
+
+Os envios podem armazenar `melhor_envio_order_id`, `melhor_envio_protocol`, `label_url`, `tracking_url`, `delivery_min_days`, `delivery_max_days`, `tracking_history` e `gateway_payload`, além de transportadora, serviço, custo e código de rastreamento.
+
+## Funcionalidades futuras
+
+- histórico de auditoria;
+- avaliações com fotos;
+- testes automatizados de integridade dos webhooks;
+- métricas e retenção de payloads conforme política de privacidade.

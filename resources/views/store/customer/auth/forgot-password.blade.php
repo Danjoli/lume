@@ -14,7 +14,7 @@
             <x-forms.label for="email" :value="__('Email')" />
             <x-forms.input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
                 autofocus />
-            <x-forms.input :messages="$errors->get('email')" class="mt-2" />
+            @error('email')<p class="mt-2 text-xs text-red-600">{{ $message }}</p>@enderror
         </div>
 
         <div class="flex items-center justify-end mt-4">
@@ -23,4 +23,4 @@
             </x-buttons.primary-button>
         </div>
     </form>
-    <x-customer.guest-layout>
+ </x-customer.guest-layout>

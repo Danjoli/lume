@@ -7,6 +7,7 @@
     x-data="{ sidebarOpen: true }"
     class="bg-gray-100 antialiased"
 >
+    <x-alerts.flash />
 
     <div class="flex h-screen overflow-hidden">
 

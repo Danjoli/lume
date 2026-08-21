@@ -6,6 +6,7 @@
 
             <div class="mx-auto max-w-5xl">
 
+                {{-- Cabeçalho --}}
                 <div class="mb-8">
 
                     <span
@@ -30,7 +31,7 @@
                     </h1>
 
                     <p class="mt-2 text-sm text-[#69736F]">
-                        Gerencie seus dados, pedidos, endereços e segurança da conta.
+                        Gerencie seus dados, pedidos, endereços e preferências da conta.
                     </p>
 
                 </div>
@@ -44,6 +45,7 @@
                     "
                 >
 
+                    {{-- Conteúdo principal --}}
                     <div class="space-y-6">
 
                         {{-- Dados pessoais --}}
@@ -143,6 +145,7 @@
 
                             <div class="mt-4 grid gap-4 sm:grid-cols-2">
 
+                                {{-- Pedidos --}}
                                 <a
                                     href="{{ route('store.customer.orders.index') }}"
                                     class="
@@ -182,6 +185,7 @@
 
                                 </a>
 
+                                {{-- Endereços --}}
                                 <a
                                     href="{{ route('store.customer.addresses.index') }}"
                                     class="
@@ -221,6 +225,7 @@
 
                                 </a>
 
+                                {{-- Lista de desejos --}}
                                 <a
                                     href="{{ route('store.wishlist.index') }}"
                                     class="
@@ -260,6 +265,7 @@
 
                                 </a>
 
+                                {{-- Segurança --}}
                                 <a
                                     href="{{ route('store.customer.security.edit') }}"
                                     class="
@@ -336,6 +342,7 @@
 
                         <nav class="space-y-2">
 
+                            {{-- Dados pessoais --}}
                             <a
                                 href="{{ route('store.customer.profile.edit') }}"
                                 class="
@@ -350,6 +357,7 @@
                                 Dados pessoais
                             </a>
 
+                            {{-- Pedidos --}}
                             <a
                                 href="{{ route('store.customer.orders.index') }}"
                                 class="
@@ -364,6 +372,7 @@
                                 Meus pedidos
                             </a>
 
+                            {{-- Endereços --}}
                             <a
                                 href="{{ route('store.customer.addresses.index') }}"
                                 class="
@@ -378,6 +387,7 @@
                                 Endereços
                             </a>
 
+                            {{-- Segurança --}}
                             <a
                                 href="{{ route('store.customer.security.edit') }}"
                                 class="
@@ -392,6 +402,22 @@
                                 Segurança
                             </a>
 
+                            {{-- Preferências --}}
+                            <a
+                                href="{{ route('store.customer.preferences.index') }}"
+                                class="
+                                    flex items-center gap-3
+                                    rounded-lg px-3 py-2.5
+                                    text-sm text-[#394844]
+                                    transition hover:bg-white
+                                "
+                            >
+                                <x-heroicon-o-adjustments-horizontal class="h-5 w-5" />
+
+                                Preferências
+                            </a>
+
+                            {{-- Excluir conta --}}
                             <a
                                 href="{{ route('store.customer.account.delete') }}"
                                 class="

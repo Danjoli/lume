@@ -10,7 +10,7 @@ Route::prefix('reports')
         Route::get('/reports', [ReportController::class, 'dashboard'])
             ->name('dashboard');
 
-        Route::get('/sales',[ReportController::class, 'sales'])
+        Route::get('/sales', [ReportController::class, 'sales'])
             ->name('sales');
 
         Route::get('/orders', [ReportController::class, 'orders'])

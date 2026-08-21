@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
 
+        $middleware->validateCsrfTokens(except: ['webhooks/asaas']);
+
         $middleware->alias([
             'admin' => AdminMiddleware::class,
             'guest.admin' => GuestAdminMiddleware::class,

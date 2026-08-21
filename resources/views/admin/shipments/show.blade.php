@@ -14,25 +14,25 @@
 
         <x-alerts.flash />
 
-        @include('admin.shipments._partials.show.actions')
+        @include('admin.shipments.show.actions')
 
         <div class="grid gap-6 lg:grid-cols-3">
 
             <div class="space-y-6 lg:col-span-2">
 
-                @include('admin.shipments._partials.show.summary')
+                @include('admin.shipments.show.summary')
 
-                @include('admin.shipments._partials.show.tracking')
+                @include('admin.shipments.show.tracking')
 
-                @include('admin.shipments._partials.show.timeline')
+                @include('admin.shipments.show.timeline')
 
             </div>
 
             <div class="space-y-6">
 
-                @include('admin.shipments._partials.show.recipient')
+                @include('admin.shipments.show.recipient')
 
-                @include('admin.shipments._partials.show.address')
+                @include('admin.shipments.show.address')
 
             </div>
 

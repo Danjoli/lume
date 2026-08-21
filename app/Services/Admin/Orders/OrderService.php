@@ -2,10 +2,10 @@
 
 namespace App\Services\Admin\Orders;
 
-use App\Models\Order;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\ShipmentStatus;
+use App\Models\Order;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 
@@ -56,7 +56,7 @@ class OrderService
                             ->orWhere(
                                 'recipient_name',
                                 'like',
-                                '%' . $request->string('search') . '%'
+                                '%'.$request->string('search').'%'
                             );
                     });
                 }

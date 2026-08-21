@@ -1,51 +1,6 @@
 <x-store.app-layout title="Política de Privacidade">
 
-    {{-- Cabeçalho --}}
-    <section class="border-b border-[#ECEAE6] py-14 lg:py-16">
-
-        <x-store.ui.container>
-
-            <div class="mx-auto max-w-5xl">
-
-                <span
-                    class="
-                        inline-flex rounded-full
-                        bg-[#EDF0EC] px-4 py-1.5
-                        text-xs font-semibold text-[#233A35]
-                    "
-                >
-                    Institucional
-                </span>
-
-                <h1
-                    class="
-                        mt-5 text-4xl font-bold
-                        tracking-[-0.035em] text-[#10211E]
-                        lg:text-5xl
-                    "
-                >
-                    Política de Privacidade
-                </h1>
-
-                <p
-                    class="
-                        mt-4 max-w-2xl
-                        text-base leading-7 text-[#64706D]
-                    "
-                >
-                    Entenda como a Lume trata as informações fornecidas
-                    durante sua navegação e utilização da nossa loja.
-                </p>
-
-                <p class="mt-4 text-xs text-[#8A918E]">
-                    Última atualização: agosto de 2026
-                </p>
-
-            </div>
-
-        </x-store.ui.container>
-
-    </section>
+    <x-store.pages.hero eyebrow="Institucional" title="Política de Privacidade" description="Entenda como a Lume trata as informações fornecidas durante sua navegação e utilização da nossa loja." updated-at="agosto de 2026" />
 
     {{-- Conteúdo --}}
     <section class="py-14 lg:py-20">
@@ -59,93 +14,7 @@
                 "
             >
 
-                {{-- Índice --}}
-                <aside class="hidden lg:block">
-
-                    <div class="sticky top-8">
-
-                        <p
-                            class="
-                                text-xs font-bold uppercase
-                                tracking-[0.12em] text-[#69736F]
-                            "
-                        >
-                            Nesta página
-                        </p>
-
-                        <nav
-                            class="
-                                mt-5 flex flex-col gap-3
-                                text-sm text-[#69736F]
-                            "
-                        >
-                            <a
-                                href="#introducao"
-                                class="transition hover:text-[#0D5147]"
-                            >
-                                Introdução
-                            </a>
-
-                            <a
-                                href="#dados-coletados"
-                                class="transition hover:text-[#0D5147]"
-                            >
-                                Dados coletados
-                            </a>
-
-                            <a
-                                href="#uso-dados"
-                                class="transition hover:text-[#0D5147]"
-                            >
-                                Uso das informações
-                            </a>
-
-                            <a
-                                href="#compartilhamento"
-                                class="transition hover:text-[#0D5147]"
-                            >
-                                Compartilhamento
-                            </a>
-
-                            <a
-                                href="#seguranca"
-                                class="transition hover:text-[#0D5147]"
-                            >
-                                Segurança
-                            </a>
-
-                            <a
-                                href="#cookies"
-                                class="transition hover:text-[#0D5147]"
-                            >
-                                Cookies
-                            </a>
-
-                            <a
-                                href="#direitos"
-                                class="transition hover:text-[#0D5147]"
-                            >
-                                Seus direitos
-                            </a>
-
-                            <a
-                                href="#alteracoes"
-                                class="transition hover:text-[#0D5147]"
-                            >
-                                Alterações
-                            </a>
-
-                            <a
-                                href="#contato"
-                                class="transition hover:text-[#0D5147]"
-                            >
-                                Contato
-                            </a>
-                        </nav>
-
-                    </div>
-
-                </aside>
+                <x-store.pages.legal-navigation :items="['introducao' => 'Introdução', 'dados-coletados' => 'Dados coletados', 'uso-dados' => 'Uso das informações', 'compartilhamento' => 'Compartilhamento', 'seguranca' => 'Segurança', 'cookies' => 'Cookies', 'direitos' => 'Seus direitos', 'alteracoes' => 'Alterações', 'contato' => 'Contato']" />
 
                 {{-- Política --}}
                 <div class="min-w-0">

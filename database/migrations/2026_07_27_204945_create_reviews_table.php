@@ -35,7 +35,7 @@ return new class extends Migration
 
             $table->unique([
                 'user_id',
-                'book_id'
+                'book_id',
             ]);
         });
     }

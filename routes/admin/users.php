@@ -28,6 +28,6 @@ Route::prefix('users')
         Route::patch('/{user}/block', [UserController::class, 'block'])
             ->name('block');
 
-        Route::delete('/users/{user}',[UserController::class, 'destroy'])
+        Route::delete('/{user}', [UserController::class, 'destroy'])
             ->name('destroy');
     });

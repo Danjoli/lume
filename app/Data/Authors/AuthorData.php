@@ -11,8 +11,7 @@ readonly class AuthorData
     public function __construct(
         public string $name,
         public ?string $biography,
-    ) {
-    }
+    ) {}
 
     /**
      * Cria um DTO a partir do Form Request.

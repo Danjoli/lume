@@ -83,7 +83,7 @@
 
                     <x-admin.tables.td>
 
-                        <x-badges.shipment-status-badge :status="$shipment->status" />
+                    <x-badges.status-badge :status="$shipment->status" />
 
                     </x-admin.tables.td>
 

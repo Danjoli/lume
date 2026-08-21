@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Store\Customer\Account;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Store\Customer\UpdatePasswordRequest;
+use App\Http\Requests\Store\Customer\Account\UpdatePasswordRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 

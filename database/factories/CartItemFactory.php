@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\CartItem;
 use App\Models\Book;
 use App\Models\Cart;
+use App\Models\CartItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

@@ -94,6 +94,14 @@ $class = trim(
         <x-heroicon-o-shield-check {{ $attributes->class($class) }} />
         @break
 
+    @case('contact')
+        <x-heroicon-o-chat-bubble-left-right {{ $attributes->class($class) }} />
+        @break
+
+    @case('newsletter')
+        <x-heroicon-o-envelope {{ $attributes->class($class) }} />
+        @break
+
     @default
         <x-heroicon-o-question-mark-circle {{ $attributes->class($class) }} />
 

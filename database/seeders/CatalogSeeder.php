@@ -23,9 +23,8 @@ class CatalogSeeder extends Seeder
         */
 
         $publishers = Publisher::factory()
-            ->count(5)
+            ->count(10)
             ->create();
-
 
         /*
         |--------------------------------------------------------------------------
@@ -34,9 +33,8 @@ class CatalogSeeder extends Seeder
         */
 
         $authors = Author::factory()
-            ->count(15)
+            ->count(35)
             ->create();
-
 
         /*
         |--------------------------------------------------------------------------
@@ -45,9 +43,8 @@ class CatalogSeeder extends Seeder
         */
 
         $categories = Category::factory()
-            ->count(10)
+            ->count(18)
             ->create();
-
 
         /*
         |--------------------------------------------------------------------------
@@ -56,11 +53,10 @@ class CatalogSeeder extends Seeder
         */
 
         $books = Book::factory()
-            ->count(50)
+            ->count(100)
             ->create([
                 'publisher_id' => $publishers->random()->id,
             ]);
-
 
         /*
         |--------------------------------------------------------------------------
@@ -75,12 +71,10 @@ class CatalogSeeder extends Seeder
                 $authors->random(rand(1, 3))
             );
 
-
             // Cada livro recebe 1 a 3 categorias
             $book->categories()->attach(
                 $categories->random(rand(1, 3))
             );
-
 
             /*
             |--------------------------------------------------------------------------

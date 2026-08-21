@@ -124,8 +124,7 @@ class NotificationService
         Admin::query()
             ->where('is_active', true)
             ->each(
-                fn (Admin $admin) =>
-                    $admin->notify($notification)
+                fn (Admin $admin) => $admin->notify($notification)
             );
     }
 

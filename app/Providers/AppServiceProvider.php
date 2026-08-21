@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Cart;
@@ -12,9 +13,11 @@ use App\Observers\AuthorObserver;
 use App\Observers\BookObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\PublisherObserver;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +28,13 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        Password::defaults(fn () => Password::min(12)->mixedCase()->letters()->numbers()->symbols());
+        ResetPassword::createUrlUsing(function ($notifiable, string $token) {
+            $route = $notifiable instanceof Admin ? 'admin.password.reset' : 'password.reset';
+
+            return url(route($route, ['token' => $token, 'email' => $notifiable->getEmailForPasswordReset()], false));
+        });
+
         Book::observe(BookObserver::class);
         Author::observe(AuthorObserver::class);
         Publisher::observe(PublisherObserver::class);

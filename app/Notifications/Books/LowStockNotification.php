@@ -12,8 +12,7 @@ class LowStockNotification extends Notification
 
     public function __construct(
         private readonly Book $book
-    ) {
-    }
+    ) {}
 
     public function via(object $notifiable): array
     {
