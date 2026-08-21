@@ -4,6 +4,7 @@ namespace App\Services\Store\Shipping;
 
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\Setting;
 use App\Models\Shipment;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
@@ -65,11 +66,15 @@ class MelhorEnvioService
 
     public function addToCart(Shipment $shipment): array
     {
+        if (! ctype_digit((string) $shipment->service)) {
+            throw new RuntimeException('O serviço deste envio não possui um ID válido do Melhor Envio. Recalcule o frete ou utilize um pedido criado pelo checkout integrado.');
+        }
+
         $shipment->loadMissing('order.items.book', 'order.user');
         $order = $shipment->order;
         $response = $this->client()->post('/me/cart', [
             'service' => (int) $shipment->service,
-            'from' => ['postal_code' => preg_replace('/\D/', '', config('services.melhor_envio.from_postal_code'))],
+            'from' => $this->sender(),
             'to' => ['name' => $order->recipient_name, 'phone' => $order->phone, 'email' => $order->user->email,
                 'document' => preg_replace('/\D/', '', $order->cpf), 'postal_code' => preg_replace('/\D/', '', $order->cep),
                 'address' => $order->street, 'number' => $order->number, 'complement' => $order->complement,
@@ -85,6 +90,58 @@ class MelhorEnvioService
         }
 
         return $response->json();
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function sender(): array
+    {
+        $settings = Setting::query()->first();
+        $sender = [
+            'name' => $settings?->company_name ?: $settings?->store_name,
+            'phone' => $settings?->phone,
+            'email' => $settings?->email,
+            'postal_code' => preg_replace('/\D/', '', (string) ($settings?->origin_cep ?: config('services.melhor_envio.from_postal_code'))),
+            'address' => $settings?->street,
+            'number' => $settings?->number,
+            'complement' => $settings?->complement,
+            'district' => $settings?->neighborhood,
+            'city' => $settings?->city,
+            'state_abbr' => $settings?->state,
+        ];
+
+        $document = preg_replace('/\D/', '', (string) $settings?->cnpj);
+        if (strlen($document) === 14) {
+            $sender['company_document'] = $document;
+        } elseif (strlen($document) === 11) {
+            $sender['document'] = $document;
+        }
+
+        $required = [
+            'name' => 'nome/razão social',
+            'phone' => 'telefone',
+            'email' => 'e-mail',
+            'postal_code' => 'CEP de origem',
+            'address' => 'logradouro',
+            'number' => 'número',
+            'district' => 'bairro',
+            'city' => 'cidade',
+            'state_abbr' => 'estado',
+        ];
+        $missing = collect($required)
+            ->filter(fn (string $label, string $field) => blank($sender[$field] ?? null))
+            ->values();
+
+        if (! in_array(strlen($document), [11, 14], true)) {
+            $missing->push('CPF/CNPJ válido');
+        }
+
+        if ($missing->isNotEmpty()) {
+            throw new RuntimeException('Complete os dados do remetente em Administração > Configurações: '.$missing->implode(', ').'.');
+        }
+
+        return array_filter($sender, fn ($value) => filled($value));
     }
 
     public function purchase(Shipment $shipment): array

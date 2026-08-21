@@ -86,4 +86,17 @@ class AdminEntryTest extends TestCase
             ->assertSee('Marcar como enviado')
             ->assertDontSee('Comprar e gerar etiqueta');
     }
+
+    public function test_demo_shipment_with_legacy_service_cannot_prepare_an_invalid_label(): void
+    {
+        $admin = Admin::factory()->create();
+        $shipment = Shipment::factory()->pending()->create(['service' => 'PAC']);
+
+        $this->actingAs($admin, 'admin')
+            ->patch(route('admin.shipments.generate-label', $shipment))
+            ->assertRedirect()
+            ->assertSessionHas('error', 'O serviço deste envio não possui um ID válido do Melhor Envio. Recalcule o frete ou utilize um pedido criado pelo checkout integrado.');
+
+        $this->assertTrue($shipment->refresh()->isPending());
+    }
 }
