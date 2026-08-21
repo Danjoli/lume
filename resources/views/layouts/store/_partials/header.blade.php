@@ -113,7 +113,7 @@
             @click="searchOpen = !searchOpen; navigationOpen = false"
             :aria-expanded="searchOpen"
             aria-label="Abrir busca"
-            class="ml-auto rounded-full p-2 transition hover:bg-[#F0EEE8] lg:hidden"
+            class="ml-auto rounded-full p-2 transition hover:bg-[#F0EEE8] xl:hidden"
         >
             <x-heroicon-o-magnifying-glass class="h-6 w-6" />
         </button>
@@ -156,26 +156,28 @@
 
     </div>
 
-    <div
-        x-show="searchOpen"
-        x-cloak
-        x-transition
-        class="border-t border-[#E8E6E1] px-5 py-4 lg:hidden"
-    >
-        <form action="{{ route('store.catalog.index') }}" method="GET" class="mx-auto max-w-xl">
-            <div class="relative">
-                <input
-                    type="search"
-                    name="search"
-                    value="{{ request('search') }}"
-                    placeholder="Buscar livros, autores ou categorias"
-                    class="h-12 w-full rounded-full border border-[#D8D6D0] bg-white px-5 pr-12 text-base focus:border-[#0D5147] focus:ring-[#0D5147]"
-                >
-                <button type="submit" aria-label="Buscar" class="absolute right-4 top-1/2 -translate-y-1/2">
-                    <x-heroicon-o-magnifying-glass class="h-6 w-6" />
-                </button>
-            </div>
-        </form>
+    <div class="xl:hidden">
+        <div
+            x-show="searchOpen"
+            x-cloak
+            x-transition
+            class="border-t border-[#E8E6E1] px-5 py-4"
+        >
+            <form action="{{ route('store.catalog.index') }}" method="GET" class="mx-auto max-w-xl">
+                <div class="relative">
+                    <input
+                        type="search"
+                        name="search"
+                        value="{{ request('search') }}"
+                        placeholder="Buscar livros, autores ou categorias"
+                        class="h-12 w-full rounded-full border border-[#D8D6D0] bg-white px-5 pr-12 text-base focus:border-[#0D5147] focus:ring-[#0D5147]"
+                    >
+                    <button type="submit" aria-label="Buscar" class="absolute right-4 top-1/2 -translate-y-1/2">
+                        <x-heroicon-o-magnifying-glass class="h-6 w-6" />
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <nav
