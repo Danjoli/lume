@@ -27,6 +27,9 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 ### Loja e administração
 
 - [x] Home, catálogo, busca, filtros e paginação
+- [x] URLs amigáveis por slug para o catálogo público
+- [x] Galeria selecionável na página do livro
+- [x] Busca, conta, carrinho e navegação no cabeçalho mobile
 - [x] Livros, autores, editoras, categorias e imagens
 - [x] Carrinho, cupons e lista de desejos
 - [x] Avaliações de produtos com aprovação administrativa
@@ -40,6 +43,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 - [x] Integração Asaas preparada para PIX, boleto e cartão
 - [x] Retorno de pagamento e webhook autenticado
 - [x] Integração Melhor Envio para cotação, compra e etiqueta
+- [x] Webhook do Melhor Envio autenticado por HMAC-SHA256
 - [x] Rastreamento e controle de status no painel e na conta
 - [x] Variáveis sensíveis centralizadas no `.env`
 
@@ -55,8 +59,8 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 
 - [x] Formatação do backend com Laravel Pint
 - [x] Compilação das views e validação das rotas após a reorganização
-- [x] Suíte atual de autenticação, perfil e páginas principais: 25 testes e 61 assertions
-- [ ] Ampliar testes de integração do checkout, webhooks e logística
+- [x] Suíte atual: 30 testes e 82 assertions, incluindo webhook logístico e URLs amigáveis
+- [ ] Ampliar testes de integração do checkout e das chamadas externas de logística
 - [ ] Cobrir regras críticas de estoque, cupons, reembolso e avaliações
 - [ ] Adicionar rate limiting específico para login, contato e webhooks
 - [ ] Configurar CI, monitoramento, backup e política de logs

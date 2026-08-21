@@ -5,6 +5,7 @@ E-commerce de livros desenvolvido com Laravel 12, Blade, Alpine.js, Tailwind CSS
 ## Recursos principais
 
 - catálogo de livros, autores, editoras e categorias;
+- URLs públicas amigáveis por slug e galeria interativa de imagens;
 - carrinho, cupons, lista de desejos e checkout;
 - pagamentos por PIX, boleto e cartão via Asaas;
 - cotação, etiqueta e rastreamento via Melhor Envio;
@@ -12,6 +13,7 @@ E-commerce de livros desenvolvido com Laravel 12, Blade, Alpine.js, Tailwind CSS
 - avaliações com moderação administrativa;
 - autenticação e recuperação de senha para clientes e administradores;
 - newsletter, formulário de contato, notificações e alertas de sessão;
+- cabeçalho responsivo com busca, conta, carrinho e navegação no celular;
 - factories e seeders com clientes, catálogo, pedidos, avaliações e envios.
 
 ## Requisitos
@@ -51,16 +53,22 @@ ASAAS_PRODUCTION_API_KEY=
 ASAAS_PRODUCTION_WEBHOOK_TOKEN=
 
 MELHOR_ENVIO_ENVIRONMENT=sandbox
+MELHOR_ENVIO_SANDBOX_CLIENT_ID=
+MELHOR_ENVIO_SANDBOX_CLIENT_SECRET=
 MELHOR_ENVIO_SANDBOX_BASE_URL=https://sandbox.melhorenvio.com.br/api/v2
 MELHOR_ENVIO_SANDBOX_TOKEN=
 MELHOR_ENVIO_SANDBOX_FROM_POSTAL_CODE=
 MELHOR_ENVIO_PRODUCTION_BASE_URL=https://melhorenvio.com.br/api/v2
+MELHOR_ENVIO_PRODUCTION_CLIENT_ID=
+MELHOR_ENVIO_PRODUCTION_CLIENT_SECRET=
 MELHOR_ENVIO_PRODUCTION_TOKEN=
 MELHOR_ENVIO_PRODUCTION_FROM_POSTAL_CODE=
 MELHOR_ENVIO_USER_AGENT="Lume contato@seudominio.com.br"
 ```
 
 O valor `sandbox` seleciona apenas as credenciais de teste. Para publicar, altere o seletor correspondente para `production`; não duplique nomes de variáveis.
+
+Cadastre no aplicativo do Melhor Envio o webhook `https://seu-dominio.com.br/webhooks/melhor-envio`. A assinatura `X-ME-Signature` é validada com o `CLIENT_SECRET` do ambiente ativo. A URL de callback OAuth é diferente do webhook e ainda depende da implementação do fluxo de autorização.
 
 Nunca versione tokens reais. Para processar campanhas, notificações e demais tarefas assíncronas, mantenha um worker de fila ativo com `php artisan queue:work`.
 

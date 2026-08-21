@@ -3,12 +3,14 @@
 
     <div
         x-data="{ open: false }"
-        class="relative hidden md:block"
+        class="relative"
     >
         <button
             type="button"
-            @click="open = !open"
-            @click.outside="open = false"
+        @click="open = !open"
+        @click.outside="open = false"
+        :aria-expanded="open"
+        aria-label="Abrir menu da conta"
             class="
                 flex items-center gap-2
                 text-sm font-medium
@@ -17,11 +19,11 @@
         >
             <x-heroicon-o-user class="h-6 w-6" />
 
-            <span>
+            <span class="hidden md:inline">
                 {{ Auth::user()->name }}
             </span>
 
-            <x-heroicon-o-chevron-down class="h-4 w-4" />
+            <x-heroicon-o-chevron-down class="hidden h-4 w-4 md:block" />
         </button>
 
         <div
@@ -109,15 +111,14 @@
     <a
         href="{{ route('login') }}"
         class="
-            hidden items-center gap-2
+            flex items-center gap-2
             text-sm font-medium
             transition hover:text-[#0D5147]
-            md:flex
         "
     >
         <x-heroicon-o-user class="h-6 w-6" />
 
-        Entrar
+        <span class="hidden md:inline">Entrar</span>
     </a>
 
 @endif

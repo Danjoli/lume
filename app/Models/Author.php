@@ -10,6 +10,11 @@ class Author extends Model
 {
     use HasFactory;
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     protected $fillable = [
         'name',
         'slug',

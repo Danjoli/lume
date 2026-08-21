@@ -890,6 +890,8 @@ Esses campos permitem conciliar o retorno do gateway sem armazenar chaves secret
 
 Os envios podem armazenar `melhor_envio_order_id`, `melhor_envio_protocol`, `label_url`, `tracking_url`, `delivery_min_days`, `delivery_max_days`, `tracking_history` e `gateway_payload`, além de transportadora, serviço, custo e código de rastreamento.
 
+O endpoint `POST /webhooks/melhor-envio` recebe mudanças do ciclo da etiqueta. Cada payload aceito é registrado em `tracking_history` com um hash, evitando duplicação do mesmo evento. A atualização local não permite que eventos antigos rebaixem um envio já entregue, devolvido ou cancelado.
+
 ## Funcionalidades futuras
 
 - histórico de auditoria;

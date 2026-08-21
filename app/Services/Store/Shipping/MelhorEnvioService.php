@@ -16,7 +16,9 @@ class MelhorEnvioService
     {
         $token = (string) config('services.melhor_envio.token');
         if ($token === '') {
-            throw new RuntimeException('Configure MELHOR_ENVIO_TOKEN no arquivo .env.');
+            $environment = strtoupper((string) config('services.melhor_envio.environment', 'sandbox'));
+
+            throw new RuntimeException("Configure MELHOR_ENVIO_{$environment}_TOKEN no arquivo .env.");
         }
 
         return Http::baseUrl(rtrim((string) config('services.melhor_envio.base_url'), '/'))
@@ -31,7 +33,9 @@ class MelhorEnvioService
     ): Collection {
         $from = preg_replace('/\D/', '', (string) config('services.melhor_envio.from_postal_code'));
         if ($from === '') {
-            throw new RuntimeException('Configure MELHOR_ENVIO_FROM_POSTAL_CODE no arquivo .env.');
+            $environment = strtoupper((string) config('services.melhor_envio.environment', 'sandbox'));
+
+            throw new RuntimeException("Configure MELHOR_ENVIO_{$environment}_FROM_POSTAL_CODE no arquivo .env.");
         }
 
         $products = $cart->items->map(fn ($item) => [
