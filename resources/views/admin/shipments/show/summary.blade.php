@@ -56,6 +56,26 @@
 
         </div>
 
+        <div>
+            <dt>Serviço</dt>
+            <dd>{{ $shipment->service ?: '-' }}</dd>
+        </div>
+
+        <div>
+            <dt>Custo do frete</dt>
+            <dd>R$ {{ number_format((float) $shipment->shipping_cost, 2, ',', '.') }}</dd>
+        </div>
+
+        <div>
+            <dt>Prazo estimado</dt>
+            <dd>{{ $shipment->delivery_min_days }} a {{ $shipment->delivery_max_days }} dias úteis</dd>
+        </div>
+
+        <div>
+            <dt>Postado em</dt>
+            <dd>{{ $shipment->shipped_at?->format('d/m/Y H:i') ?: '-' }}</dd>
+        </div>
+
     </dl>
 
 </x-admin.cards.card>

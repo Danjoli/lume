@@ -27,6 +27,10 @@
         </li>
 
         <li>
+            <x-admin.sidebar.menu-item label="Envios" route="admin.shipments.index" icon="shipments" />
+        </li>
+
+        <li>
             <x-admin.sidebar.menu-item label="Atendimentos" route="admin.contact-messages.index" icon="contact" />
         </li>
 

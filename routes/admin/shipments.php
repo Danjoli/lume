@@ -25,6 +25,15 @@ Route::prefix('shipments')
         Route::patch('/{shipment}/tracking', [ShipmentController::class, 'tracking'])
             ->name('tracking');
 
+        Route::patch('/{shipment}/ship', [ShipmentController::class, 'ship'])
+            ->name('ship');
+
+        Route::patch('/{shipment}/deliver', [ShipmentController::class, 'deliver'])
+            ->name('deliver');
+
+        Route::patch('/{shipment}/return', [ShipmentController::class, 'return'])
+            ->name('return');
+
         Route::patch('/{shipment}/cancel', [ShipmentController::class, 'cancel'])
             ->name('cancel');
 

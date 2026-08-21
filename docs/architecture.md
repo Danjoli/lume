@@ -51,6 +51,8 @@ As pastas `routes/admin` e `routes/store` permanecem majoritariamente planas: ca
 
 Prefixos não devem ser repetidos dentro do módulo. Por exemplo, o dashboard de relatórios usa `/admin/reports`, e não `/admin/reports/reports`.
 
+`GET /admin` é a entrada canônica do painel. O `Admin/Auth/EntryController` consulta o guard administrativo e encaminha visitantes ao login ou administradores autenticados ao dashboard. As rotas de `admin/shipments.php` expõem separadamente preparação, compra de etiqueta, rastreamento e transições manuais do envio.
+
 ## Views
 
 - `components`: elementos reutilizáveis, com API por props/slots.
@@ -75,4 +77,5 @@ O cabeçalho expõe busca, conta, carrinho e menu em telas pequenas. Elementos c
 - Processamento demorado: Jobs e filas, sem bloquear a resposta HTTP.
 - Webhooks: controllers dedicados, autenticação do emissor e processamento idempotente.
 - Melhor Envio: `X-ME-Signature` validada por HMAC-SHA256 sobre o corpo bruto, usando o client secret do aplicativo ativo.
+- Controle logístico: o painel chama `Services/Admin/Shipments`, que coordena Actions de transição e o adapter do Melhor Envio sem colocar chamadas externas no Controller.
 - Pastas e namespaces: nomes em inglês, no plural para domínios de recursos administrativos e por capacidade para módulos da loja.

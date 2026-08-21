@@ -50,6 +50,10 @@ $class = trim(
         <x-heroicon-o-shopping-cart {{ $attributes->class($class) }} />
         @break
 
+    @case('shipments')
+        <x-heroicon-o-truck {{ $attributes->class($class) }} />
+        @break
+
     @case('users')
         <x-heroicon-o-users {{ $attributes->class($class) }} />
         @break
