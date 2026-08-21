@@ -14,7 +14,7 @@
 
             <dd>
 
-                {{ $shipment->order->user->name }}
+                {{ $shipment->order->recipient_name }}
 
             </dd>
 
@@ -38,7 +38,7 @@
 
             <dd>
 
-                {{ $shipment->order->user->phone }}
+                {{ $shipment->order->phone }}
 
             </dd>
 
