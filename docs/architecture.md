@@ -77,5 +77,6 @@ O cabeçalho expõe busca, conta, carrinho e menu em telas pequenas. Elementos c
 - Processamento demorado: Jobs e filas, sem bloquear a resposta HTTP.
 - Webhooks: controllers dedicados, autenticação do emissor e processamento idempotente.
 - Melhor Envio: `X-ME-Signature` validada por HMAC-SHA256 sobre o corpo bruto, usando o client secret do aplicativo ativo.
+- OAuth do Melhor Envio: tokens criptografados em `integration_credentials`, separados por ambiente e renovados automaticamente antes da expiração.
 - Controle logístico: o painel chama `Services/Admin/Shipments`, que coordena Actions de transição e o adapter do Melhor Envio sem colocar chamadas externas no Controller.
 - Pastas e namespaces: nomes em inglês, no plural para domínios de recursos administrativos e por capacidade para módulos da loja.

@@ -57,19 +57,22 @@ MELHOR_ENVIO_ENVIRONMENT=sandbox
 MELHOR_ENVIO_SANDBOX_CLIENT_ID=
 MELHOR_ENVIO_SANDBOX_CLIENT_SECRET=
 MELHOR_ENVIO_SANDBOX_BASE_URL=https://sandbox.melhorenvio.com.br/api/v2
-MELHOR_ENVIO_SANDBOX_TOKEN=
+MELHOR_ENVIO_SANDBOX_OAUTH_URL=https://sandbox.melhorenvio.com.br
 MELHOR_ENVIO_SANDBOX_FROM_POSTAL_CODE=
 MELHOR_ENVIO_PRODUCTION_BASE_URL=https://melhorenvio.com.br/api/v2
 MELHOR_ENVIO_PRODUCTION_CLIENT_ID=
 MELHOR_ENVIO_PRODUCTION_CLIENT_SECRET=
-MELHOR_ENVIO_PRODUCTION_TOKEN=
+MELHOR_ENVIO_PRODUCTION_OAUTH_URL=https://melhorenvio.com.br
 MELHOR_ENVIO_PRODUCTION_FROM_POSTAL_CODE=
 MELHOR_ENVIO_USER_AGENT="Lume contato@seudominio.com.br"
+MELHOR_ENVIO_SCOPES="cart-read cart-write shipping-calculate shipping-checkout shipping-generate shipping-print shipping-tracking shipping-cancel"
 ```
 
 O valor `sandbox` seleciona apenas as credenciais de teste. Para publicar, altere o seletor correspondente para `production`; não duplique nomes de variáveis.
 
-Cadastre no aplicativo do Melhor Envio o webhook `https://seu-dominio.com.br/webhooks/melhor-envio`. A assinatura `X-ME-Signature` é validada com o `CLIENT_SECRET` do ambiente ativo. A URL de callback OAuth é diferente do webhook e ainda depende da implementação do fluxo de autorização.
+Cadastre no aplicativo do Melhor Envio o webhook `https://seu-dominio.com.br/webhooks/melhor-envio`. A assinatura `X-ME-Signature` é validada com o `CLIENT_SECRET` do ambiente ativo. A URL de callback OAuth é diferente do webhook.
+
+Cadastre como URL de redirecionamento OAuth exatamente `https://seu-dominio.com.br/admin/settings/integrations/melhor-envio/callback`. O domínio gerado pelo Laravel vem de `APP_URL`, que deve usar HTTPS e o endereço público da loja.
 
 Nunca versione tokens reais. Para processar campanhas, notificações e demais tarefas assíncronas, mantenha um worker de fila ativo com `php artisan queue:work`.
 
@@ -85,7 +88,7 @@ O menu **Envios** concentra a operação do Melhor Envio. Em cada envio, o admin
 4. sincronizar código, link, eventos e status de rastreamento;
 5. registrar manualmente postagem, entrega, devolução ou cancelamento quando necessário.
 
-As ações externas só funcionam após configurar as credenciais e o CEP de origem do ambiente ativo. Recomenda-se homologar todo o fluxo no sandbox antes de selecionar `production`.
+As ações externas só funcionam após configurar Client ID, Client Secret e o CEP de origem do ambiente ativo. Em **Administração > Configurações**, clique em **Conectar Melhor Envio** para autorizar a conta. Access token e refresh token são armazenados criptografados no banco e renovados automaticamente; eles não pertencem ao `.env`. Recomenda-se homologar todo o fluxo no sandbox antes de selecionar `production`.
 
 ## Contas de demonstração
 

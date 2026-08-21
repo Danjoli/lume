@@ -894,6 +894,10 @@ O endpoint `POST /webhooks/melhor-envio` recebe mudanças do ciclo da etiqueta. 
 
 O `ShipmentSeeder`, executado depois do `OrderSeeder`, garante registros demonstrativos nos estados `pending`, `preparing`, `shipped`, `delivered`, `returned` e `cancelled`. Os cenários usam pedidos com itens já populados e incluem, conforme a etapa, identificador do Melhor Envio, protocolo, etiqueta, rastreamento, prazos e histórico fictícios próprios para desenvolvimento.
 
+### Credenciais OAuth
+
+`integration_credentials` guarda `access_token`, `refresh_token` e expiração por provedor e ambiente. Os tokens usam casts criptografados do Laravel e nunca são exibidos no painel ou armazenados no `.env`. Client ID e Client Secret permanecem nas variáveis do servidor e a renovação ocorre antes das chamadas à API.
+
 ## Funcionalidades futuras
 
 - histórico de auditoria;

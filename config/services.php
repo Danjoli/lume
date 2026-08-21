@@ -57,9 +57,9 @@ return [
         'base_url' => $melhorEnvioEnvironment === 'production'
             ? env('MELHOR_ENVIO_PRODUCTION_BASE_URL', 'https://melhorenvio.com.br/api/v2')
             : env('MELHOR_ENVIO_SANDBOX_BASE_URL', 'https://sandbox.melhorenvio.com.br/api/v2'),
-        'token' => $melhorEnvioEnvironment === 'production'
-            ? env('MELHOR_ENVIO_PRODUCTION_TOKEN')
-            : env('MELHOR_ENVIO_SANDBOX_TOKEN'),
+        'oauth_url' => $melhorEnvioEnvironment === 'production'
+            ? env('MELHOR_ENVIO_PRODUCTION_OAUTH_URL', 'https://melhorenvio.com.br')
+            : env('MELHOR_ENVIO_SANDBOX_OAUTH_URL', 'https://sandbox.melhorenvio.com.br'),
         'client_id' => $melhorEnvioEnvironment === 'production'
             ? env('MELHOR_ENVIO_PRODUCTION_CLIENT_ID')
             : env('MELHOR_ENVIO_SANDBOX_CLIENT_ID'),
@@ -70,6 +70,7 @@ return [
             ? env('MELHOR_ENVIO_PRODUCTION_FROM_POSTAL_CODE')
             : env('MELHOR_ENVIO_SANDBOX_FROM_POSTAL_CODE'),
         'user_agent' => env('MELHOR_ENVIO_USER_AGENT', env('APP_NAME', 'Lume').' contato@example.com'),
+        'scopes' => env('MELHOR_ENVIO_SCOPES', 'cart-read cart-write shipping-calculate shipping-checkout shipping-generate shipping-print shipping-tracking shipping-cancel'),
     ],
 
 ];
