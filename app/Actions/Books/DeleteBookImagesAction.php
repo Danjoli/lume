@@ -17,7 +17,7 @@ class DeleteBookImagesAction
         foreach ($book->images as $image) {
 
             Storage::disk('public')
-                ->delete($image->path);
+                ->delete($image->image);
 
         }
 

@@ -17,6 +17,8 @@ Este documento descreve a estrutura vigente em 21/08/2026. O estado funcional es
 
 Controllers devem permanecer finos: receber request, chamar um serviço/action e escolher a resposta. Integrações com Asaas e Melhor Envio ficam isoladas em serviços próprios.
 
+Quando criação e edição compartilham a mesma entrada, o Request base do domínio concentra as regras comuns e cada Request concreto mantém apenas a diferença contextual. `Http/Requests/Admin/Books/BookRequest`, por exemplo, centraliza a validação do formulário de livros; os Requests de criação e edição definem somente a regra de unicidade do ISBN.
+
 ### Estrutura de domínio
 
 ```text
@@ -42,6 +44,8 @@ Não é obrigatório criar uma subpasta para cada classe. Uma pasta é criada qu
 - Model: relações, casts, scopes e comportamento diretamente ligado ao próprio estado.
 
 Avaliações são tratadas por `Store/Catalog/ReviewService`; criação e repetição de cobranças por `Payments/OrderPaymentService`; conciliação financeira por `Payments/AsaasWebhookService`; eventos logísticos por `Store/Shipping/MelhorEnvioWebhookService`. Os respectivos Controllers não consultam nem atualizam essas entidades diretamente.
+
+As Actions de imagens de livros preservam a consistência do agregado: uploads gravam o campo `book_images.image`, mantêm a imagem principal já escolhida e continuam a ordenação existente; a troca de capa verifica o vínculo com o livro dentro de transação.
 
 ## Rotas
 
