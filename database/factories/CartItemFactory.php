@@ -23,6 +23,7 @@ class CartItemFactory extends Factory
             'cart_id' => Cart::factory(),
             'book_id' => Book::factory(),
             'quantity' => fake()->numberBetween(1, 5),
+            'unit_price' => fake()->randomFloat(2, 20, 300),
         ];
     }
 
