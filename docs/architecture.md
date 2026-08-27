@@ -63,6 +63,14 @@ O ambiente de referência em `.env.example` usa MySQL, que é o banco da aplica�
 
 A conexão `database` da fila usa `after_commit=true`: jobs só são disponibilizados depois que a transação que os originou foi confirmada, evitando que um worker processe dados ainda não persistidos. Isso exige manter o worker de fila ativo em produção.
 
+## Recursos públicos e traduções
+
+`public/` contém somente arquivos que o navegador pode servir: o front controller, regras de Apache, `robots.txt`, assets compilados pelo Vite, imagens institucionais e os ícones publicados pelo pacote Blade Heroicons. O link `public/storage` é gerado por `php artisan storage:link` e não é versionado.
+
+O favicon oficial é `public/favicon.svg`, usado pelos layouts público, de autenticação e administrativo. Não há fallback `.ico` vazio. Ao trocar a identidade visual, atualize esse SVG e mantenha os layouts apontando para ele.
+
+`lang/pt_BR` contém traduções por grupo do Laravel (`auth`, `passwords` e `validation`). O arquivo `lang/pt_BR.json` traduz frases avulsas da autenticação do Breeze. A pasta é necessária porque a aplicação usa `APP_LOCALE=pt_BR`; novas mensagens reutilizáveis devem ser adicionadas nela, não duplicadas nas views.
+
 ## Views
 
 - `components`: elementos reutilizáveis, com API por props/slots.
