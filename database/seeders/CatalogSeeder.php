@@ -54,9 +54,10 @@ class CatalogSeeder extends Seeder
 
         $books = Book::factory()
             ->count(100)
-            ->create([
+            ->state(fn () => [
                 'publisher_id' => $publishers->random()->id,
-            ]);
+            ])
+            ->create();
 
         /*
         |--------------------------------------------------------------------------
@@ -83,7 +84,13 @@ class CatalogSeeder extends Seeder
             */
 
             BookImage::factory()
-                ->count(rand(1, 4))
+                ->primary()
+                ->create([
+                    'book_id' => $book->id,
+                ]);
+
+            BookImage::factory()
+                ->count(fake()->numberBetween(0, 3))
                 ->create([
                     'book_id' => $book->id,
                 ]);

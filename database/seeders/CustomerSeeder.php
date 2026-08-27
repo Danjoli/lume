@@ -28,11 +28,13 @@ class CustomerSeeder extends Seeder
             |--------------------------------------------------------------------------
             */
 
-            Address::factory()
-                ->count(rand(1, 3))
-                ->create([
-                    'user_id' => $user->id,
-                ]);
+            if (! $user->addresses()->exists()) {
+                Address::factory()
+                    ->default()
+                    ->create([
+                        'user_id' => $user->id,
+                    ]);
+            }
 
             /*
             |--------------------------------------------------------------------------
@@ -40,18 +42,22 @@ class CustomerSeeder extends Seeder
             |--------------------------------------------------------------------------
             */
 
-            $cart = Cart::factory()
-                ->create([
-                    'user_id' => $user->id,
-                ]);
+            $cart = Cart::firstOrCreate([
+                'user_id' => $user->id,
+            ]);
 
             if (fake()->boolean(65)) {
-                $books->random(rand(1, 5))->each(fn ($book) => CartItem::factory()->create([
-                    'cart_id' => $cart->id,
-                    'book_id' => $book->id,
-                    'quantity' => rand(1, 3),
-                    'unit_price' => $book->sale_price ?? $book->price,
-                ]));
+                $books->random(fake()->numberBetween(1, 5))
+                    ->each(fn ($book) => CartItem::firstOrCreate(
+                        [
+                            'cart_id' => $cart->id,
+                            'book_id' => $book->id,
+                        ],
+                        [
+                            'quantity' => fake()->numberBetween(1, 3),
+                            'unit_price' => $book->sale_price ?? $book->price,
+                        ],
+                    ));
             }
 
             /*
@@ -60,9 +66,11 @@ class CustomerSeeder extends Seeder
             |--------------------------------------------------------------------------
             */
 
-            $user->wishlistBooks()->attach(
-                $books->random(rand(2, 5))->pluck('id')
-            );
+            if (! $user->wishlistBooks()->exists()) {
+                $user->wishlistBooks()->attach(
+                    $books->random(fake()->numberBetween(2, 5))->pluck('id')
+                );
+            }
         }
     }
 }

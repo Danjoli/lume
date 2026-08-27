@@ -851,6 +851,14 @@ Banco populado
 Aplicação utilizando Eloquent
 ```
 
+## Factories e seeders de desenvolvimento
+
+As factories criam registros válidos de forma isolada para testes e cenários de desenvolvimento. Em especial, `CartItemFactory` sempre preenche o snapshot obrigatório de `unit_price`; quando o cenário exigir um livro específico, o teste ou seeder deve informar o preço vigente desse livro.
+
+`CatalogSeeder` cria editoras, autores, categorias e 100 livros distribuídos entre as editoras. Todo livro de demonstração recebe uma imagem principal e pode receber imagens adicionais. Os arquivos de imagem de exemplo ficam em `storage/app/public/books` e precisam do link público criado por `php artisan storage:link`.
+
+`CustomerSeeder` pode ser executado novamente sem criar um segundo carrinho, itens repetidos ou favoritos duplicados para um mesmo cliente. Os seeders representam dados de demonstração: use `migrate:fresh --seed` apenas em ambiente local ou de homologação, nunca em uma base de produção com dados reais.
+
 ---
 
 # Objetivo do banco
