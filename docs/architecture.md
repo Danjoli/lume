@@ -65,6 +65,18 @@ A página de detalhes do livro mantém a galeria em `components/store/books/show
 
 O cabeçalho expõe busca, conta, carrinho e menu em telas pequenas. Elementos controlados por Alpine usam `x-cloak` para não aparecer antes da inicialização do JavaScript.
 
+## Testes automatizados
+
+Os testes usam PHPUnit com SQLite em memória, configurado em `phpunit.xml`. Cada cenário de Feature usa `RefreshDatabase`, portanto não consulta nem modifica o banco MySQL local ou de produção.
+
+- `tests/Unit/Models`: regras puras de disponibilidade, preço e transições permitidas de pedido, sem dependência de banco.
+- `tests/Feature/Store`: catálogo, URLs amigáveis, perfil e fluxos de compra. Os testes de `Shopping` garantem estoque, acúmulo de quantidade, isolamento de carrinhos e listas de desejos entre clientes.
+- `tests/Feature/Admin`: entrada do painel, operações de envio e OAuth do Melhor Envio.
+- `tests/Feature/Webhooks`: assinatura HMAC, atualização de rastreio e idempotência do webhook do Melhor Envio.
+- `tests/Feature/Auth`: fluxos do Laravel Breeze para clientes.
+
+Para executar a validação completa, use `php artisan test`. Para adicionar uma regra, prefira um teste de Unit apenas quando ela não exigir framework, persistência ou HTTP; caso contrário, use um teste de Feature no domínio correspondente.
+
 ## Convenções
 
 - Nomes de rotas: `area.dominio.acao`.
