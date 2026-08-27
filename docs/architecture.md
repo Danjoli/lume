@@ -55,6 +55,14 @@ Prefixos não devem ser repetidos dentro do módulo. Por exemplo, o dashboard de
 
 Não há `routes/api.php` neste momento por decisão deliberada: a aplicação é servida por Blade e suas integrações externas usam webhooks assinados. Uma API versionada só deve ser introduzida quando existir um consumidor real — por exemplo, aplicativo mobile, integração de parceiros ou front-end separado — junto de autenticação, Resources e contratos próprios.
 
+## Bootstrap e configuração
+
+`bootstrap/app.php` centraliza aliases de middleware, exceções de CSRF estritamente necessárias para webhooks assinados e o carregamento das rotas web e de console. Providers do projeto são registrados em `bootstrap/providers.php`.
+
+O ambiente de referência em `.env.example` usa MySQL, que é o banco da aplicação em desenvolvimento e produção. A suíte de testes continua isolada em SQLite em memória por meio de `phpunit.xml`. O fuso padrão é `America/Sao_Paulo`, mas pode ser alterado com `APP_TIMEZONE` se a operação mudar de região.
+
+A conexão `database` da fila usa `after_commit=true`: jobs só são disponibilizados depois que a transação que os originou foi confirmada, evitando que um worker processe dados ainda não persistidos. Isso exige manter o worker de fila ativo em produção.
+
 ## Views
 
 - `components`: elementos reutilizáveis, com API por props/slots.
