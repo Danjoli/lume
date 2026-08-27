@@ -45,13 +45,15 @@ Avaliações são tratadas por `Store/Catalog/ReviewService`; criação e repeti
 
 ## Rotas
 
-Os agregadores `routes/admin/routes.php` e `routes/store/routes.php` apenas aplicam middleware e carregam módulos. Cada domínio possui seu arquivo. A área do cliente é subdividida em `routes/store/customer` para evitar um único arquivo concentrando perfil, segurança, endereços e pedidos.
+Os agregadores `routes/admin/routes.php` e `routes/store/routes.php` apenas aplicam middleware e carregam módulos. Cada domínio possui seu arquivo. A área do cliente é subdividida em `routes/store/customer` para evitar um único arquivo concentrando perfil, segurança, endereços e pedidos. Os webhooks externos ficam em `routes/webhooks.php`, mantendo `routes/web.php` apenas como ponto de composição.
 
 As pastas `routes/admin` e `routes/store` permanecem majoritariamente planas: cada arquivo já representa um domínio pequeno e reconhecível. A subpasta `routes/store/customer` existe porque reúne vários módulos sob o mesmo prefixo `minha-conta` (`profile`, `security`, `account`, `addresses`, `orders` e `preferences`). Novas subpastas só devem ser criadas quando um domínio exigir vários arquivos próprios, não apenas para agrupamento visual.
 
 Prefixos não devem ser repetidos dentro do módulo. Por exemplo, o dashboard de relatórios usa `/admin/reports`, e não `/admin/reports/reports`.
 
 `GET /admin` é a entrada canônica do painel. O `Admin/Auth/EntryController` consulta o guard administrativo e encaminha visitantes ao login ou administradores autenticados ao dashboard. As rotas de `admin/shipments.php` expõem separadamente preparação, compra de etiqueta, rastreamento e transições manuais do envio.
+
+Não há `routes/api.php` neste momento por decisão deliberada: a aplicação é servida por Blade e suas integrações externas usam webhooks assinados. Uma API versionada só deve ser introduzida quando existir um consumidor real — por exemplo, aplicativo mobile, integração de parceiros ou front-end separado — junto de autenticação, Resources e contratos próprios.
 
 ## Views
 
