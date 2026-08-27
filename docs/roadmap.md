@@ -9,6 +9,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 - [x] Laravel 12, Blade, Alpine.js, Tailwind CSS e Vite
 - [x] Models, relacionamentos, enums, policies e observers
 - [x] Form Requests, Services, Actions e objetos Data
+- [x] Regras compartilhadas de formulários de livros centralizadas em um Request base
 - [x] Rotas separadas por área e domínio
 - [x] Prefixos de rotas revisados, sem segmentos duplicados
 - [x] Controllers, Form Requests e Services alinhados por domínio
@@ -67,7 +68,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 
 - [x] Formatação do backend com Laravel Pint
 - [x] Compilação das views e validação das rotas após a reorganização
-- [x] Suíte atual: 59 testes e 198 assertions, incluindo rastreamento vazio do Sandbox, smoke test, OAuth, webhooks, URLs amigáveis e seeders
+- [x] Suíte atual: 61 testes e 208 assertions, incluindo rastreamento vazio do Sandbox, smoke test, OAuth, webhooks, URLs amigáveis, seeders e imagens de livros
 - [ ] Ampliar testes de integração do checkout e das chamadas externas de logística
 - [ ] Cobrir regras críticas de estoque, cupons, reembolso e avaliações
 - [ ] Adicionar rate limiting específico para login, contato e webhooks

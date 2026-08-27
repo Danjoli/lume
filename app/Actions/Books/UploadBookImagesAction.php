@@ -23,6 +23,13 @@ class UploadBookImagesAction
             return;
         }
 
+        $hasPrimaryImage = $book->images()
+            ->where('is_primary', true)
+            ->exists();
+
+        $nextSortOrder = (int) $book->images()
+            ->max('sort_order') + 1;
+
         foreach ($images as $index => $image) {
 
             $this->validateImage($image);
@@ -34,11 +41,11 @@ class UploadBookImagesAction
 
             $book->images()->create([
 
-                'path' => $path,
+                'image' => $path,
 
-                'is_primary' => $index === 0,
+                'is_primary' => ! $hasPrimaryImage && $index === 0,
 
-                'sort_order' => $index + 1,
+                'sort_order' => $nextSortOrder + $index,
 
             ]);
 

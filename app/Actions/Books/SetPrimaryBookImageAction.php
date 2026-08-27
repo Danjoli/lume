@@ -3,6 +3,8 @@
 namespace App\Actions\Books;
 
 use App\Models\Book;
+use App\Models\BookImage;
+use Illuminate\Support\Facades\DB;
 
 class SetPrimaryBookImageAction
 {
@@ -12,23 +14,17 @@ class SetPrimaryBookImageAction
     public function execute(
         Book $book,
         int $imageId
-    ): void {
+    ): BookImage {
+        return DB::transaction(function () use ($book, $imageId): BookImage {
+            $image = $book->images()->findOrFail($imageId);
 
-        $book->images()->update([
+            $book->images()
+                ->where('id', '!=', $image->id)
+                ->update(['is_primary' => false]);
 
-            'is_primary' => false,
+            $image->update(['is_primary' => true]);
 
-        ]);
-
-        $book->images()
-
-            ->whereKey($imageId)
-
-            ->update([
-
-                'is_primary' => true,
-
-            ]);
-
+            return $image->refresh();
+        });
     }
 }
