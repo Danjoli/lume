@@ -83,6 +83,12 @@ A página de detalhes do livro mantém a galeria em `components/store/books/show
 
 O cabeçalho expõe busca, conta, carrinho e menu em telas pequenas. Elementos controlados por Alpine usam `x-cloak` para não aparecer antes da inicialização do JavaScript.
 
+## Assets de front-end
+
+`resources/js/app.js` é o ponto de entrada do Vite: inicializa Alpine e comportamentos reutilizáveis da interface. Alertas de sessão ficam em `resources/js/flash-alerts.js`; os gráficos do dashboard ficam em `resources/js/admin/charts.js` e recebem apenas os dados da view por atributos `data-*`. Assim, Blade continua responsável por renderizar dados e JavaScript por comportamento no navegador.
+
+Estados pequenos e exclusivos de uma view, como abrir menus ou selecionar uma foto da galeria, permanecem próximos ao Blade com Alpine. Não devem virar módulos globais sem reutilização real. O CSS global continua mínimo em `resources/css/app.css` (diretivas Tailwind e `x-cloak`); estilos visuais são compostos com as utilitárias Tailwind nos componentes.
+
 ## Testes automatizados
 
 Os testes usam PHPUnit com SQLite em memória, configurado em `phpunit.xml`. Cada cenário de Feature usa `RefreshDatabase`, portanto não consulta nem modifica o banco MySQL local ou de produção.

@@ -13,6 +13,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 - [x] Prefixos de rotas revisados, sem segmentos duplicados
 - [x] Controllers, Form Requests e Services alinhados por domínio
 - [x] Views organizadas entre componentes reutilizáveis e `_partials`
+- [x] Scripts reutilizáveis extraídos das views para módulos Vite, mantendo Alpine local para interações exclusivas
 - [x] Factories e seeders com cenários relacionados
 - [x] Cenários logísticos determinísticos para todos os status de envio
 
@@ -66,7 +67,7 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 
 - [x] Formatação do backend com Laravel Pint
 - [x] Compilação das views e validação das rotas após a reorganização
-- [x] Suíte atual: 41 testes e 128 assertions, incluindo rastreamento vazio do Sandbox, smoke test, OAuth, webhooks e URLs amigáveis
+- [x] Suíte atual: 59 testes e 198 assertions, incluindo rastreamento vazio do Sandbox, smoke test, OAuth, webhooks, URLs amigáveis e seeders
 - [ ] Ampliar testes de integração do checkout e das chamadas externas de logística
 - [ ] Cobrir regras críticas de estoque, cupons, reembolso e avaliações
 - [ ] Adicionar rate limiting específico para login, contato e webhooks

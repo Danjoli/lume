@@ -24,6 +24,5 @@
             </div>
         @endforeach
     </div>
-    <script>document.querySelectorAll('[data-flash-alert]').forEach((alert)=>{const close=()=>{alert.style.opacity='0';alert.style.transform='translateY(-8px)';setTimeout(()=>alert.remove(),200)};alert.style.transition='opacity .2s ease, transform .2s ease';alert.querySelector('[data-flash-close]')?.addEventListener('click',close);setTimeout(close,6000)});</script>
 @endif
 @endonce

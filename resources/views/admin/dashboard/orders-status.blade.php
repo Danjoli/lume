@@ -9,7 +9,13 @@
         <div class="flex justify-center xl:w-1/2 xl:flex-shrink-0">
 
             <div class="relative aspect-square w-full max-w-[200px]">
-                <canvas id="orders-status-chart"></canvas>
+                <canvas
+                    id="orders-status-chart"
+                    data-admin-chart="orders-status"
+                    data-chart-labels="{{ json_encode(collect($ordersStatus)->pluck('label')->values()) }}"
+                    data-chart-values="{{ json_encode(collect($ordersStatus)->pluck('value')->values()) }}"
+                    data-chart-colors="{{ json_encode(collect($ordersStatus)->pluck('color')->values()) }}"
+                ></canvas>
             </div>
 
         </div>
@@ -45,77 +51,3 @@
     </div>
 
 </x-admin.cards.card>
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            const canvas = document.getElementById('orders-status-chart');
-
-            if (!canvas) return;
-
-            new Chart(canvas, {
-
-                type: 'doughnut',
-
-                data: {
-
-                    labels: @json(collect($ordersStatus)->pluck('label')),
-
-                    datasets: [{
-
-                        data: @json(collect($ordersStatus)->pluck('value')),
-
-                        backgroundColor: @json(collect($ordersStatus)->pluck('color')),
-
-                        borderWidth: 0,
-
-                        hoverOffset: 4,
-
-                    }]
-
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    cutout: '62%',
-
-                    plugins: {
-
-                        legend: {
-                            display: false,
-                        },
-
-                        tooltip: {
-
-                            backgroundColor: '#FFFFFF',
-
-                            titleColor: '#0F172A',
-
-                            bodyColor: '#475569',
-
-                            borderColor: '#E2E8F0',
-
-                            borderWidth: 1,
-
-                            cornerRadius: 10,
-
-                            padding: 12,
-
-                            displayColors: false,
-
-                        }
-
-                    }
-
-                }
-
-            });
-
-        });
-    </script>
-@endpush
