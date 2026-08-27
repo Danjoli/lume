@@ -1,0 +1,15 @@
+{
+    "Confirm": "Confirmar",
+    "Confirm Password": "Confirmar senha",
+    "Email": "E-mail",
+    "Email Password Reset Link": "Enviar link de redefinição",
+    "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": "Esqueceu sua senha? Informe seu e-mail e enviaremos um link para você criar uma nova senha.",
+    "Log Out": "Sair",
+    "Password": "Senha",
+    "Reset Password": "Redefinir senha",
+    "Resend Verification Email": "Reenviar e-mail de verificação",
+    "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.": "Obrigado por se cadastrar! Antes de começar, confirme seu endereço de e-mail pelo link que acabamos de enviar. Caso não o tenha recebido, podemos enviar outro.",
+    "The password is incorrect.": "A senha informada está incorreta.",
+    "This is a secure area of the application. Please confirm your password before continuing.": "Esta é uma área segura. Confirme sua senha antes de continuar.",
+    "A new verification link has been sent to the email address you provided during registration.": "Um novo link de confirmação foi enviado para o e-mail informado no cadastro."
+}
