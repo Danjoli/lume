@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Store;
+namespace Tests\Feature\Store\Catalog;
 
 use App\Models\Author;
 use App\Models\Book;
