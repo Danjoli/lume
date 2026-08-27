@@ -51,7 +51,12 @@ class CatalogTest extends TestCase
             'sale_price' => 60,
             'stock' => 2,
         ]);
-        $fullPriceBook = Book::factory()->create(['title' => 'Livro sem desconto', 'stock' => 2]);
+        $fullPriceBook = Book::factory()->create([
+            'title' => 'Livro sem desconto',
+            'price' => 80,
+            'sale_price' => null,
+            'stock' => 2,
+        ]);
         $outOfStockBook = Book::factory()->create([
             'title' => 'Livro sem estoque',
             'price' => 80,
