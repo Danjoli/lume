@@ -29,4 +29,5 @@ Route::get('/formas-de-pagamento', [PageController::class, 'payments'])
     ->name('store.pages.payments');
 
 Route::post('/contato', [ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
     ->name('store.pages.contact.store');

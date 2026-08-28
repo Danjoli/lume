@@ -67,8 +67,8 @@ return [
             ? env('MELHOR_ENVIO_PRODUCTION_CLIENT_SECRET')
             : env('MELHOR_ENVIO_SANDBOX_CLIENT_SECRET'),
         'webhook_secrets' => array_values(array_filter([
-            env('MELHOR_ENVIO_SANDBOX_CLIENT_SECRET'),
-            env('MELHOR_ENVIO_PRODUCTION_CLIENT_SECRET'),
+            env('MELHOR_ENVIO_SANDBOX_WEBHOOK_SECRET'),
+            env('MELHOR_ENVIO_PRODUCTION_WEBHOOK_SECRET'),
         ])),
         'from_postal_code' => $melhorEnvioEnvironment === 'production'
             ? env('MELHOR_ENVIO_PRODUCTION_FROM_POSTAL_CODE')

@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/webhooks/asaas', AsaasWebhookController::class)
+    ->middleware('throttle:60,1')
     ->name('webhooks.asaas');
 
 Route::post('/webhooks/melhor-envio', MelhorEnvioWebhookController::class)
+    ->middleware('throttle:60,1')
     ->name('webhooks.melhor-envio');

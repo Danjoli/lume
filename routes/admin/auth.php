@@ -15,7 +15,9 @@ Route::middleware('guest.admin')->group(function () {
         ->name('login.store');
 
     Route::get('/esqueci-minha-senha', [PasswordResetLinkController::class, 'create'])->name('password.request');
-    Route::post('/esqueci-minha-senha', [PasswordResetLinkController::class, 'store'])->name('password.email');
+    Route::post('/esqueci-minha-senha', [PasswordResetLinkController::class, 'store'])
+        ->middleware('throttle:3,1')
+        ->name('password.email');
     Route::get('/redefinir-senha/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('/redefinir-senha', [NewPasswordController::class, 'store'])->name('password.update');
 
