@@ -43,6 +43,8 @@ Não é obrigatório criar uma subpasta para cada classe. Uma pasta é criada qu
 - Action: operação de domínio pequena e reutilizável, especialmente uma transição de estado.
 - Model: relações, casts, scopes e comportamento diretamente ligado ao próprio estado.
 
+As rotas administrativas de autores, livros, categorias, editoras e administradores aplicam as Policies do recurso com o middleware `can`. `AdminMiddleware` seleciona o guard `admin` antes dessa verificação, para que as permissões sejam avaliadas contra o administrador autenticado e seu cargo.
+
 Avaliações são tratadas por `Store/Catalog/ReviewService`; criação e repetição de cobranças por `Payments/OrderPaymentService`; conciliação financeira por `Payments/AsaasWebhookService`; eventos logísticos por `Store/Shipping/MelhorEnvioWebhookService`. Os respectivos Controllers não consultam nem atualizam essas entidades diretamente.
 
 As Actions de imagens de livros preservam a consistência do agregado: uploads gravam o campo `book_images.image`, mantêm a imagem principal já escolhida e continuam a ordenação existente; a troca de capa verifica o vínculo com o livro dentro de transação.
