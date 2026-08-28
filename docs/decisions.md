@@ -680,16 +680,6 @@ Receber eventos de etiqueta do Melhor Envio em `/webhooks/melhor-envio`, validan
 
 Atualizar rastreamento sem depender exclusivamente de consultas manuais, rejeitar payloads sem autenticidade e tolerar reenvios ou eventos atrasados sem regredir o estado logístico.
 
-# 034 - Endurecimento de rotas e navegador
-
-## Decisão
-
-Aplicar cabeçalhos de segurança em todas as respostas, limitar rotas públicas sensíveis e separar segredos de webhook dos segredos OAuth.
-
-## Motivo
-
-Reduzir superfícies de spam, clickjacking, interpretação indevida de conteúdo e reutilização de credenciais, sem substituir autenticação, CSRF ou validação de assinatura existentes.
-
 # 033 - URLs públicas por slug
 
 ## Decisão
@@ -699,3 +689,13 @@ Usar `slug` como chave de rota de livros, autores, categorias e editoras. Entida
 ## Motivo
 
 Produzir endereços legíveis, compartilháveis e adequados para indexação sem aplicar slugs artificiais a pedidos, usuários ou registros operacionais.
+
+# 034 - Endurecimento de rotas e navegador
+
+## Decisão
+
+Aplicar cabeçalhos de segurança em todas as respostas, limitar rotas públicas sensíveis e separar segredos de webhook dos segredos OAuth.
+
+## Motivo
+
+Reduzir superfícies de spam, clickjacking, interpretação indevida de conteúdo e reutilização de credenciais, sem substituir autenticação, CSRF ou validação de assinatura existentes.

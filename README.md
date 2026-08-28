@@ -1,6 +1,8 @@
 # Lume
 
-E-commerce de livros desenvolvido com Laravel 12, Blade, Alpine.js, Tailwind CSS e Vite. O projeto possui loja pública, conta do cliente e painel administrativo, com checkout integrado ao Asaas e logística integrada ao Melhor Envio.
+E-commerce de livros desenvolvido com Laravel 12, Blade, Alpine.js, Tailwind CSS e Vite. A aplicação reúne loja pública, conta do cliente e painel administrativo, com checkout integrado ao Asaas e logística integrada ao Melhor Envio.
+
+> Este é o guia de entrada do projeto. Consulte o [índice da documentação](docs/README.md) para arquitetura, banco de dados, decisões técnicas e estado de entrega.
 
 ## Recursos principais
 
@@ -23,7 +25,7 @@ E-commerce de livros desenvolvido com Laravel 12, Blade, Alpine.js, Tailwind CSS
 - Composer;
 - Node.js e npm;
 - extensões PHP exigidas pelo Laravel;
-- banco compatível com Laravel (SQLite é o padrão do `.env.example`).
+- MySQL 8.0 ou compatível (padrão do `.env.example`); a suíte de testes usa SQLite em memória automaticamente.
 
 ## Instalação
 
@@ -56,12 +58,14 @@ ASAAS_PRODUCTION_WEBHOOK_TOKEN=
 MELHOR_ENVIO_ENVIRONMENT=sandbox
 MELHOR_ENVIO_SANDBOX_CLIENT_ID=
 MELHOR_ENVIO_SANDBOX_CLIENT_SECRET=
+MELHOR_ENVIO_SANDBOX_WEBHOOK_SECRET=
 MELHOR_ENVIO_SANDBOX_BASE_URL=https://sandbox.melhorenvio.com.br/api/v2
 MELHOR_ENVIO_SANDBOX_OAUTH_URL=https://sandbox.melhorenvio.com.br
 MELHOR_ENVIO_SANDBOX_FROM_POSTAL_CODE=
 MELHOR_ENVIO_PRODUCTION_BASE_URL=https://melhorenvio.com.br/api/v2
 MELHOR_ENVIO_PRODUCTION_CLIENT_ID=
 MELHOR_ENVIO_PRODUCTION_CLIENT_SECRET=
+MELHOR_ENVIO_PRODUCTION_WEBHOOK_SECRET=
 MELHOR_ENVIO_PRODUCTION_OAUTH_URL=https://melhorenvio.com.br
 MELHOR_ENVIO_PRODUCTION_FROM_POSTAL_CODE=
 MELHOR_ENVIO_USER_AGENT="Lume contato@seudominio.com.br"
@@ -70,11 +74,33 @@ MELHOR_ENVIO_SCOPES="cart-read cart-write shipping-calculate shipping-checkout s
 
 O valor `sandbox` seleciona apenas as credenciais de teste. Para publicar, altere o seletor correspondente para `production`; não duplique nomes de variáveis.
 
-Cadastre no aplicativo do Melhor Envio o webhook `https://seu-dominio.com.br/webhooks/melhor-envio`. A assinatura `X-ME-Signature` é validada com o `CLIENT_SECRET` do ambiente ativo. A URL de callback OAuth é diferente do webhook.
+Cadastre no aplicativo do Melhor Envio o webhook `https://seu-dominio.com.br/webhooks/melhor-envio`. A assinatura `X-ME-Signature` é validada com `MELHOR_ENVIO_<AMBIENTE>_WEBHOOK_SECRET`; esse segredo é exclusivo do webhook e **não** deve reutilizar o `CLIENT_SECRET` do OAuth. A URL de callback OAuth é diferente do webhook.
 
 Cadastre como URL de redirecionamento OAuth exatamente `https://seu-dominio.com.br/admin/settings/integrations/melhor-envio/callback`. O domínio gerado pelo Laravel vem de `APP_URL`, que deve usar HTTPS e o endereço público da loja.
 
 Nunca versione tokens reais. Para processar campanhas, notificações e demais tarefas assíncronas, mantenha um worker de fila ativo com `php artisan queue:work`.
+
+### Publicação e segurança
+
+No ambiente de produção, mantenha ao menos estas configurações no `.env` do servidor:
+
+```dotenv
+APP_ENV=production
+APP_DEBUG=false
+LOG_LEVEL=warning
+SESSION_SECURE_COOKIE=true
+SESSION_HTTP_ONLY=true
+SESSION_SAME_SITE=lax
+```
+
+Após qualquer alteração de ambiente, atualize o cache de configuração:
+
+```bash
+php artisan optimize:clear
+php artisan config:cache
+```
+
+O projeto aplica cabeçalhos de segurança, limite de requisições em endpoints públicos sensíveis e autenticação própria para webhooks. Isso complementa, mas não substitui, HTTPS, backups, monitoramento, credenciais fortes e um worker de fila supervisionado no servidor.
 
 ### Administração e envios
 
@@ -114,7 +140,8 @@ php artisan view:cache
 
 ## Documentação
 
-- `docs/architecture.md`: organização e convenções do código;
-- `docs/database.md`: entidades, relacionamentos e integrações persistidas;
-- `docs/decisions.md`: decisões técnicas e arquiteturais;
-- `docs/roadmap.md`: estado atual e próximos passos.
+- [Índice da documentação](docs/README.md): ponto de partida e ordem de leitura;
+- [Arquitetura](docs/architecture.md): organização, convenções, segurança e publicação;
+- [Banco de dados](docs/database.md): entidades, relacionamentos e integrações persistidas;
+- [Decisões técnicas](docs/decisions.md): decisões arquiteturais e respectivas motivações;
+- [Roadmap](docs/roadmap.md): estado funcional, homologações pendentes e próximos passos.

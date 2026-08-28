@@ -1,6 +1,6 @@
 # Roadmap — Lume
 
-Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concluída está implementada; isso não substitui homologação com credenciais reais ou testes de produção.
+Estado funcional do projeto em 27/08/2026. Uma funcionalidade marcada como concluída está implementada; isso não substitui homologação com credenciais reais ou testes de produção.
 
 ## Concluído
 
