@@ -1,6 +1,6 @@
 # Organização do projeto
 
-Este documento descreve a estrutura vigente em 21/08/2026. O estado funcional está em `roadmap.md`, a persistência em `database.md` e o histórico de decisões em `decisions.md`.
+Este documento descreve a estrutura vigente em 27/08/2026. Para o estado funcional, consulte o [roadmap](roadmap.md); para persistência, o [banco de dados](database.md); e para o histórico arquitetural, as [decisões técnicas](decisions.md).
 
 ## Backend
 
