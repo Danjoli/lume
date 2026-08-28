@@ -59,21 +59,23 @@ class Admin extends Authenticatable
 
     public function isSuperAdmin(): bool
     {
-        return $this->role === 'superadmin';
+        return $this->role === AdminRole::SUPERADMIN;
     }
 
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->role === AdminRole::ADMIN;
     }
 
     public function isSupport(): bool
     {
-        return $this->role === 'suporte';
+        return $this->role === AdminRole::SUPPORT;
     }
 
-    public function hasRole(string $role): bool
+    public function hasRole(AdminRole|string $role): bool
     {
+        $role = is_string($role) ? AdminRole::tryFrom($role) : $role;
+
         return $this->role === $role;
     }
 
