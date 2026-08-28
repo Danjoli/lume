@@ -69,10 +69,11 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 
 - [x] Formatação do backend com Laravel Pint
 - [x] Compilação das views e validação das rotas após a reorganização
-- [x] Suíte atual: 64 testes e 216 assertions, incluindo rastreamento vazio do Sandbox, smoke test, OAuth, webhooks, URLs amigáveis, seeders, imagens de livros e permissões administrativas
+- [x] Suíte atual: 65 testes e 226 assertions, incluindo rastreamento vazio do Sandbox, smoke test, OAuth, webhooks, URLs amigáveis, seeders, imagens de livros, permissões administrativas e cabeçalhos de segurança
 - [ ] Ampliar testes de integração do checkout e das chamadas externas de logística
 - [ ] Cobrir regras críticas de estoque, cupons, reembolso e avaliações
-- [ ] Adicionar rate limiting específico para login, contato e webhooks
+- [x] Rate limiting específico para cadastro, contato, newsletter, recuperação de senha e webhooks
+- [x] Cabeçalhos de segurança globais e segredo de webhook separado de OAuth
 - [ ] Configurar CI, monitoramento, backup e política de logs
 - [ ] Revisar SEO técnico, acessibilidade e desempenho em produção
 
@@ -81,4 +82,4 @@ Estado funcional do projeto em 21/08/2026. Uma funcionalidade marcada como concl
 1. Homologar Asaas e Melhor Envio em sandbox com tokens próprios.
 2. Criar testes automatizados dos fluxos financeiros e logísticos.
 3. Configurar e-mail, filas e scheduler no ambiente de publicação.
-4. Executar revisão de segurança e checklist de deploy.
+4. Homologar os limites, a CSP e os segredos de webhook no ambiente de produção.

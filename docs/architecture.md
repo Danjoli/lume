@@ -118,7 +118,15 @@ Para executar a validação completa, use `php artisan test`. Para adicionar uma
 - Integrações externas: adapters próprios em `Services/Payments` e `Services/Store/Shipping`.
 - Processamento demorado: Jobs e filas, sem bloquear a resposta HTTP.
 - Webhooks: controllers dedicados, autenticação do emissor e processamento idempotente.
-- Melhor Envio: `X-ME-Signature` validada por HMAC-SHA256 sobre o corpo bruto, aceitando apenas os client secrets configurados dos aplicativos sandbox e produção.
+- Melhor Envio: `X-ME-Signature` validada por HMAC-SHA256 sobre o corpo bruto, aceitando apenas os segredos dedicados de webhook configurados para sandbox e produção. Segredos OAuth não são reutilizados como chave de assinatura.
 - OAuth do Melhor Envio: tokens criptografados em `integration_credentials`, separados por ambiente e renovados automaticamente antes da expiração.
 - Controle logístico: o painel chama `Services/Admin/Shipments`, que coordena Actions de transição e o adapter do Melhor Envio sem colocar chamadas externas no Controller.
 - Pastas e namespaces: nomes em inglês, no plural para domínios de recursos administrativos e por capacidade para módulos da loja.
+
+## Segurança e publicação
+
+`SecurityHeadersMiddleware` é global e adiciona Content Security Policy, proteção contra MIME sniffing, clickjacking, vazamento de referer e permissões de navegador desnecessárias. A CSP permite somente os assets próprios, o CDN do Chart.js e as fontes Google usadas pelo painel; em ambiente local, também libera a conexão do Vite para desenvolvimento.
+
+Rotas públicas de cadastro, contato, newsletter e recuperação de senha possuem rate limiting. Webhooks também têm limite defensivo, mas continuam autenticados por token ou HMAC. A recuperação de senha sempre responde com mensagem genérica, evitando enumerar contas cadastradas.
+
+Antes de publicar, configure no `.env` do servidor: `APP_ENV=production`, `APP_DEBUG=false`, `LOG_LEVEL=warning`, `SESSION_SECURE_COOKIE=true`, `SESSION_HTTP_ONLY=true` e `SESSION_SAME_SITE=lax`. Para o Melhor Envio, preencha `MELHOR_ENVIO_<AMBIENTE>_WEBHOOK_SECRET` com o segredo específico configurado no provedor; não use o Client Secret OAuth. Após alterar o `.env`, execute `php artisan optimize:clear` e `php artisan config:cache`.
