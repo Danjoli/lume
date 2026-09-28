@@ -74,7 +74,8 @@ Estado funcional do projeto em 27/08/2026. Uma funcionalidade marcada como concl
 - [ ] Cobrir regras críticas de estoque, cupons, reembolso e avaliações
 - [x] Rate limiting específico para cadastro, contato, newsletter, recuperação de senha e webhooks
 - [x] Cabeçalhos de segurança globais e segredo de webhook separado de OAuth
-- [ ] Configurar CI, monitoramento, backup e política de logs
+- [x] Configurar CI para auditoria, formatação, testes e build
+- [ ] Configurar monitoramento, backup e política de logs
 - [ ] Revisar SEO técnico, acessibilidade e desempenho em produção
 
 ## Próximos passos recomendados
